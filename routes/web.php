@@ -74,6 +74,9 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
         Route::get('/elementary', function () {
             return Inertia::render('admin/literacy_test/elementary/page');
         });
+        Route::get('/elementary/{id}', function () {
+            return Inertia::render('admin/literacy_test/elementary/id/page');
+        });
         Route::get('/junior_high', function () {
             return Inertia::render('admin/literacy_test/junior_high/page');
         });

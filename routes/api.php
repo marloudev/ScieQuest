@@ -27,7 +27,7 @@ Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
 Route::resource('teachers', TeacherController::class);
 Route::resource('examinations', ExaminationController::class);
-Route::resource('questionaires', QuestionnaireController::class);
+Route::resource('questionnaires', QuestionnaireController::class);
 Route::resource('score_sheets', ScoreSheetController::class);
 Route::resource('dashboard', DashboardController::class);
 
