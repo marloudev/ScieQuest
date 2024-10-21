@@ -14,8 +14,8 @@ export function search_students_thunk(data) {
 
 export function get_teachers_thunk() {
   return async function (dispatch, getState) {
-    const res = await get_teachers_service(2)
-    dispatch(teachersSlice.actions.setteachers(res.data.response));
+    const res = await get_teachers_service()
+    dispatch(teachersSlice.actions.setTeachers(res.data.response));
     return res
   };
 }

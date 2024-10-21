@@ -15,25 +15,24 @@ import { Visibility } from "@mui/icons-material";
 import { router } from "@inertiajs/react";
 
 export default function TableSection() {
-    const { instructors } = useSelector((state) => state.teachers);
+    const { teachers } = useSelector((state) => state.teachers);
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Employee ID</TableCell>
-                        <TableCell>Firstname</TableCell>
-                        <TableCell>Lastname</TableCell>
+                        <TableCell>Fullname</TableCell>
                         <TableCell>Email</TableCell>
-                        <TableCell>Department</TableCell>
+                        <TableCell>Mobile</TableCell>
                         {/* <TableCell>Course</TableCell> */}
-                        {/* <TableCell>Age</TableCell>
-                        <TableCell>Address</TableCell> */}
+                        <TableCell>Age</TableCell>
+                        
+                         <TableCell>Address</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {instructors?.data.map((res, i) => {
+                    {teachers?.data.map((res, i) => {
                         const dob = moment(res.dob, "YYYY-MM-DD"); // Replace with actual date of birth
                         const age = moment().diff(dob, "years");
                         return (
@@ -45,17 +44,13 @@ export default function TableSection() {
                                     },
                                 }}
                             >
-                                <TableCell component="th" scope="row">
-                                    {res.user_id}
-                                </TableCell>
-                                <TableCell>{res.fname}</TableCell>
-                                <TableCell>{res.lname}</TableCell>
+                                <TableCell>{res.name}</TableCell>
                                 <TableCell>{res.email}</TableCell>
                                 <TableCell>
-                                    {res?.department?.name ?? ""}
+                                    {res?.mobile ?? ""}
                                 </TableCell>
-                                {/* <TableCell>{age}</TableCell>
-                                <TableCell>{res.address}</TableCell> */}
+                                <TableCell>{res.dob}</TableCell> 
+                                <TableCell>{res.address}</TableCell> 
                                 <TableCell>
                                     <div className="flex gap-2">
                                         {/* <UpdateSection data={res} /> */}

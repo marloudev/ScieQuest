@@ -10,7 +10,7 @@ export const teachersSlice = createSlice({
     teachers: {
       data: []
     },
-    teachers: {},
+    teacher: {},
     search: {
       academic_year: current_academic_year(),
       section_id: '1'
@@ -22,7 +22,7 @@ export const teachersSlice = createSlice({
       state.teachers = action.payload
     },
     setTeacher: (state, action) => {
-      state.teachers = action.payload
+      state.teacher = action.payload
     },
     setSearch: (state, action) => {
       state.search = action.payload

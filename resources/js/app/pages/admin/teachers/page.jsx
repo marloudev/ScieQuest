@@ -12,7 +12,7 @@ export default function AdminInstructorPage() {
 
 
   useEffect(()=>{
-    // store.dispatch(get_teachers_thunk())
+    store.dispatch(get_teachers_thunk())
   },[])
   return (
     <AdminLayout>
