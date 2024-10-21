@@ -6,23 +6,23 @@ const hash = path.split('&')[0];
 export const questionnairesSlice = createSlice({
   name: 'questionnaires',
   initialState: {
-    questionaires: {
+    questionnaires: {
       data:[]
     },
-    questionaire: {},
+    questionnaire: {},
   },
   reducers: {
-    setQuestionaires: (state, action) => {
-      state.questionaires = action.payload
+    setQuestionnaires: (state, action) => {
+      state.questionnaires = action.payload
     },
-    setQuestionaire: (state, action) => {
-      state.questionaire = action.payload
+    setQuestionnaire: (state, action) => {
+      state.questionnaire = action.payload
     },
   },
 })
 export const { 
-  setQuestionaires,
-  setQuestionaire
+  setQuestionnaires,
+  setQuestionnaire
  } = questionnairesSlice.actions
 
 export default questionnairesSlice.reducer

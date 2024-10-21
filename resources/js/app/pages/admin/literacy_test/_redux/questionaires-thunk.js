@@ -8,7 +8,7 @@ export function get_questionnaires_thunk() {
   return async function (dispatch, getState) {
     // dispatch(appSlice.actions.incrementByAmount(10));
     const res = await get_questionnaires_service()
-    dispatch(questionnairesSlice.actions.setQuestionaires(res.data.response));
+    dispatch(questionnairesSlice.actions.setQuestionnaires(res.data.response));
     return res
   };
 }
