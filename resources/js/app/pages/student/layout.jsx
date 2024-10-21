@@ -111,7 +111,7 @@ function StudentLayout({ children }, props) {
             window={demoWindow}
             branding={{
                 logo: <img src="/images/logo.png" />,
-                title: "CSR Grading System",
+                title: "Alternative Learning System",
             }}
         >
             <DashboardLayout>
