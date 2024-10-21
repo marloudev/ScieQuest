@@ -2,13 +2,13 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail // Implement MustVerifyEmail
 {
     use HasFactory, Notifiable;
 
@@ -18,18 +18,11 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'user_id',
-        'department_id',
-        'course_id',
-        'section',
-        'fname',
-        'lname',
         'name',
         'email',
         'password',
-        'dob',
-        'address',
         'user_type',
+        'email_verified_at'
     ];
 
     /**
@@ -54,16 +47,6 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
-    public function department(): HasOne
-    {
-        return $this->hasOne(Department::class,'id','department_id');
-    }
-    public function course(): HasOne
-    {
-        return $this->hasOne(Course::class,'id','course_id');
-    }
-    public function enrollment(): HasOne
-    {
-        return $this->hasOne(Enrollment::class,'user_id','user_id');
-    }
+
+
 }

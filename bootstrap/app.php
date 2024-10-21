@@ -23,8 +23,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->appendToGroup('administrator', [
             \App\Http\Middleware\Administrator::class,
         ]);
-        $middleware->appendToGroup('instructor', [
-            \App\Http\Middleware\Instructor::class,
+        $middleware->appendToGroup('teacher', [
+            \App\Http\Middleware\Teacher::class,
         ]);
         $middleware->appendToGroup('student', [
             \App\Http\Middleware\Student::class,

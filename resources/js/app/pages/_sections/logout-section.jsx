@@ -28,7 +28,7 @@ export default function LogoutSection({ open, setOpen }) {
                 onClose={handleClose}
                 aria-describedby="alert-dialog-slide-description"
             >
-                <DialogTitle>{"Colegio de Santa Rita de San Carlos, Inc."}</DialogTitle>
+                <DialogTitle>{"Alternative Learning System"}</DialogTitle>
                 <DialogContent>
                     <DialogContentText id="alert-dialog-slide-description">
                         Are you sure want to logout?

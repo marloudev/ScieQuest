@@ -1,4 +1,4 @@
-import { useForm } from "@inertiajs/react";
+import { router, useForm } from "@inertiajs/react";
 import { Button, Checkbox, CircularProgress, TextField } from "@mui/material";
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ export default function LoginPage() {
     };
     return (
         <>
-            <div className="absolute inset-0 -z-10 items-center px-5 py-24 [background:radial-gradient(125%_125%_at_50%_10%,#000_40%,#63e_100%)]"></div>
+            <div className="absolute inset-0 -z-10 items-center px-5 py-24 bg-gray-300"></div>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
 
                 <div className="mt-20 sm:mx-auto sm:w-full sm:max-w-sm bg-white p-5 rounded-md">
@@ -29,7 +29,7 @@ export default function LoginPage() {
                                 className="mx-auto h-32 w-32 "
                             />
                             <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight ">
-                                Sign in to your account
+                                Educational Portal
                             </h2>
                         </div>
                     </div>
@@ -58,13 +58,18 @@ export default function LoginPage() {
                             variant="outlined"
                         />
                         <div className="block mt-4">
-                            <label className="flex items-center">
-                                <Checkbox
+                            <label className="flex flex-row items-center justify-between">
+                               <div>
+                               <Checkbox
                                     name="remember"
                                     checked={data.remember}
                                     onChange={(e) => setData('remember', e.target.checked)}
                                 />
                                 <span className="ms-2 text-sm text-gray-600">Remember me</span>
+                               </div>
+                                <a onClick={()=>router.visit('/register')} className="ms-2 text-sm text-gray-600 underline">
+                                    Account Registration
+                                </a>
                             </label>
                         </div>
                         <div>

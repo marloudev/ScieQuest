@@ -10,7 +10,6 @@ import { PersonAdd } from '@mui/icons-material';
 import academic_year from '@/app/lib/academic-year';
 import current_academic_year from '@/app/lib/current-academic-year';
 import { useEffect } from 'react';
-import { store_enrollments_thunk } from '../../enrollment/redux/enrollment-thunk';
 import { get_student_thunk } from '../redux/student-thunk';
 
 export default function AddEnrollmentSection({ data }) {
@@ -18,9 +17,6 @@ export default function AddEnrollmentSection({ data }) {
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState({})
     const [notify, setNotify] = useState(false)
-    const { departments } = useSelector((state) => state.department)
-    const { courses } = useSelector((state) => state.courses)
-    const { sections } = useSelector((state) => state.sections)
     const [form, setForm] = useState({})
 
 
@@ -40,16 +36,16 @@ export default function AddEnrollmentSection({ data }) {
 
     async function submitForm(params) {
         setLoading(true)
-        const result = await store.dispatch(store_enrollments_thunk(form))
-        if (result.status == 200) {
-            await store.dispatch(get_student_thunk())
-            setNotify(true)
-            setError({})
-            setLoading(false)
-        } else {
-            setLoading(false)
-            setError(result.response.data.errors)
-        }
+        // const result = await store.dispatch(store_enrollments_thunk(form))
+        // if (result.status == 200) {
+        //     await store.dispatch(get_student_thunk())
+        //     setNotify(true)
+        //     setError({})
+        //     setLoading(false)
+        // } else {
+        //     setLoading(false)
+        //     setError(result.response.data.errors)
+        // }
     }
 
     const handleClose = (event, reason) => {
@@ -131,11 +127,11 @@ export default function AddEnrollmentSection({ data }) {
                                         [e.target.name]: e.target.value
                                     })}
                                 >
-                                    {
+                                    {/* {
                                         courses.data.map((res, i) => {
                                             return <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
                                         })
-                                    }
+                                    } */}
                                 </Select>
                             </FormControl>
                             <FormControl fullWidth>
@@ -175,7 +171,7 @@ export default function AddEnrollmentSection({ data }) {
                             </FormControl>
                             <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Sections</InputLabel>
-                                <Select
+                                {/* <Select
                                     id="demo-simple-select"
                                     name='section_id'
                                     label="Course"
@@ -190,7 +186,7 @@ export default function AddEnrollmentSection({ data }) {
                                             return <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
                                         })
                                     }
-                                </Select>
+                                </Select> */}
                             </FormControl>
 
 

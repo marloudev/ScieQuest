@@ -13,12 +13,12 @@ class AccountController extends Controller
     {
         // Fetch paginated users, you can specify how many items per page, e.g., 10
         if($request->page){
-            $users = User::where('user_type', $request->user_type)->with(['department', 'course','enrollment'])->paginate(10);
+            $users = User::where('user_type', $request->user_type)->paginate(10);
             return response()->json([
                 'response' => $users,
             ], 200);
         }else{
-            $users = User::where('user_type', $request->user_type)->with(['department', 'course','enrollment'])->get();
+            $users = User::where('user_type', $request->user_type)->get();
             return response()->json([
                 'response' => [
                     'data' => $users

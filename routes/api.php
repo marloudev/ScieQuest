@@ -1,20 +1,15 @@
 <?php
 
 use App\Http\Controllers\AccountController;
-use App\Http\Controllers\ClassParticipationController;
-use App\Http\Controllers\CourseController;
 use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\DepartmentController;
-use App\Http\Controllers\EnrollmentController;
-use App\Http\Controllers\ExaminationController;
-use App\Http\Controllers\GradeController;
-use App\Http\Controllers\ProjectController;
-use App\Http\Controllers\QuizController;
-use App\Http\Controllers\SectionController;
-use App\Http\Controllers\SubjectController;
-use App\Http\Controllers\SubjectHandledController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatGPTController;
+use App\Http\Controllers\ExaminationController;
+use App\Http\Controllers\QuestionnaireController;
+use App\Http\Controllers\ScoreSheetController;
+use App\Http\Controllers\StudentController;
+use App\Http\Controllers\TeacherController;
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -24,28 +19,15 @@ Route::get('/user', function (Request $request) {
 //     return $request->user();
 // });
 
+Route::post('/rate-paragraph', [ChatGPTController::class, 'rateParagraph']);
 
-Route::resource('class_participation', ClassParticipationController::class);
-Route::resource('course', CourseController::class);
+
 
 Route::resource('account', AccountController::class);
-Route::post('search_students', [EnrollmentController::class, 'search_students']);
-Route::resource('enrollments', EnrollmentController::class);
-
+Route::resource('students', StudentController::class);
+Route::resource('teachers', TeacherController::class);
+Route::resource('examinations', ExaminationController::class);
+Route::resource('questionaires', QuestionnaireController::class);
+Route::resource('score_sheets', ScoreSheetController::class);
 Route::resource('dashboard', DashboardController::class);
-Route::resource('department', DepartmentController::class);
-Route::resource('examination', ExaminationController::class);
 
-Route::resource('grade', GradeController::class);
-Route::get('get_student_grade/{enrollment_id}', [GradeController::class, 'get_student_grade']);
-
-
-Route::resource('project', ProjectController::class);
-Route::resource('quiz', QuizController::class);
-
-Route::resource('subject', SubjectController::class);
-Route::post('get_instructor_subject', [SubjectController::class, 'get_instructor_subject']);
-
-Route::resource('subject_handled', SubjectHandledController::class);
-
-Route::resource('sections', SectionController::class);

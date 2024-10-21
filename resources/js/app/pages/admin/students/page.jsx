@@ -7,18 +7,12 @@ import SearchSection from './sections/search-section'
 import { useEffect } from 'react'
 import store from '../../store/store'
 import { get_student_thunk } from './redux/student-thunk'
-import { get_department_thunk } from '../department/redux/department-thunk'
-import { get_course_thunk } from '../courses/redux/course-thunk'
-import { get_sections_thunk } from '../sections/redux/sections-thunk'
 
 export default function StudentsPage() {
 
 
   useEffect(()=>{
-    store.dispatch(get_department_thunk())
     store.dispatch(get_student_thunk())
-    store.dispatch(get_course_thunk())
-    store.dispatch(get_sections_thunk())
   },[])
   return (
     <AdminLayout>

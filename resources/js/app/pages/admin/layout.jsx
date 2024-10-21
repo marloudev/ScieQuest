@@ -14,7 +14,7 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { router as route } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPathname } from "@/app/redux/app-slice";
-import { AssignmentInd, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, School, SupervisedUserCircle } from "@mui/icons-material";
+import { AssignmentInd, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, Quiz, School, SupervisedUserCircle } from "@mui/icons-material";
 import LogoutSection from "../_sections/logout-section";
 import store from "../store/store";
 import { get_user_login_thunk } from "@/app/redux/app-thunk";
@@ -30,49 +30,54 @@ const NAVIGATION = [
         icon: <DashboardIcon />,
     },
     {
-        segment: "instructor",
-        title: "Instructor",
+        segment: "teachers",
+        title: "Teachers",
         icon: <Diversity1 />,
     },
     {
         segment: "students",
         title: "Students",
         icon: <Groups />,
+    },
+    {
+        segment: "literacy_test",
+        title: "Literacy Test",
+        icon: <Quiz />,
         children: [
             {
-              segment: 'registered',
-              title: 'Preregistered',
+              segment: 'elementary',
+              title: 'Elementary',
               icon: <DescriptionIcon />,
             },
             {
-              segment: 'enrollment',
-              title: 'Enrollment Record',
+              segment: 'junior_high',
+              title: 'Junior High',
               icon: <DescriptionIcon />,
             },
           ],
     },
     
-    {
-        segment: "subjects",
-        title: "Subjects",
-        icon: <HistoryEdu />,
-    },
-    {
-        segment: "department",
-        title: "Department",
-        icon: <FolderShared />,
-    },
+    // {
+    //     segment: "subjects",
+    //     title: "Subjects",
+    //     icon: <HistoryEdu />,
+    // },
+    // {
+    //     segment: "department",
+    //     title: "Department",
+    //     icon: <FolderShared />,
+    // },
     
-    {
-        segment: "courses",
-        title: "Courses",
-        icon: <School />,
-    },
-    {
-        segment: "sections",
-        title: "Sections",
-        icon: <Diversity3 />,
-    },
+    // {
+    //     segment: "courses",
+    //     title: "Courses",
+    //     icon: <School />,
+    // },
+    // {
+    //     segment: "sections",
+    //     title: "Sections",
+    //     icon: <Diversity3 />,
+    // },
     // {
     //     segment: "grades",
     //     title: "Grades",
@@ -81,15 +86,15 @@ const NAVIGATION = [
     {
         kind: "divider",
     },
-    {
-        kind: "header",
-        title: "Analytics",
-    },
-    {
-        segment: "settings",
-        title: "Settings",
-        icon: <Engineering />,
-    },
+    // {
+    //     kind: "header",
+    //     title: "Analytics",
+    // },
+    // {
+    //     segment: "settings",
+    //     title: "Settings",
+    //     icon: <Engineering />,
+    // },
     {
         segment: "logout",
         title: "Logout",

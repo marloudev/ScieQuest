@@ -14,8 +14,7 @@ export default function CreateSection() {
     const [data, setData] = useState({})
     const [error, setError] = useState({})
     const [notify, setNotify] = useState(false)
-    const { departments } = useSelector((state) => state.department)
-    const { courses } = useSelector((state) => state.courses)
+    // const { courses } = useSelector((state) => state.courses)
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -133,7 +132,7 @@ export default function CreateSection() {
                                 label="Password"
                                 variant="outlined" />
 
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Department</InputLabel>
                                 <Select
                                     id="demo-simple-select"
@@ -150,9 +149,9 @@ export default function CreateSection() {
                                         })
                                     }
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
 
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Course</InputLabel>
                                 <Select
                                     id="demo-simple-select"
@@ -170,7 +169,7 @@ export default function CreateSection() {
                                         })
                                     }
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                             {/* <TextField
                                 onChange={(e) => setData({
                                     ...data,

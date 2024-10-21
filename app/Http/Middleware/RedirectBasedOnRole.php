@@ -23,7 +23,7 @@ class RedirectBasedOnRole
                 case '1':
                     return Inertia::location(route('admin.dashboard'));
                 case '2':
-                    return Inertia::location(route('instructor.dashboard'));
+                    return Inertia::location(route('teacher.dashboard'));
                 case '3':
                     return Inertia::location(route('student.dashboard'));
             }

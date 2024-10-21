@@ -16,8 +16,6 @@ export default function UpdateSection({ data }) {
     const [error, setError] = useState({})
     const [notify, setNotify] = useState(false)
     const [loading, setLoading] = useState(false)
-    const { departments } = useSelector((state) => state.department)
-    const { courses } = useSelector((state) => state.courses)
 
     useEffect(() => {
         setForm(data)
@@ -137,7 +135,7 @@ export default function UpdateSection({ data }) {
                                 label="Password"
                                 variant="outlined" />
 
-                            <FormControl fullWidth>
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Department</InputLabel>
                                 <Select
                                     id="demo-simple-select"
@@ -155,8 +153,8 @@ export default function UpdateSection({ data }) {
                                         })
                                     }
                                 </Select>
-                            </FormControl>
-                            <FormControl fullWidth>
+                            </FormControl> */}
+                            {/* <FormControl fullWidth>
                                 <InputLabel id="demo-simple-select-label">Course</InputLabel>
                                 <Select
                                     id="demo-simple-select"
@@ -174,7 +172,7 @@ export default function UpdateSection({ data }) {
                                         })
                                     }
                                 </Select>
-                            </FormControl>
+                            </FormControl> */}
                             {/* <TextField
                                 value={form.dob}
                                 onChange={(e) => setForm({

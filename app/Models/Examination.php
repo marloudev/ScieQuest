@@ -8,13 +8,4 @@ use Illuminate\Database\Eloquent\Model;
 class Examination extends Model
 {
     use HasFactory;
-    protected $fillable = [
-        'grade_id',
-        'assessment',
-        'score',
-        'percent',
-        'total',
-        'remarks',
-        'date',
-    ];
 }

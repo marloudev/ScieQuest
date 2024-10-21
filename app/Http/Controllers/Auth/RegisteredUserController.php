@@ -39,6 +39,7 @@ class RegisteredUserController extends Controller
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
+            'user_type' => $request->user_type,
             'password' => Hash::make($request->password),
         ]);
 
@@ -47,13 +48,14 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         // return redirect(route('dashboard', absolute: false));
-        switch ($user->user_type) {
-            case '1':
-                return redirect()->route('admin.dashboard');  // Redirect admins
-            case '2':
-                return redirect()->route('instructor.dashboard');   // Redirect regular users
-            case '3':
-                return redirect()->route('student.dashboard');     // Default redirection
-        }
+        // switch ($user->user_type) {
+        //     case '1':
+        //         return redirect()->route('admin.dashboard');  
+        //     case '2':
+        //         return redirect()->route('teacher.dashboard'); 
+        //     case '3':
+        //         return redirect()->route('student.dashboard');    
+        // }
+        return redirect()->route('login');  
     }
 }

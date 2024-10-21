@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
@@ -19,25 +20,38 @@ Route::middleware('redirectBasedOnRole')->get('/', function () {
     return Inertia::render('login/page');
 })->name('login');
 
-Route::middleware('auth:sanctum','administrator')->prefix('administrator')->group(function () {
+Route::middleware('redirectBasedOnRole')->get('/register', function () {
+    return Inertia::render('register/page');
+})->name('register');
+
+
+
+
+Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administrator')->group(function () {
+
+    Route::get('/', function () {
+        return redirect()->route('admin.dashboard');
+    })->name('dashboard');
+
     Route::get('/dashboard', function () {
         return Inertia::render('admin/dashboard/page');
     })->name('admin.dashboard');
-    Route::prefix('instructor')->group(function () {
+
+    Route::prefix('teachers')->group(function () {
         Route::get('/', function () {
-            return Inertia::render('admin/instructor/page');
+            return Inertia::render('admin/teachers/page');
         });
         Route::prefix('{user_id}')->group(function () {
             Route::get('/', function () {
-                return Inertia::render('admin/instructor/id/page1');
+                return Inertia::render('admin/teachers/id/page1');
             });
 
             Route::get('/create_grades', function () {
-                return Inertia::render('admin/instructor/id/page2');
+                return Inertia::render('admin/teachers/id/page2');
             });
 
             Route::get('/students', function () {
-                return Inertia::render('admin/instructor/id/page3');
+                return Inertia::render('admin/teachers/id/page3');
             });
         });
     });
@@ -56,70 +70,67 @@ Route::middleware('auth:sanctum','administrator')->prefix('administrator')->grou
         });
     });
 
-    Route::get('/department', function () {
-        return Inertia::render('admin/department/page');
-    });
-    Route::get('/courses', function () {
-        return Inertia::render('admin/courses/page');
-    });
-    Route::prefix('subjects')->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('admin/subjects/page');
+    Route::prefix('literacy_test')->group(function () {
+        Route::get('/elementary', function () {
+            return Inertia::render('admin/literacy_test/elementary/page');
         });
-        Route::get('/{id}', function () {
-            return Inertia::render('admin/subjects/id/page');
+        Route::get('/junior_high', function () {
+            return Inertia::render('admin/literacy_test/junior_high/page');
         });
     });
 
-    Route::get('/grades', function () {
-        return Inertia::render('admin/grades/page');
-    });
     Route::get('/settings', function () {
         return Inertia::render('admin/settings/page');
     });
 
-    Route::get('/sections', function () {
-        return Inertia::render('admin/sections/page');
-    });
 });
 
-Route::middleware('auth:sanctum','instructor')->prefix('instructor')->group(function () {
+Route::middleware('auth:sanctum', 'teacher', 'verified')->prefix('teacher')->group(function () {
+
+    Route::get('/', function () {
+        return redirect()->route('teacher.dashboard');
+    })->name('dashboard');
+
     Route::get('/dashboard', function () {
-        return Inertia::render('instructor/dashboard/page');
-    })->name('instructor.dashboard');
+        return Inertia::render('teacher/dashboard/page');
+    })->name('teacher.dashboard');
 
     Route::prefix('subjects')->group(function () {
         Route::get('/', function () {
-            return Inertia::render('instructor/subjects/page');
+            return Inertia::render('teacher/subjects/page');
         });
         Route::prefix('{user_id}')->group(function () {
             Route::get('/', function () {
-                return Inertia::render('instructor/subjects/id/page1');
+                return Inertia::render('teacher/subjects/id/page1');
             });
 
             Route::get('/create_grades', function () {
-                return Inertia::render('instructor/subjects/id/page2');
+                return Inertia::render('teacher/subjects/id/page2');
             });
 
             Route::get('/students', function () {
-                return Inertia::render('instructor/subjects/id/page3');
+                return Inertia::render('teacher/subjects/id/page3');
             });
         });
     });
     // Route::get('/subjects', function () {
-    //     return Inertia::render('instructor/subjects/page');
-    // })->name('instructor.subjects');
+    //     return Inertia::render('teacher/subjects/page');
+    // })->name('teacher.subjects');
 
     // Route::get('/subjects/{code}', function () {
-    //     return Inertia::render('instructor/subjects/id/page');
-    // })->name('instructor.subject.code');
+    //     return Inertia::render('teacher/subjects/id/page');
+    // })->name('teacher.subject.code');
 
     Route::get('/settings', function () {
-        return Inertia::render('instructor/settings/page');
-    })->name('instructor.settings');
+        return Inertia::render('teacher/settings/page');
+    })->name('teacher.settings');
 });
 
-Route::middleware('auth:sanctum','student')->prefix('student')->group(function () {
+Route::middleware('auth:sanctum', 'student', 'verified')->prefix('student')->group(function () {
+    Route::get('/', function () {
+        return redirect()->route('student.dashboard');
+    })->name('dashboard');
+
     Route::get('/dashboard', function () {
         return Inertia::render('student/dashboard/page');
     })->name('student.dashboard');

@@ -1,4 +1,4 @@
-import { store_student_service, delete_student_service, update_student_service, get_student_by_id_service, get_student_service } from "@/app/services/student-service";
+import { store_student_service, delete_student_service, update_student_service, get_student_by_id_service, get_student_service } from "@/app/services/students-service";
 import {studentSlice} from "./student-slice";
 
 
