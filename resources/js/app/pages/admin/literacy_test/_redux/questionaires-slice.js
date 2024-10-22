@@ -10,10 +10,20 @@ export const questionnairesSlice = createSlice({
       data:[]
     },
     questionnaire: {},
+    specifications:{
+      data:[]
+    },
+    questionnaire:{}
   },
   reducers: {
     setQuestionnaires: (state, action) => {
       state.questionnaires.data = action.payload
+    },
+    setSpecifications: (state, action) => {
+      state.specifications.data = action.payload
+    },
+    setSpecification: (state, action) => {
+      state.specification.data = action.payload
     },
     setQuestionnaire: (state, action) => {
       state.questionnaire = action.payload

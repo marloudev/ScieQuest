@@ -100,6 +100,7 @@ export default function QuestionnaireCardSection() {
                                                         alt="Your Image Description"
                                                     />
                                                 )}
+                                                {res.a}
                                             </div>
                                             <FormControlLabel
                                                 value="B"
@@ -114,10 +115,11 @@ export default function QuestionnaireCardSection() {
                                                         component="img"
                                                         height="full"
                                                         width="25"
-                                                        image={res?.image_a}
+                                                        image={res?.image_b}
                                                         alt="Your Image Description"
                                                     />
                                                 )}
+                                                {res.b}
                                             </div>
                                             <FormControlLabel
                                                 value="C"
@@ -132,10 +134,11 @@ export default function QuestionnaireCardSection() {
                                                         component="img"
                                                         height="full"
                                                         width="25"
-                                                        image={res?.image_a}
+                                                        image={res?.image_c}
                                                         alt="Your Image Description"
                                                     />
                                                 )}
+                                                {res.c}
                                             </div>
                                             <FormControlLabel
                                                 value="D"
@@ -150,10 +153,11 @@ export default function QuestionnaireCardSection() {
                                                         component="img"
                                                         height="full"
                                                         width="25"
-                                                        image={res?.image_a}
+                                                        image={res?.image_d}
                                                         alt="Your Image Description"
                                                     />
                                                 )}
+                                                {res.d}
                                             </div>
                                             <FormControlLabel
                                                 value="E"
@@ -172,6 +176,7 @@ export default function QuestionnaireCardSection() {
                                                         alt="Your Image Description"
                                                     />
                                                 )}
+                                                {res.e}
                                             </div>
                                         </RadioGroup>
                                     </FormControl>

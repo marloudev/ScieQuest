@@ -8,6 +8,7 @@ use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ScoreSheetController;
+use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 
@@ -30,4 +31,5 @@ Route::resource('examinations', ExaminationController::class);
 Route::resource('questionnaires', QuestionnaireController::class);
 Route::resource('score_sheets', ScoreSheetController::class);
 Route::resource('dashboard', DashboardController::class);
+Route::resource('specifications', SpecificationController::class);
 
