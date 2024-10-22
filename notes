@@ -22,4 +22,14 @@ Examination Type
  - Als Level
  - Date
 
+
+Schedule FLT Test
+- unique ID
+- ALS Level 
+- Date and time of exam
+- multiple select student
+- teacher (dropdown)
+- community learning center
+- send email to alls students and teacher selected.
+
  
