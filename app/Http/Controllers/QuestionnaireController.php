@@ -23,12 +23,21 @@ class QuestionnaireController extends Controller
             'b' => 'required',
             'c' => 'required',
             'd' => 'required',
-            'e' => 'nullable', 
+            'e' => 'nullable',
             'examination_id' => 'required',
             'specification' => 'required',
         ]);
 
+
         Questionnaire::create($validatedData);
+        return response()->json([
+            'response' => 'success',
+        ], 200);
+    }
+
+    public function destroy($id)
+    {
+        Questionnaire::where('id', $id)->delete();
         return response()->json([
             'response' => 'success',
         ], 200);

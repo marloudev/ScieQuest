@@ -13,6 +13,8 @@ import {
     Radio,
     RadioGroup,
 } from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import DeleteQuestionnaireSection from "./delete-questionnaire-section";
 
 const bull = (
     <Box
@@ -28,81 +30,87 @@ export default function QuestionnaireCardSection() {
     console.log("questionnaires", questionnaires.data);
     return (
         <div className="flex flex-col gap-5">
+
             {questionnaires?.data?.map((res, i) => {
                 return (
-                    <Card sx={{ minWidth: 275 }}>
-                        <CardContent>
-                            <Typography variant="body2">
-                                <div className="flex gap-4">
-                                    {i + 1}. {res.question}
-                                </div>
-                                <br />
-                            </Typography>
-                        </CardContent>
+                    <>
+                        <div className="flex w-full items-end justify-end">
+                            <DeleteQuestionnaireSection data={res}/>
+                        </div>
+                        <Card sx={{ minWidth: 275 }}>
+                            <CardContent>
+                                <Typography variant="body2">
+                                    <div className="flex gap-4">
+                                        {i + 1}. {res.question}
+                                    </div>
+                                    <br />
+                                </Typography>
+                            </CardContent>
 
-                        <Typography
-                            className="px-4"
-                            sx={{ color: "text.secondary", mb: 1.5 }}
-                        >
-                            Specification: {res.specification}
-                        </Typography>
-                        <CardActions>
-                            <div className="flex items-start justify-start w-full px-3">
-                                <FormControl>
-                                    <FormLabel id="demo-row-radio-buttons-group-label">
-                                        Answer Key
-                                    </FormLabel>
-                                    <RadioGroup
-                                        onChange={(e) =>
-                                            setData({
-                                                ...data,
-                                                [e.target.name]: e.target.value,
-                                            })
-                                        }
-                                        row
-                                        aria-labelledby="demo-row-radio-buttons-group-label"
-                                        name="answer_key"
-                                    >
-                                        <FormControlLabel
-                                            value="A"
-                                            control={<Radio />}
-                                            label="A"
-                                            checked={res.answer_key == "A"}
-                                            disabled={res.answer_key != "A"}
-                                        />
-                                        <FormControlLabel
-                                            value="B"
-                                            control={<Radio />}
-                                            label="B"
-                                            checked={res.answer_key == "B"}
-                                            disabled={res.answer_key != "B"}
-                                        />
-                                        <FormControlLabel
-                                            value="C"
-                                            control={<Radio />}
-                                            label="C"
-                                            checked={res.answer_key == "C"}
-                                            disabled={res.answer_key != "C"}
-                                        />
-                                        <FormControlLabel
-                                            value="D"
-                                            control={<Radio />}
-                                            label="D"
-                                            checked={res.answer_key == "D"}
-                                            disabled={res.answer_key != "D"}
-                                        />
-                                        <FormControlLabel
-                                            value="E"
-                                            control={<Radio />}
-                                            label="E"
-                                            checked={res.answer_key == "E"}
-                                            disabled={res.answer_key != "E"}
-                                        />
-                                    </RadioGroup>
-                                </FormControl>
-                            </div>
-                        </CardActions>
-                    </Card>
+                            <Typography
+                                className="px-4"
+                                sx={{ color: "text.secondary", mb: 1.5 }}
+                            >
+                                Specification: {res.specification}
+                            </Typography>
+                            <CardActions>
+                                <div className="flex items-start justify-start w-full px-3">
+                                    <FormControl>
+                                        <FormLabel id="demo-row-radio-buttons-group-label">
+                                            Answer Key
+                                        </FormLabel>
+                                        <RadioGroup
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    [e.target.name]: e.target.value,
+                                                })
+                                            }
+                                            row
+                                            aria-labelledby="demo-row-radio-buttons-group-label"
+                                            name="answer_key"
+                                        >
+                                            <FormControlLabel
+                                                value="A"
+                                                control={<Radio />}
+                                                label="A"
+                                                checked={res.answer_key == "A"}
+                                                disabled={res.answer_key != "A"}
+                                            />
+                                            <FormControlLabel
+                                                value="B"
+                                                control={<Radio />}
+                                                label="B"
+                                                checked={res.answer_key == "B"}
+                                                disabled={res.answer_key != "B"}
+                                            />
+                                            <FormControlLabel
+                                                value="C"
+                                                control={<Radio />}
+                                                label="C"
+                                                checked={res.answer_key == "C"}
+                                                disabled={res.answer_key != "C"}
+                                            />
+                                            <FormControlLabel
+                                                value="D"
+                                                control={<Radio />}
+                                                label="D"
+                                                checked={res.answer_key == "D"}
+                                                disabled={res.answer_key != "D"}
+                                            />
+                                            <FormControlLabel
+                                                value="E"
+                                                control={<Radio />}
+                                                label="E"
+                                                checked={res.answer_key == "E"}
+                                                disabled={res.answer_key != "E"}
+                                            />
+                                        </RadioGroup>
+                                    </FormControl>
+                                </div>
+                            </CardActions>
+                        </Card>
+                    </>
                 );
             })}
         </div>

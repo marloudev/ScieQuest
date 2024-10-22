@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Edit } from '@mui/icons-material';
 import { useEffect } from 'react';
 import store from '@/app/pages/store/store';
-import { get_instructor_thunk, update_instructor_thunk } from '../redux/teachers-thunk';
+import { get_teachers_thunk, update_teachers_thunk } from '../redux/teachers-thunk';
 import { useSelector } from 'react-redux';
 
 export default function UpdateSection({ data }) {
@@ -27,9 +27,9 @@ export default function UpdateSection({ data }) {
 
     async function submitForm(params) {
         setLoading(true)
-        const result = await store.dispatch(update_instructor_thunk(form))
+        const result = await store.dispatch(update_teachers_thunk(form))
         if (result.status == 200) {
-            await store.dispatch(get_instructor_thunk())
+            await store.dispatch(get_teachers_thunk())
             setNotify(true)
             setError({})
             setLoading(false)
@@ -70,7 +70,7 @@ export default function UpdateSection({ data }) {
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3  w-full' >
                             <div className='text-2xl font-black'>
-                                Edit Instructor
+                                Edit teachers
                             </div>
                             <TextField onChange={(e) => setForm({
                                 ...data,

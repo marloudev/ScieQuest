@@ -11,6 +11,8 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
+import { styled } from '@mui/material/styles';
+
 import {
     FormControl,
     FormControlLabel,
@@ -29,6 +31,7 @@ import {
     get_questionnaires_thunk,
     store_questionnaires_thunk,
 } from "../../../_redux/questionaires-thunk";
+import { Check, CloudUpload } from "@mui/icons-material";
 // import {
 //     get_examinations_thunk,
 //     store_examinations_thunk,
@@ -49,6 +52,23 @@ export default function CreateQuestionnaireSection() {
     };
 
     async function submit_form(params) {
+
+        const fd = new FormData()
+        fd.append('examination_id', examination_id)
+        fd.append('question', data.question)
+        fd.append('answer_key', data.answer_key)
+        fd.append('specification', data.specification)
+        fd.append('a', data.a)
+        fd.append('b', data.b)
+        fd.append('c', data.c)
+        fd.append('d', data.d)
+        fd.append('e', data.e)
+        fd.append('image_a', data.image_a)
+        fd.append('image_b', data.image_b)
+        fd.append('image_c', data.image_c)
+        fd.append('image_d', data.image_d)
+        fd.append('image_e', data.image_e)
+
         try {
             setLoading(true);
             const result = await store.dispatch(
@@ -72,6 +92,19 @@ export default function CreateQuestionnaireSection() {
         }
     }
     console.log("data", data);
+
+
+    const VisuallyHiddenInput = styled('input')({
+        clip: 'rect(0 0 0 0)',
+        clipPath: 'inset(50%)',
+        height: 1,
+        overflow: 'hidden',
+        position: 'absolute',
+        bottom: 0,
+        left: 0,
+        whiteSpace: 'nowrap',
+        width: 1,
+    });
     return (
         <React.Fragment>
             <Button variant="outlined" onClick={handleClickOpen}>
@@ -95,25 +128,51 @@ export default function CreateQuestionnaireSection() {
                         <CloseIcon />
                     </IconButton>
                 </Toolbar>
-                <Toolbar className="flex-col gap-3 flex">
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.question ? true : false}
-                        helperText={error?.question ?? ""}
-                        name="question"
-                        type="text"
-                        id="outlined-basic"
-                        label="Question"
-                        variant="outlined"
-                        className="w-full"
-                        multiline
-                        rows={2}
-                    />
+                <Toolbar className="flex-col gap-3 flex items-start justify-start w-full">
+                    <div className="w-full flex gap-4 flex-col">
+
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+
+                            startIcon={data?.image_header ? <Check /> : <CloudUpload />}
+                        >
+                            {
+                                data?.image_header ? data?.image_header.name : "Upload files"
+                            }
+                            <VisuallyHiddenInput
+                                name="image_header"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.question ? true : false}
+                            helperText={error?.question ?? ""}
+                            name="question"
+                            type="text"
+                            id="outlined-basic"
+                            label="Question"
+                            variant="outlined"
+                            className="w-full"
+                            multiline
+                            rows={2}
+                        />
+                    </div>
                     <div className="flex items-start justify-start w-full">
                         <FormControl error={!!error?.answer_key}>
                             <FormLabel id="demo-row-radio-buttons-group-label">
@@ -130,11 +189,13 @@ export default function CreateQuestionnaireSection() {
                                 aria-labelledby="demo-row-radio-buttons-group-label"
                                 name="answer_key"
                             >
+
                                 <FormControlLabel
                                     value="A"
                                     control={<Radio />}
                                     label="A"
                                 />
+
                                 <FormControlLabel
                                     value="B"
                                     control={<Radio />}
@@ -195,86 +256,196 @@ export default function CreateQuestionnaireSection() {
                             </FormHelperText>
                         )}
                     </FormControl>
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.a ? true : false}
-                        helperText={error?.a ?? ""}
-                        name="a"
-                        type="text"
-                        id="outlined-basic"
-                        label="Answer A"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.b ? true : false}
-                        helperText={error?.b ?? ""}
-                        name="b"
-                        type="text"
-                        id="outlined-basic"
-                        label="Answer B"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.c ? true : false}
-                        helperText={error?.c ?? ""}
-                        name="c"
-                        type="text"
-                        id="outlined-basic"
-                        label="Answer C"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.d ? true : false}
-                        helperText={error?.d ?? ""}
-                        name="d"
-                        type="text"
-                        id="outlined-basic"
-                        label="Answer D"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                    <TextField
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
-                            })
-                        }
-                        error={error?.e ? true : false}
-                        helperText={error?.e ?? ""}
-                        name="e"
-                        type="text"
-                        id="outlined-basic"
-                        label="Answer E"
-                        variant="outlined"
-                        className="w-full"
-                    />
+                    {data?.image_a.name??''}
+                    <div className="flex gap-3 w-full">
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            startIcon={data?.image_a ? <Check /> : <CloudUpload />}
+                        >
+                            <VisuallyHiddenInput
+                                name="image_a"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.a ? true : false}
+                            helperText={error?.a ?? ""}
+                            name="a"
+                            type="text"
+                            id="outlined-basic"
+                            label="Answer A"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                    </div>
+                    {data?.image_b.name??''}
+                    <div className="flex gap-3 w-full">
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            startIcon={data?.image_b ? <Check /> : <CloudUpload />}
+                        >
+                            <VisuallyHiddenInput
+                                name="image_b"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.b ? true : false}
+                            helperText={error?.b ?? ""}
+                            name="b"
+                            type="text"
+                            id="outlined-basic"
+                            label="Answer B"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                    </div>
+                    {data?.image_c.name??''}
+                    <div className="flex gap-3 w-full">
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            startIcon={data?.image_c ? <Check /> : <CloudUpload />}
+                        >
+                            <VisuallyHiddenInput
+                                name="image_c"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.c ? true : false}
+                            helperText={error?.c ?? ""}
+                            name="c"
+                            type="text"
+                            id="outlined-basic"
+                            label="Answer C"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                    </div>
+                    {data?.image_d.name??''}
+                    <div className="flex gap-3 w-full">
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            startIcon={data?.image_d ? <Check /> : <CloudUpload />}
+                        >
+                            <VisuallyHiddenInput
+                                name="image_d"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.d ? true : false}
+                            helperText={error?.d ?? ""}
+                            name="d"
+                            type="text"
+                            id="outlined-basic"
+                            label="Answer D"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                    </div>
+                    {data?.image_e.name??''}
+                    <div className="flex gap-3 w-full">
+                        <Button
+                            component="label"
+                            role={undefined}
+                            variant="contained"
+                            startIcon={data?.image_e ? <Check /> : <CloudUpload />}
+                        >
+                            <VisuallyHiddenInput
+                                name="image_e"
+                                type="file"
+                                // onChange={(event) => console.log(event.target.files)}
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        [e.target.name]: e.target.files[0],
+                                    })
+                                }
+                                accept="image/*"
+                            />
+                        </Button>
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.e ? true : false}
+                            helperText={error?.e ?? ""}
+                            name="e"
+                            type="text"
+                            id="outlined-basic"
+                            label="Answer E"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                    </div>
                     <div className="mt-6 flex w-full items-end justify-end">
                         <Toolbar>
                             <Typography
