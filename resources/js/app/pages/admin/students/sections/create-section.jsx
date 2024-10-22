@@ -5,7 +5,7 @@ import Button from '@mui/material/Button';
 import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
 import { useState } from 'react';
 import store from '@/app/pages/store/store';
-import { get_student_thunk, store_student_thunk } from '../redux/student-thunk';
+// import { get_student_thunk, store_student_thunk } from '../redux/student-thunk';
 import { useSelector } from 'react-redux';
 
 export default function CreateSection() {

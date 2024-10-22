@@ -7,7 +7,7 @@ import { useState } from 'react';
 import { Edit } from '@mui/icons-material';
 import { useEffect } from 'react';
 import store from '@/app/pages/store/store';
-import { get_student_thunk, update_student_thunk } from '../redux/student-thunk';
+// import { get_student_thunk, update_student_thunk } from '../redux/student-thunk';
 import { useSelector } from 'react-redux';
 
 export default function UpdateSection({ data }) {

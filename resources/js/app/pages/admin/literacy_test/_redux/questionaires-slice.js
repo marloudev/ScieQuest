@@ -13,7 +13,7 @@ export const questionnairesSlice = createSlice({
   },
   reducers: {
     setQuestionnaires: (state, action) => {
-      state.questionnaires = action.payload
+      state.questionnaires.data = action.payload
     },
     setQuestionnaire: (state, action) => {
       state.questionnaire = action.payload

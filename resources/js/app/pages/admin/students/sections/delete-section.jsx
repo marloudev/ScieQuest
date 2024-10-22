@@ -4,7 +4,6 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
 import { Delete } from '@mui/icons-material';
-import { delete_student_thunk, get_student_thunk } from '../redux/student-thunk';
 import store from '@/app/pages/store/store';
 import { Alert, CircularProgress, Snackbar } from '@mui/material';
 import { useState } from 'react';

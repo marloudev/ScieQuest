@@ -68,14 +68,12 @@ export default function CreateQuestionnaireSection() {
         fd.append('image_c', data.image_c)
         fd.append('image_d', data.image_d)
         fd.append('image_e', data.image_e)
-
+        fd.append('image_header', data.image_header)
+        
         try {
             setLoading(true);
             const result = await store.dispatch(
-                store_questionnaires_thunk({
-                    ...data,
-                    examination_id: examination_id,
-                }),
+                store_questionnaires_thunk(fd),
             );
             if (result.status == 200) {
                 await store.dispatch(get_questionnaires_thunk());
@@ -91,7 +89,7 @@ export default function CreateQuestionnaireSection() {
             setLoading(false);
         }
     }
-    console.log("data", data);
+ 
 
 
     const VisuallyHiddenInput = styled('input')({
@@ -190,11 +188,13 @@ export default function CreateQuestionnaireSection() {
                                 name="answer_key"
                             >
 
+                                <div>
                                 <FormControlLabel
                                     value="A"
                                     control={<Radio />}
                                     label="A"
                                 />
+                                </div>
 
                                 <FormControlLabel
                                     value="B"
@@ -256,7 +256,7 @@ export default function CreateQuestionnaireSection() {
                             </FormHelperText>
                         )}
                     </FormControl>
-                    {data?.image_a.name??''}
+                    {data?.image_a?.name??''}
                     <div className="flex gap-3 w-full">
                         <Button
                             component="label"
@@ -294,7 +294,7 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_b.name??''}
+                    {data?.image_b?.name??''}
                     <div className="flex gap-3 w-full">
                         <Button
                             component="label"
@@ -332,7 +332,7 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_c.name??''}
+                    {data?.image_c?.name??''}
                     <div className="flex gap-3 w-full">
                         <Button
                             component="label"
@@ -370,7 +370,7 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_d.name??''}
+                    {data?.image_d?.name??''}
                     <div className="flex gap-3 w-full">
                         <Button
                             component="label"
@@ -408,7 +408,7 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_e.name??''}
+                    {data?.image_e?.name??''}
                     <div className="flex gap-3 w-full">
                         <Button
                             component="label"

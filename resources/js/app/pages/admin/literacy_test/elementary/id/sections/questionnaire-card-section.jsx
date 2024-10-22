@@ -7,6 +7,7 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
 import {
+    CardMedia,
     FormControl,
     FormControlLabel,
     FormLabel,
@@ -30,12 +31,11 @@ export default function QuestionnaireCardSection() {
     console.log("questionnaires", questionnaires.data);
     return (
         <div className="flex flex-col gap-5">
-
             {questionnaires?.data?.map((res, i) => {
                 return (
                     <>
                         <div className="flex w-full items-end justify-end">
-                            <DeleteQuestionnaireSection data={res}/>
+                            <DeleteQuestionnaireSection data={res} />
                         </div>
                         <Card sx={{ minWidth: 275 }}>
                             <CardContent>
@@ -53,6 +53,18 @@ export default function QuestionnaireCardSection() {
                             >
                                 Specification: {res.specification}
                             </Typography>
+                            <div className="w-1/5">
+                                {res?.image_header && (
+                                    <CardMedia
+                                        component="img"
+                                        height="full"
+                                        width="25"
+                                        image={res?.image_header}
+                                        alt="Your Image Description"
+                                    />
+                                )}
+                            </div>
+
                             <CardActions>
                                 <div className="flex items-start justify-start w-full px-3">
                                     <FormControl>
@@ -63,7 +75,8 @@ export default function QuestionnaireCardSection() {
                                             onChange={(e) =>
                                                 setData({
                                                     ...data,
-                                                    [e.target.name]: e.target.value,
+                                                    [e.target.name]:
+                                                        e.target.value,
                                                 })
                                             }
                                             row
@@ -76,7 +89,18 @@ export default function QuestionnaireCardSection() {
                                                 label="A"
                                                 checked={res.answer_key == "A"}
                                                 disabled={res.answer_key != "A"}
-                                            />
+                                            />{" "}
+                                            <div className="w-1/5">
+                                                {res?.image_header && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="full"
+                                                        width="25"
+                                                        image={res?.image_a}
+                                                        alt="Your Image Description"
+                                                    />
+                                                )}
+                                            </div>
                                             <FormControlLabel
                                                 value="B"
                                                 control={<Radio />}
@@ -84,6 +108,17 @@ export default function QuestionnaireCardSection() {
                                                 checked={res.answer_key == "B"}
                                                 disabled={res.answer_key != "B"}
                                             />
+                                            <div className="w-1/5">
+                                                {res?.image_header && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="full"
+                                                        width="25"
+                                                        image={res?.image_a}
+                                                        alt="Your Image Description"
+                                                    />
+                                                )}
+                                            </div>
                                             <FormControlLabel
                                                 value="C"
                                                 control={<Radio />}
@@ -91,6 +126,17 @@ export default function QuestionnaireCardSection() {
                                                 checked={res.answer_key == "C"}
                                                 disabled={res.answer_key != "C"}
                                             />
+                                            <div className="w-1/5">
+                                                {res?.image_header && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="full"
+                                                        width="25"
+                                                        image={res?.image_a}
+                                                        alt="Your Image Description"
+                                                    />
+                                                )}
+                                            </div>
                                             <FormControlLabel
                                                 value="D"
                                                 control={<Radio />}
@@ -98,6 +144,17 @@ export default function QuestionnaireCardSection() {
                                                 checked={res.answer_key == "D"}
                                                 disabled={res.answer_key != "D"}
                                             />
+                                            <div className="w-1/5">
+                                                {res?.image_header && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="full"
+                                                        width="25"
+                                                        image={res?.image_a}
+                                                        alt="Your Image Description"
+                                                    />
+                                                )}
+                                            </div>
                                             <FormControlLabel
                                                 value="E"
                                                 control={<Radio />}
@@ -105,6 +162,17 @@ export default function QuestionnaireCardSection() {
                                                 checked={res.answer_key == "E"}
                                                 disabled={res.answer_key != "E"}
                                             />
+                                            <div className="w-1/5">
+                                                {res?.image_header && (
+                                                    <CardMedia
+                                                        component="img"
+                                                        height="full"
+                                                        width="25"
+                                                        image={res?.image_a}
+                                                        alt="Your Image Description"
+                                                    />
+                                                )}
+                                            </div>
                                         </RadioGroup>
                                     </FormControl>
                                 </div>

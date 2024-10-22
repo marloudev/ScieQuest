@@ -22,6 +22,12 @@ return new class extends Migration
             $table->string('c')->nullable();
             $table->string('d')->nullable();
             $table->string('e')->nullable();
+            $table->string('image_header')->nullable();
+            $table->string('image_a')->nullable();
+            $table->string('image_b')->nullable();
+            $table->string('image_c')->nullable();
+            $table->string('image_d')->nullable();
+            $table->string('image_e')->nullable();
             $table->timestamps();
         });
     }

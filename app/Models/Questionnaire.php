@@ -18,5 +18,11 @@ class Questionnaire extends Model
         'c',
         'd',
         'e',
+        'image_header',
+        'image_a',
+        'image_b',
+        'image_c',
+        'image_d',
+        'image_e',
     ];
 }

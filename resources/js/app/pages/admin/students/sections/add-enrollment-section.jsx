@@ -10,7 +10,7 @@ import { PersonAdd } from '@mui/icons-material';
 import academic_year from '@/app/lib/academic-year';
 import current_academic_year from '@/app/lib/current-academic-year';
 import { useEffect } from 'react';
-import { get_student_thunk } from '../redux/student-thunk';
+// import { get_student_thunk } from '../redux/student-thunk';
 
 export default function AddEnrollmentSection({ data }) {
     const [open, setOpen] = React.useState(false);

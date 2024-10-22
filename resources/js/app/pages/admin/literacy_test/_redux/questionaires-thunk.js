@@ -15,7 +15,8 @@ export function get_questionnaires_thunk() {
 
 export function get_questionnaires_by_id_thunk(id) {
   return async function (dispatch, getState) {
-    const res = get_questionnaires_by_id_service(id)
+    const res = await get_questionnaires_by_id_service(id)
+    dispatch(questionnairesSlice.actions.setQuestionnaires(res.data.response));
     return res
   };
 }
