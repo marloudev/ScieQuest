@@ -37,7 +37,7 @@ export default function CreateExaminationSection() {
             setLoading(true);
             const result = await store.dispatch(store_examinations_thunk({
                 ...data,
-                als_level:'Elementary'
+                als_level:'Junior High School'
             }));
             if (result.status == 200) {
                 await store.dispatch(get_examinations_thunk('Junior High School'));

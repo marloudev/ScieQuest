@@ -7,9 +7,9 @@ use Illuminate\Http\Request;
 
 class ExaminationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $examinations = Examination::paginate(10);
+        $examinations = Examination::where('als_level',$request->als_level)->paginate(10);
         return response()->json([
             'response' => $examinations,
         ], 200);
@@ -20,8 +20,9 @@ class ExaminationController extends Controller
             'instruction' => 'required',
             'sub_title' => 'required',
             'title' => 'required',
+            'als_level' => 'required',
         ]);
-
+      
         Examination::create($validatedData);
         return response()->json([
             'response' => 'success',

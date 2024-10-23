@@ -1,7 +1,7 @@
 import { store_questionnaires_service, delete_questionnaires_service, update_questionnaires_service, get_questionnaires_by_id_service, get_questionnaires_service } from "@/app/services/questionnaires-service";
 import { literacyTestSlice } from "./literacy-test-slice";
 import { questionnairesSlice } from "./questionaires-slice";
-import { store_specifications_service } from "@/app/services/specification-service";
+import { delete_specifications_service, get_specifications_by_id_service, store_specifications_service } from "@/app/services/specification-service";
 
 
 
@@ -36,6 +36,14 @@ export function store_specifications_thunk(data) {
   };
 }
 
+export function get_specifications_by_id_thunk(id) {
+  return async function (dispatch, getState) {
+    const res = await get_specifications_by_id_service(id)
+    dispatch(questionnairesSlice.actions.setSpecifications(res.data.response));
+    return res
+  };
+}
+
 export function update_questionnaires_thunk(data) {
   return async function (dispatch, getState) {
     const res = update_questionnaires_service(data)
@@ -46,6 +54,13 @@ export function update_questionnaires_thunk(data) {
 export function delete_questionnaires_thunk(id) {
   return async function (dispatch, getState) {
     const res = delete_questionnaires_service(id)
+    return res
+  };
+}
+
+export function delete_specifications_thunk(id) {
+  return async function (dispatch, getState) {
+    const res = delete_specifications_service(id)
     return res
   };
 }

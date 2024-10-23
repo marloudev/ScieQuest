@@ -1,8 +1,8 @@
 import axios from "axios";
 
-export async function get_examinations_service() {
+export async function get_examinations_service(als_level) {
     try {
-        const res = await axios.get("/api/examinations");
+        const res = await axios.get("/api/examinations?als_level="+als_level);
         return res;
     } catch (error) {
         return error;

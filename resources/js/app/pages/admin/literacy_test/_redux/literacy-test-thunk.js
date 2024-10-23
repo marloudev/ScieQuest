@@ -3,10 +3,10 @@ import { literacyTestSlice } from "./literacy-test-slice";
 
 
 
-export function get_examinations_thunk() {
+export function get_examinations_thunk(als_level) {
   return async function (dispatch, getState) {
     // dispatch(appSlice.actions.incrementByAmount(10));
-    const res = await get_examinations_service()
+    const res = await get_examinations_service(als_level)
     dispatch(literacyTestSlice.actions.setLiteracyTests(res.data.response));
     return res
   };

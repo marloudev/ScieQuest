@@ -15,6 +15,7 @@ class SpecificationController extends Controller
         ], 200);
     }
 
+
     public function show($id)
     {
         $specification = Specification::where('examination_id', $id)
@@ -31,4 +32,11 @@ class SpecificationController extends Controller
         ], 200);
     }
 
+    public function destroy($id)
+    {
+        Specification::where('id', $id)->delete();
+        return response()->json([
+            'response' => 'success',
+        ], 200);
+    }
 }

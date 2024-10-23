@@ -8,7 +8,7 @@ import ExaminationsTableSection from "./_sections/examination-table-section";
 
 export default function LiteracyTestElementaryPage() {
     useEffect(() => {
-        store.dispatch(get_examinations_thunk());
+        store.dispatch(get_examinations_thunk('Elementary'));
     }, []);
     return (
         <AdminLayout>

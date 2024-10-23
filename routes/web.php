@@ -80,6 +80,9 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
         Route::get('/junior_high', function () {
             return Inertia::render('admin/literacy_test/junior_high/page');
         });
+        Route::get('/junior_high/{id}', function () {
+            return Inertia::render('admin/literacy_test/junior_high/id/page');
+        });
     });
 
     Route::get('/settings', function () {
