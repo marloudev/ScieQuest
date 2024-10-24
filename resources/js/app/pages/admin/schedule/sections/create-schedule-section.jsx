@@ -24,12 +24,16 @@ import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
 import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
+import { useSelector } from "react-redux";
 
 export default function CreateScheduleSection() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = useState({});
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
+    const { teachers } = useSelector((store) => store.teachers)
+
+    console.log('data', data)
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -111,14 +115,23 @@ export default function CreateScheduleSection() {
                                     start: "Start-At",
                                     end: "End-At",
                                 }}
+                                onChange={(newValue) => {
+                                    setData({
+                                        ...data,
+                                        start_at: newValue[0].$d,
+                                        end_at: newValue[1].$d,
+                                    });
+                                }}
                             />
                         </DemoContainer>
                     </LocalizationProvider>
+
+
                 </div>
                 <Toolbar className="flex-col gap-3 flex w-full py-4">
                     <FormControl fullWidth error={!!error?.teacher}>
                         <InputLabel id="demo-simple-select-label">
-                        Teacher
+                            Teacher
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
@@ -131,13 +144,13 @@ export default function CreateScheduleSection() {
                                     [e.target.name]: e.target.value,
                                 })
                             }
-                            value={data.specification ?? ""}
+                            value={data.teacher ?? ""}
                         >
                             <MenuItem selected disabled></MenuItem>
                             {/* Uncomment and use the map to dynamically render options from departments */}
-                            {/* {specifications.data.map((res, i) => (
-                                <MenuItem key={i} value={res.specification}>{res.specification}</MenuItem>
-                            ))} */}
+                            {teachers.data.map((res, i) => (
+                                <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
+                            ))}
                         </Select>
                         {error?.specification && (
                             <FormHelperText>
@@ -149,7 +162,7 @@ export default function CreateScheduleSection() {
                 <Toolbar className="flex-col gap-3 flex w-full ">
                     <FormControl fullWidth error={!!error?.learning_center}>
                         <InputLabel id="demo-simple-select-label">
-                        Community Center
+                            Community Center
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-label"

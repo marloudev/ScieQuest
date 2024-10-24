@@ -14,6 +14,8 @@ class Schedule extends Model
         'title',
         'als_level',
         'examination_date',
+        'start_at',
+        'end_at',
         'learning_center',
     ];
 }

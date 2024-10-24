@@ -17,6 +17,8 @@ return new class extends Migration
             $table->string('teacher_id')->nullable();
             $table->string('title')->nullable();
             $table->string('als_level')->nullable();
+            $table->string('start_at')->nullable();
+            $table->string('end_at')->nullable();
             $table->string('examination_date')->nullable();
             $table->string('learning_center')->nullable();
             $table->timestamps();
