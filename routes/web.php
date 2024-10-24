@@ -89,6 +89,10 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
         return Inertia::render('admin/settings/page');
     });
 
+    Route::get('/schedule', function () {
+        return Inertia::render('admin/schedule/page');
+    });
+
 });
 
 Route::middleware('auth:sanctum', 'teacher', 'verified')->prefix('teacher')->group(function () {

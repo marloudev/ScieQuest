@@ -46,12 +46,12 @@ const NAVIGATION = [
         children: [
             {
               segment: 'elementary',
-              title: 'Elementary',
+              title: 'Elementary Level',
               icon: <DescriptionIcon />,
             },
             {
               segment: 'junior_high',
-              title: 'Junior High',
+              title: 'Junior High Level',
               icon: <DescriptionIcon />,
             },
           ],
