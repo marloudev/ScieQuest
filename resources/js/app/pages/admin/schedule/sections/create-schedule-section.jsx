@@ -89,6 +89,46 @@ export default function CreateScheduleSection() {
                         <CloseIcon />
                     </IconButton>
                 </Toolbar>
+                <Toolbar className="flex gap-3 mb-2 w-full">
+                <TextField
+                name="referrence_id"
+                type="text"
+                id="outlined-basic"
+                label="Referrence ID"
+                variant="outlined"
+                className="w-1/2 mr-2"
+                readOnly
+                />
+               <FormControl fullWidth error={!!error?.literacy_level}>
+                        <InputLabel id="demo-simple-select-label">
+                            Literacy Level
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="literacy_level"
+                            label="Literacy Level"
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            value={data.specification ?? ""}
+                        >
+                            <MenuItem selected disabled></MenuItem>
+                            {/* Uncomment and use the map to dynamically render options from departments */}
+                            {/* {specifications.data.map((res, i) => (
+                                <MenuItem key={i} value={res.specification}>{res.specification}</MenuItem>
+                            ))} */}
+                        </Select>
+                        {error?.specification && (
+                            <FormHelperText>
+                                {error.specification}
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full">
                     <TextField
                         onChange={(e) =>
