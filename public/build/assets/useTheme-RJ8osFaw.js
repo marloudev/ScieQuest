@@ -1,0 +1,1 @@
+import{r as n}from"./app-C7upABgG.js";import{T as s,l as o,n as r,o as u}from"./DefaultPropsProvider-DweDITsp.js";function m(e){return Object.keys(e).length===0}function a(e=null){const t=n.useContext(s);return!t||m(t)?e:t}const c=o();function h(e=c){return a(e)}function i(){const e=h(u);return e[r]||e}export{h as a,a as b,i as u};
