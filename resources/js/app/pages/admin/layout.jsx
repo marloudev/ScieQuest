@@ -14,7 +14,7 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { router as route } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPathname } from "@/app/redux/app-slice";
-import { AssignmentInd, CalendarMonth, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, Quiz, School, SupervisedUserCircle } from "@mui/icons-material";
+import { AssignmentInd, AutoStories, CalendarMonth, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, HomeWork, PowerSettingsNew, Quiz, School, SupervisedUserCircle } from "@mui/icons-material";
 import LogoutSection from "../_sections/logout-section";
 import store from "../store/store";
 import { get_user_login_thunk } from "@/app/redux/app-thunk";
@@ -40,21 +40,31 @@ const NAVIGATION = [
         icon: <Groups />,
     },
     {
-        segment: "literacy_test",
-        title: "Literacy Test",
-        icon: <Quiz />,
-        children: [
-            {
-              segment: 'elementary',
-              title: 'Elementary Level',
-              icon: <DescriptionIcon />,
-            },
-            {
-              segment: 'junior_high',
-              title: 'Junior High Level',
-              icon: <DescriptionIcon />,
-            },
-          ],
+        segment: "learning_center",
+        title: "Learning Center",
+        icon: <HomeWork />,
+    },
+    // {
+    //     segment: "literacy_test",
+    //     title: "Literacy Test",
+    //     icon: <Quiz />,
+    //     children: [
+    //         {
+    //           segment: 'elementary',
+    //           title: 'Elementary Level',
+    //           icon: <DescriptionIcon />,
+    //         },
+    //         {
+    //           segment: 'junior_high',
+    //           title: 'Junior High Level',
+    //           icon: <DescriptionIcon />,
+    //         },
+    //       ],
+    // },
+    {
+        segment: "booklet",
+        title: "Booklet",
+        icon: <AutoStories />,
     },
     {
         segment: "schedule",

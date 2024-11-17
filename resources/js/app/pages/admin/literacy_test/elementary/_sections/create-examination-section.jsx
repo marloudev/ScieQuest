@@ -40,10 +40,9 @@ export default function CreateExaminationSection() {
                 als_level:'Elementary'
             }));
             if (result.status == 200) {
-                await store.dispatch(get_examinations_thunk('Junior High School'));
+                await store.dispatch(get_examinations_thunk('Elementary'));
                 setLoading(false);
                 setOpen(false);
-                m
             } else {
                 setLoading(false);
                 setError(result.response.data.errors);
@@ -109,7 +108,7 @@ export default function CreateExaminationSection() {
                         variant="outlined"
                         className="w-full"
                     />
-                    <TextField
+                    {/* <TextField
                         onChange={(e) =>
                             setData({
                                 ...data,
@@ -126,7 +125,7 @@ export default function CreateExaminationSection() {
                         label="Instruction"
                         variant="outlined"
                         className="w-full"
-                    />
+                    /> */}
                 </Toolbar>
                 <Toolbar>
                     <Typography

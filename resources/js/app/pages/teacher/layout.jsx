@@ -14,7 +14,7 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { router as route } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPathname } from "@/app/redux/app-slice";
-import { AssignmentInd, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, School, SupervisedUserCircle } from "@mui/icons-material";
+import { AssignmentInd, CalendarMonth, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, School, SupervisedUserCircle } from "@mui/icons-material";
 import LogoutSection from "../_sections/logout-section";
 import store from "../store/store";
 import { get_user_login_thunk } from "@/app/redux/app-thunk";
@@ -30,10 +30,15 @@ const NAVIGATION = [
         icon: <DashboardIcon />,
     },
  
+    // {
+    //     segment: "subjects",
+    //     title: "Subjects",
+    //     icon: <HistoryEdu />,
+    // },
     {
-        segment: "subjects",
-        title: "Subjects",
-        icon: <HistoryEdu />,
+        segment: "schedule",
+        title: "Schedule FLT Test",
+        icon: <CalendarMonth />,
     },
     {
         kind: "divider",
@@ -42,11 +47,11 @@ const NAVIGATION = [
         kind: "header",
         title: "Analytics",
     },
-    {
-        segment: "settings",
-        title: "Settings",
-        icon: <Engineering />,
-    },
+    // {
+    //     segment: "settings",
+    //     title: "Settings",
+    //     icon: <Engineering />,
+    // },
     {
         segment: "logout",
         title: "Logout",
@@ -88,10 +93,10 @@ function InstructorLayout({ children }, props) {
                 if (path == '/logout') {
                     setOpen(true)
                 }else{  
-                    if (path == '/instructor' || path == '/students/registered' || path == '/students/enrollment') {
-                        route.visit(String("/instructor" + path+'?page=1'));
+                    if (path == '/teacher' || path == '/students/registered' || path == '/students/enrollment') {
+                        route.visit(String("/teacher" + path+'?page=1'));
                     }else{
-                        route.visit(String("/instructor" + path));
+                        route.visit(String("/teacher" + path));
                     }
                     dispatch(setPathname(path));
                 }

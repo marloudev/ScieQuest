@@ -25,39 +25,38 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvid
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
 import { useSelector } from "react-redux";
+import { get_examinations_thunk, store_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
+import { get_schedule_thunk, store_schedule_thunk } from "../redux/schedule-thunk";
+import moment from "moment";
 
 export default function CreateScheduleSection() {
-    const [open, setOpen] = React.useState(false);
+    const [open, setOpen] = useState(false);
     const [data, setData] = useState({});
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
     const { teachers } = useSelector((store) => store.teachers)
-
-    console.log('data', data)
+    const { learning_centers } = useSelector((state) => state.learning_centers)
+    const { booklets } = useSelector((state) => state.booklets);
+    console.log('booklets', booklets)
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
-
     async function submit_form(params) {
         try {
             setLoading(true);
             const result = await store.dispatch(
-                store_examinations_thunk({
+                store_schedule_thunk({
+                    unique_id: moment().format("MMDDYYYYHHmmss"),
                     ...data,
-                    als_level: "Elementary",
                 }),
             );
             if (result.status == 200) {
-                await store.dispatch(
-                    get_examinations_thunk("Junior High School"),
-                );
+                await store.dispatch(get_schedule_thunk())
                 setLoading(false);
                 setOpen(false);
-                m;
             } else {
                 setLoading(false);
                 setError(result.response.data.errors);
@@ -65,6 +64,20 @@ export default function CreateScheduleSection() {
         } catch (error) {
             setLoading(false);
         }
+    }
+
+    async function als_level_function(e) {
+        setLoading(true);
+        if ('Elementary Level' == e.target.value) {
+            await store.dispatch(get_examinations_thunk('Elementary'));
+        } else if ('Junior High Level' == e.target.value) {
+            await store.dispatch(get_examinations_thunk('Junior High School'));
+        }
+        setData({
+            ...data,
+            [e.target.name]: e.target.value,
+        })
+        setLoading(false);
     }
     return (
         <React.Fragment>
@@ -158,8 +171,8 @@ export default function CreateScheduleSection() {
                                 onChange={(newValue) => {
                                     setData({
                                         ...data,
-                                        start_at: newValue[0].$d,
-                                        end_at: newValue[1].$d,
+                                        start_at: newValue[0].$d ?? '',
+                                        end_at: newValue[1].$d ?? '',
                                     });
                                 }}
                             />
@@ -169,14 +182,14 @@ export default function CreateScheduleSection() {
 
                 </div>
                 <Toolbar className="flex-col gap-3 flex w-full py-4">
-                    <FormControl fullWidth error={!!error?.teacher}>
+                    <FormControl fullWidth error={!!error?.teacher_id}>
                         <InputLabel id="demo-simple-select-label">
                             Teacher
                         </InputLabel>
                         <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            name="teacher"
+                            name="teacher_id"
                             label="Teacher"
                             onChange={(e) =>
                                 setData({
@@ -184,7 +197,7 @@ export default function CreateScheduleSection() {
                                     [e.target.name]: e.target.value,
                                 })
                             }
-                            value={data.teacher ?? ""}
+                            value={data.teacher_id ?? ""}
                         >
                             <MenuItem selected disabled></MenuItem>
                             {/* Uncomment and use the map to dynamically render options from departments */}
@@ -215,9 +228,37 @@ export default function CreateScheduleSection() {
                                     [e.target.name]: e.target.value,
                                 })
                             }
-                            value={data.specification ?? ""}
+                            value={data.learning_center ?? ""}
                         >
                             <MenuItem selected disabled></MenuItem>
+                            {/* Uncomment and use the map to dynamically render options from departments */}
+                            {learning_centers.map((res, i) => (
+                                <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
+                            ))}
+                        </Select>
+                        {error?.specification && (
+                            <FormHelperText>
+                                {error.specification}
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                </Toolbar>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                    <FormControl fullWidth error={!!error?.als_level}>
+                        <InputLabel id="demo-simple-select-label">
+                            ALS Level
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="als_level"
+                            label="ALS Level"
+                            onChange={(e) => als_level_function(e)}
+                            value={data.als_level ?? ""}
+                        >
+                            <MenuItem selected disabled></MenuItem>
+                            <MenuItem value="Elementary Level">Elementary Level</MenuItem>
+                            <MenuItem value="Junior High Level">Junior High Level</MenuItem>
                             {/* Uncomment and use the map to dynamically render options from departments */}
                             {/* {specifications.data.map((res, i) => (
                                 <MenuItem key={i} value={res.specification}>{res.specification}</MenuItem>
@@ -230,6 +271,36 @@ export default function CreateScheduleSection() {
                         )}
                     </FormControl>
                 </Toolbar>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                    <FormControl fullWidth error={!!error?.booklet_id}>
+                        <InputLabel id="demo-simple-select-label">
+                            Booklets
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="booklet_id"
+                            label="Booklets"
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            value={data.booklet_id ?? ""}
+                        >
+                            {booklets?.map((res, i) => (
+                                <MenuItem key={i} value={res.id}>{res.title}</MenuItem>
+                            ))}
+                        </Select>
+                        {error?.specification && (
+                            <FormHelperText>
+                                {error.specification}
+                            </FormHelperText>
+                        )}
+                    </FormControl>
+                </Toolbar>
+
                 <Toolbar>
                     <Typography
                         sx={{ ml: 2, flex: 1 }}

@@ -28,11 +28,14 @@ import {
 import { useState } from "react";
 import store from "@/app/pages/store/store";
 import {
+    get_questionnaires_by_id_thunk,
     get_questionnaires_thunk,
     store_questionnaires_thunk,
 } from "../../../_redux/questionaires-thunk";
 import { Check, CloudUpload } from "@mui/icons-material";
 import { useSelector } from "react-redux";
+import ReactQuill from 'react-quill';
+import 'react-quill/dist/quill.snow.css';
 // import {
 //     get_examinations_thunk,
 //     store_examinations_thunk,
@@ -45,7 +48,7 @@ export default function CreateQuestionnaireSection() {
     const [loading, setLoading] = useState(false);
     const examination_id = window.location.pathname.split("/")[4];
     const { specifications } = useSelector((store) => store.questionnaires);
-    console.log('specification', specifications)
+    console.log('specification', data)
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -55,17 +58,34 @@ export default function CreateQuestionnaireSection() {
         setOpen(false);
     };
 
+
     async function submit_form(params) {
         const fd = new FormData()
         fd.append('examination_id', examination_id)
-        fd.append('question', data.question)
-        fd.append('answer_key', data.answer_key)
-        fd.append('specification', data.specification)
-        fd.append('a', data.a)
-        fd.append('b', data.b)
-        fd.append('c', data.c)
-        fd.append('d', data.d)
+        if (data.question) {
+            fd.append('question', data.question)
+        }
+        if (data.answer_key) {
+            fd.append('answer_key', data.answer_key)
+        }
+        if (data.specification) {
+            fd.append('specification', data.specification)
+        }
+        if (data.a) {
+            fd.append('a', data.a)
+        }
+        if (data.b) {
+            fd.append('b', data.b)
+        }
+        if (data.c) {
+            fd.append('c', data.c)
+        }
+        if (data.d) {
+            fd.append('d', data.d)
+        }
         fd.append('e', data.e)
+        fd.append('title', data.title)
+        fd.append('item_number', data.item_number)
         fd.append('image_a', data.image_a)
         fd.append('image_b', data.image_b)
         fd.append('image_c', data.image_c)
@@ -79,7 +99,7 @@ export default function CreateQuestionnaireSection() {
                 store_questionnaires_thunk(fd),
             );
             if (result.status == 200) {
-                await store.dispatch(get_questionnaires_thunk());
+                await store.dispatch(get_questionnaires_by_id_thunk(examination_id));
                 setData({});
                 setLoading(false);
                 setOpen(false);
@@ -131,7 +151,38 @@ export default function CreateQuestionnaireSection() {
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex items-start justify-start w-full">
                     <div className="w-full flex gap-4 flex-col">
-
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.title ? true : false}
+                            helperText={error?.title ?? ""}
+                            name="title"
+                            type="text"
+                            id="outlined-basic"
+                            label="Title"
+                            variant="outlined"
+                            className="w-full"
+                        />
+                        <TextField
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            error={error?.item_number ? true : false}
+                            helperText={error?.item_number ?? ""}
+                            name="item_number"
+                            type="number"
+                            id="outlined-basic"
+                            label="Item Number"
+                            variant="outlined"
+                            className="w-full"
+                        />
                         <Button
                             component="label"
                             role={undefined}
@@ -155,26 +206,30 @@ export default function CreateQuestionnaireSection() {
                                 accept="image/*"
                             />
                         </Button>
-                        <TextField
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
+
+                        <div className="bg-white ">
+                            {
+                                error?.question && <div className="text-red-600">
+                                    {error?.question}
+                                </div>
                             }
-                            error={error?.question ? true : false}
-                            helperText={error?.question ?? ""}
-                            name="question"
-                            type="text"
-                            id="outlined-basic"
-                            label="Question"
-                            variant="outlined"
-                            className="w-full"
-                            multiline
-                            rows={2}
-                        />
+                            <div className="text-black p-3 font-black">
+                                Questions
+                            </div>
+                            <ReactQuill theme="snow"
+                                //   value={value} 
+                                className="text-black  h-52"
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        question: e,
+                                    })
+                                } />
+                        </div>
+
+
                     </div>
-                    <div className="flex items-start justify-start w-full">
+                    <div className="flex items-start justify-start w-full mt-12">
                         <FormControl error={!!error?.answer_key}>
                             <FormLabel id="demo-row-radio-buttons-group-label">
                                 Answer Key

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('score_sheets', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('user_id')->nullable();
+            $table->bigInteger('booklet_id')->nullable();
             $table->string('overall_score')->nullable();
             $table->string('als_level')->nullable();
             $table->string('date')->nullable();

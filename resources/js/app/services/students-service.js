@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function get_students_service(user_type) {
     try {
-        const res = await axios.get(`/api/students`);
+        const res = await axios.get(`/api/students`+window.location.search);
         return res;
     } catch (error) {
         return error;

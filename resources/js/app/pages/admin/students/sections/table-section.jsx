@@ -11,7 +11,9 @@ import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 // import { Visibility } from '@mui/icons-material';
-// import { Button } from '@mui/material';
+import { Button } from '@mui/material';
+import { router } from '@inertiajs/react';
+import { Checklist, ListAlt } from '@mui/icons-material';
 // import { router } from '@inertiajs/react';
 // import AddEnrollmentSection from './add-enrollment-section';
 
@@ -23,19 +25,20 @@ export default function TableSection() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-          <TableCell>Fullname</TableCell>
-                        <TableCell>Email</TableCell>
-                        <TableCell>Mobile</TableCell>
-                        <TableCell>Age</TableCell>
-                        
-                         <TableCell>Address</TableCell>
-                        <TableCell>Action</TableCell>
+            <TableCell>Fullname</TableCell>
+            <TableCell>Email</TableCell>
+            <TableCell>Mobile</TableCell>
+            <TableCell>Age</TableCell>
+
+            <TableCell>Address</TableCell>
+            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>
           {students?.data.map((res, i) => {
             const dob = moment(res.dob, 'YYYY-MM-DD'); // Replace with actual date of birth
             const age = moment().diff(dob, 'years');
+            
             return (
               <TableRow
                 key={i}
@@ -60,13 +63,22 @@ export default function TableSection() {
                      */}
                     {/* <UpdateSection data={res} />
                     <DeleteSection data={res} /> */}
-                    {/* <Button
-                      onClick={()=>router.visit(`/administrator/students/${res.id}`)}
-                      size='small'
-                      variant='contained'
-                      color='success'>
-                      <Visibility />
-                    </Button> */}
+                    <a target='_blank' href={`/administrator/students/ila_assessment_form/${res.id}`}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        color='primary'>
+                        <ListAlt />
+                      </Button>
+                    </a>
+                    <a target='_blank' href={`/administrator/students/score_sheet/${res.id}`}>
+                      <Button
+                        size='small'
+                        variant='contained'
+                        color='success'>
+                        <Checklist />
+                      </Button>
+                    </a>
                   </div>
                 </TableCell>
               </TableRow>

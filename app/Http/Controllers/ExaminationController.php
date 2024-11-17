@@ -21,11 +21,20 @@ class ExaminationController extends Controller
             'sub_title' => 'required',
             'title' => 'required',
             'als_level' => 'required',
+            'booklet_id' => 'required',
         ]);
       
         Examination::create($validatedData);
         return response()->json([
             'response' => 'success',
+        ], 200);
+    }
+    public function show($id)
+    {
+        $booklets = Examination::where('booklet_id', $id)
+        ->orderBy('created_at', 'asc')->get();
+        return response()->json([
+            'response' =>$booklets,
         ], 200);
     }
 }

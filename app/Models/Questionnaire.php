@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Questionnaire extends Model
 {
@@ -13,6 +14,8 @@ class Questionnaire extends Model
         'question',
         'answer_key',
         'specification',
+        'title',
+        'item_number',
         'a',
         'b',
         'c',
@@ -25,4 +28,9 @@ class Questionnaire extends Model
         'image_d',
         'image_e',
     ];
+
+    public function examination(): HasOne
+    {
+        return $this->hasOne(Examination::class,'id','examination_id');
+    }
 }

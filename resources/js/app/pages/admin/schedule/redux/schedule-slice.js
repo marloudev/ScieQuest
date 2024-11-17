@@ -7,20 +7,25 @@ export const scheduleSlice = createSlice({
   name: 'schedules',
   initialState: {
     schedules: [],
-    Schedule: {},
+    schedule: {},
+    examiners:[],
   },
   reducers: {
     setSchedules: (state, action) => {
       state.schedules = action.payload
     },
     setSchedule: (state, action) => {
-      state.Schedule = action.payload
+      state.schedule = action.payload
+    },
+    setExaminers: (state, action) => {
+      state.examiners = action.payload
     },
   },
 })
 export const { 
   setSchedules,
-  setSchedule
+  setSchedule,
+  setExaminers
  } = scheduleSlice.actions
 
 export default scheduleSlice.reducer

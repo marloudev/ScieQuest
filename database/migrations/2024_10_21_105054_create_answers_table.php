@@ -15,7 +15,8 @@ return new class extends Migration
             $table->id();
             $table->bigInteger('score_sheet_id')->nullable();
             $table->bigInteger('questionnaire_id')->nullable();
-            $table->bigInteger('score')->nullable();
+            $table->string('answer')->nullable();
+            $table->string('score')->nullable();
             $table->timestamps();
         });
     }

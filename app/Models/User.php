@@ -48,5 +48,12 @@ class User extends Authenticatable implements MustVerifyEmail // Implement MustV
         ];
     }
 
-
+    public function score_sheet(): HasOne
+    {
+        return $this->hasOne(ScoreSheet::class,'user_id','id')->with(['answers','booklet']);
+    }
+    public function examiner(): HasOne
+    {
+        return $this->hasOne(Examiner::class,'examiner_id','id')->with(['schedule']);
+    }
 }

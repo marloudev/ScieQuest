@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('unique_id')->nullable();
             $table->string('teacher_id')->nullable();
+            $table->string('booklet_id')->nullable();
             $table->string('title')->nullable();
             $table->string('als_level')->nullable();
             $table->string('start_at')->nullable();

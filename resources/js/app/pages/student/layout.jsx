@@ -31,10 +31,15 @@ const NAVIGATION = [
     },
  
     {
-        segment: "subjects",
-        title: "Subjects",
+        segment: "examination",
+        title: "Examinations",
         icon: <HistoryEdu />,
     },
+    // {
+    //     segment: "subjects",
+    //     title: "Subjects",
+    //     icon: <HistoryEdu />,
+    // },
     {
         kind: "divider",
     },
@@ -42,11 +47,11 @@ const NAVIGATION = [
         kind: "header",
         title: "Sub Navigation",
     },
-    {
-        segment: "settings",
-        title: "Settings",
-        icon: <Engineering />,
-    },
+    // {
+    //     segment: "settings",
+    //     title: "Settings",
+    //     icon: <Engineering />,
+    // },
     {
         segment: "logout",
         title: "Logout",
@@ -70,7 +75,7 @@ const demoTheme = createTheme({
     },
 });
 function StudentLayout({ children }, props) {
-    const { pathname } = useSelector((state) => state.app);
+    const { pathname,user } = useSelector((state) => state.app);
     const { window } = props;
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);

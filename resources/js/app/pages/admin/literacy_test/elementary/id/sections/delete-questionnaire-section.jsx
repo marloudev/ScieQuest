@@ -3,7 +3,7 @@ import { Delete } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Modal, Typography } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
-import { delete_questionnaires_thunk, get_questionnaires_thunk } from '../../../_redux/questionaires-thunk';
+import { delete_questionnaires_thunk, get_questionnaires_by_id_thunk, get_questionnaires_thunk } from '../../../_redux/questionaires-thunk';
 
 const style = {
     position: 'absolute',
@@ -21,11 +21,13 @@ export default function DeleteQuestionnaireSection({ data }) {
     const [open, setOpen] = useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+    const examination_id = window.location.pathname.split("/")[4];
 
     async function delete_data(params) {
         setLoading(true)
         await store.dispatch(delete_questionnaires_thunk(data.id))
-        await store.dispatch(get_questionnaires_thunk());
+        await store.dispatch(get_questionnaires_by_id_thunk(examination_id));
+        setOpen(false)
         setLoading(false)
     }
     return (

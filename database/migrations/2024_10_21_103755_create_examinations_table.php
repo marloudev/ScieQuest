@@ -13,6 +13,7 @@ return new class extends Migration
     {
         Schema::create('examinations', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('booklet_id')->nullable();
             $table->string('title')->nullable();
             $table->longText('sub_title')->nullable();
             $table->longText('instruction')->nullable();

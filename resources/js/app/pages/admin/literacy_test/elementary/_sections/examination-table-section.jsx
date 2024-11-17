@@ -26,9 +26,9 @@ export default function ExaminationsTableSection() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Title</TableCell>
+                        <TableCell>Examination Title</TableCell>
                         <TableCell>Subtitle</TableCell>
-                        <TableCell>Instruction</TableCell>
+                        {/* <TableCell>Instruction</TableCell> */}
                         <TableCell>ALS Level</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
@@ -48,7 +48,7 @@ export default function ExaminationsTableSection() {
                             >
                                 <TableCell>{res.title}</TableCell>
                                 <TableCell>{res.sub_title}</TableCell>
-                                <TableCell>{res.instruction}</TableCell>
+                                {/* <TableCell>{res.instruction}</TableCell> */}
                                 <TableCell>{res.als_level}</TableCell>
                                 {/* <TableCell>{res.address}</TableCell> */}
                                 <TableCell>

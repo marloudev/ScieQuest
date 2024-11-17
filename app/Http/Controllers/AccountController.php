@@ -33,9 +33,9 @@ class AccountController extends Controller
 
     public function show($id)
     {
-        User::where('id', $id)->get();
+        $user = User::where('id', $id)->with(['score_sheet','examiner'])->first();
         return response()->json([
-            'response' => 'success',
+            'response' => $user,
         ], 200);
     }
     public function store(Request $request)

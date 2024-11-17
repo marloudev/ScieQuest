@@ -19,7 +19,7 @@ class Administrator
     {
         $account = $request->user();
         if ($account->user_type =='2') {
-            return Inertia::location(route('instructor.dashboard'));
+            return Inertia::location(route('teacher.dashboard'));
         } else if ($account->user_type =='3') {
             return Inertia::location(route('student.dashboard'));
         }

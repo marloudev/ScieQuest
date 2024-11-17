@@ -6,15 +6,15 @@ const hash = path.split('&')[0];
 export const learningCenterSlice = createSlice({
   name: 'learning_center',
   initialState: {
-    learningCenters: [],
+    learning_centers: [],
     learningCenter: {},
   },
   reducers: {
     setLearningCenters: (state, action) => {
-      state.learningCenters = action.payload
+      state.learning_centers = action.payload
     },
     setLearningCenter: (state, action) => {
-      state.learningCenter = action.payload
+      state.learning_center = action.payload
     },
   },
 })

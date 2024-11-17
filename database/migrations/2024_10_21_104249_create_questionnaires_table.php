@@ -17,6 +17,8 @@ return new class extends Migration
             $table->longText('question')->nullable();
             $table->string('answer_key')->nullable();
             $table->string('specification')->nullable();
+            $table->string('title')->nullable();
+            $table->bigInteger('item_number')->nullable();
             $table->string('a')->nullable();
             $table->string('b')->nullable();
             $table->string('c')->nullable();

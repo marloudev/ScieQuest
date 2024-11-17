@@ -1,5 +1,6 @@
 import { store_students_service, delete_students_service, update_students_service, get_students_by_id_service, get_students_service } from "@/app/services/students-service";
 import {studentsSlice} from "./students-slice";
+import { store_answers_service } from "@/app/services/answer-service";
 
 
 
@@ -13,7 +14,8 @@ export function get_students_thunk() {
 
 export function get_students_by_id_thunk(id) {
   return async function (dispatch, getState) {
-    const res = get_students_by_id_service(id)
+    const res =await get_students_by_id_service(id)
+    dispatch(studentsSlice.actions.setStudent(res.data.response));
     return res
   };
 }
@@ -35,6 +37,16 @@ export function update_students_thunk(data) {
 export function delete_students_thunk(id) {
   return async function (dispatch, getState) {
     const res = delete_students_service(id)
+    return res
+  };
+}
+
+
+// answers
+
+export function store_answers_thunk(data) {
+  return async function (dispatch, getState) {
+    const res = store_answers_service(data)
     return res
   };
 }

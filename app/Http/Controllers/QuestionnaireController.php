@@ -18,7 +18,7 @@ class QuestionnaireController extends Controller
 
     public function show($id)
     {
-        $questionnaire = Questionnaire::where('examination_id', $id)
+        $questionnaire = Questionnaire::where('examination_id', $id)->with(['examination'])
         ->orderBy('created_at', 'asc')->get();
         return response()->json([
             'response' =>$questionnaire,
@@ -30,6 +30,8 @@ class QuestionnaireController extends Controller
         $validatedData = $request->validate([
             'answer_key' => 'required',
             'question' => 'required',
+            'title' => 'nullable',
+            'item_number' => 'nullable',
             'a' => 'nullable',
             'b' => 'nullable',
             'c' => 'nullable',
