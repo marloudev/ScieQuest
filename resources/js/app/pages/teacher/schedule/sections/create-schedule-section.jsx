@@ -1,16 +1,10 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import AppBar from "@mui/material/AppBar";
 import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
-import Slide from "@mui/material/Slide";
 import {
     FormControl,
     InputLabel,
@@ -25,9 +19,9 @@ import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvid
 import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
 import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
 import { useSelector } from "react-redux";
-import { get_examinations_thunk, store_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
-import { get_schedule_thunk, store_schedule_thunk } from "../redux/schedule-thunk";
 import moment from "moment";
+import { get_examinations_thunk } from "@/app/pages/admin/literacy_test/_redux/literacy-test-thunk";
+import { get_schedule_thunk, store_schedule_thunk } from "@/app/pages/admin/schedule/redux/schedule-thunk";
 
 export default function CreateScheduleSection() {
     const [open, setOpen] = useState(false);

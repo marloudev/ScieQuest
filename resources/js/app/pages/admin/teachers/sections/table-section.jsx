@@ -35,6 +35,7 @@ export default function TableSection() {
                     {teachers?.data.map((res, i) => {
                         const dob = moment(res.dob, "YYYY-MM-DD"); // Replace with actual date of birth
                         const age = moment().diff(dob, "years");
+                        console.log('res',res)
                         return (
                             <TableRow
                                 key={i}
@@ -55,12 +56,13 @@ export default function TableSection() {
                                     <div className="flex gap-2">
                                         {/* <UpdateSection data={res} /> */}
                                         {/* <DeleteSection data={res} /> */}
+                                        
                                         <Button
-                                            onClick={() =>
-                                                router.visit(
-                                                    `/administrator/instructor/${res.user_id}/create_grades`,
-                                                )
-                                            }
+                                            // onClick={() =>
+                                            //     router.visit(
+                                            //         `/administrator/teachers/${res.id}/create_grades`,
+                                            //     )
+                                            // }
                                             size="small"
                                             variant="contained"
                                             color="success"
