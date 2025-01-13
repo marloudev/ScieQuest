@@ -13,31 +13,28 @@ import moment from 'moment';
 import { router } from '@inertiajs/react';
 import { Button } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
-import DeleteExaminerSection from './delete-examiner-section';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
 // import { router } from '@inertiajs/react';
 // import AddEnrollmentSection from './add-enrollment-section';
 
 
-export default function ExaminerTableSection() {
-    const { examiners } = useSelector((state) => state.schedule)
-
-    console.log('examiners',examiners)
+export default function BookletTableSection() {
+    const { booklets } = useSelector((state) => state.booklets)
+    console.log('booklets', booklets)
     return (
         <TableContainer component={Paper}>
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Reference Test ID</TableCell>
-                        <TableCell>Examiner</TableCell>
-                        <TableCell>Mobile</TableCell>
-                        <TableCell>Learning Center</TableCell>
+                        <TableCell>Module Name</TableCell>
+                        <TableCell>Als Level</TableCell>
+                        <TableCell>Created At</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {examiners && examiners?.map((res, i) => {
+                    {booklets?.map((res, i) => {
                         const dob = moment(res.dob, 'YYYY-MM-DD'); // Replace with actual date of birth
                         const age = moment().diff(dob, 'years');
                         return (
@@ -45,22 +42,18 @@ export default function ExaminerTableSection() {
                                 key={i}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
-                                <TableCell>
-                                    {res.reference_id}
-                                </TableCell>
-                                <TableCell>{res.user.name}</TableCell>
-                                <TableCell>{res?.user?.mobile ?? ''}</TableCell>
-                                <TableCell>{res?.schedule?.learning_center?.name ?? ''}</TableCell>
+                                <TableCell>{res.title}</TableCell>
+                                <TableCell>{res?.als_level ?? ''}</TableCell>
+                                <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2'>
-                                        {/* <Button
-                                            onClick={() => router.visit(`/administrator/schedule/${res.id}`)}
+                                        <Button
+                                            onClick={() => router.visit(`/administrator/booklet/${res.id}`)}
                                             size='small'
                                             variant='contained'
                                             color='success'>
                                             <Visibility />
-                                        </Button> */}
-                                        <DeleteExaminerSection data={res}/>
+                                        </Button>
                                     </div>
                                 </TableCell>
                             </TableRow>

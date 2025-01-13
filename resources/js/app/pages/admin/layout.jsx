@@ -21,10 +21,6 @@ import { get_user_login_thunk } from "@/app/redux/app-thunk";
 
 const NAVIGATION = [
     {
-        kind: "header",
-        title: "Main items",
-    },
-    {
         segment: "dashboard",
         title: "Dashboard",
         icon: <DashboardIcon />,
@@ -40,76 +36,15 @@ const NAVIGATION = [
         icon: <Groups />,
     },
     {
-        segment: "learning_center",
-        title: "Learning Center",
-        icon: <HomeWork />,
-    },
-    // {
-    //     segment: "literacy_test",
-    //     title: "Literacy Test",
-    //     icon: <Quiz />,
-    //     children: [
-    //         {
-    //           segment: 'elementary',
-    //           title: 'Elementary Level',
-    //           icon: <DescriptionIcon />,
-    //         },
-    //         {
-    //           segment: 'junior_high',
-    //           title: 'Junior High Level',
-    //           icon: <DescriptionIcon />,
-    //         },
-    //       ],
-    // },
-    {
-        segment: "booklet",
-        title: "Booklet",
+        segment: "modules",
+        title: "Modules",
         icon: <AutoStories />,
     },
-    {
-        segment: "schedule",
-        title: "Schedule FLT Test",
-        icon: <CalendarMonth />,
-    },
-    
-    // {
-    //     segment: "subjects",
-    //     title: "Subjects",
-    //     icon: <HistoryEdu />,
-    // },
-    // {
-    //     segment: "department",
-    //     title: "Department",
-    //     icon: <FolderShared />,
-    // },
-    
-    // {
-    //     segment: "courses",
-    //     title: "Courses",
-    //     icon: <School />,
-    // },
-    // {
-    //     segment: "sections",
-    //     title: "Sections",
-    //     icon: <Diversity3 />,
-    // },
-    // {
-    //     segment: "grades",
-    //     title: "Grades",
-    //     icon: <BarChartIcon />,
-    // },
+ 
     {
         kind: "divider",
     },
-    // {
-    //     kind: "header",
-    //     title: "Analytics",
-    // },
-    // {
-    //     segment: "settings",
-    //     title: "Settings",
-    //     icon: <Engineering />,
-    // },
+    
     {
         segment: "logout",
         title: "Logout",
@@ -129,6 +64,36 @@ const demoTheme = createTheme({
             md: 600,
             lg: 1200,
             xl: 1536,
+        },
+    },
+    components: {
+        // Global styles for background image
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    backgroundImage: 'url("/images/background.webp")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    minHeight: '100vh',
+                },
+            },
+        },
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    backgroundColor: 'transparent',  // Make AppBar transparent
+                    boxShadow: 'none',  // Remove any shadow
+                },
+            },
+        },
+        MuiDrawer: {
+            styleOverrides: {
+                paper: {
+                    backgroundColor: 'transparent',  // Make Drawer transparent
+                    boxShadow: 'none',  // Remove any shadow
+                },
+            },
         },
     },
 });
@@ -173,8 +138,8 @@ function AdminLayout({ children }, props) {
             theme={demoTheme}
             window={demoWindow}
             branding={{
-                logo: <img src="/images/logo.png" />,
-                title: "Alternative Learning System",
+                logo: <img src="/images/logo.jpg" />,
+                title: "Science Quest",
             }}
         >
             <DashboardLayout>

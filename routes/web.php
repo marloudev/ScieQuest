@@ -55,9 +55,6 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
             });
         });
     });
-    Route::get('/learning_center', function () {
-        return Inertia::render('admin/learning_center/page');
-    });
     Route::prefix('students')->group(function () {
         Route::get('/', function () {
             return Inertia::render('admin/students/page');
@@ -99,25 +96,16 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
         return Inertia::render('admin/settings/page');
     });
 
-    Route::prefix('booklet')->group(function () {
+    Route::prefix('modules')->group(function () {
         Route::get('/', function () {
-            return Inertia::render('admin/booklet/page');
+            return Inertia::render('admin/module/page');
         });
 
         Route::get('/{id}', function () {
-            return Inertia::render('admin/booklet/id/page');
+            return Inertia::render('admin/module/id/page');
         });
         Route::get('/{id}/{examination_id}', function () {
-            return Inertia::render('admin/booklet/id/id/page');
-        });
-    });
-
-    Route::prefix('schedule')->group(function () {
-        Route::get('/', function () {
-            return Inertia::render('admin/schedule/page');
-        });
-        Route::get('/{id}', function () {
-            return Inertia::render('admin/schedule/id/page');
+            return Inertia::render('admin/module/id/id/page');
         });
     });
 });

@@ -20,11 +20,6 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import store from "@/app/pages/store/store";
-import { DemoContainer } from "@mui/x-date-pickers/internals/demo";
-import { LocalizationProvider } from "@mui/x-date-pickers-pro/LocalizationProvider";
-import { AdapterDayjs } from "@mui/x-date-pickers-pro/AdapterDayjs";
-import { DateTimeRangePicker } from "@mui/x-date-pickers-pro/DateTimeRangePicker";
-import { useSelector } from "react-redux";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
 import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
@@ -34,9 +29,6 @@ export default function BookletCreateSection() {
     const [data, setData] = useState({});
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-    const { teachers } = useSelector((store) => store.teachers)
-    const { learning_centers } = useSelector((state) => state.learning_centers)
-    const { literacyTests } = useSelector((state) => state.literacyTests);
    
     const handleClickOpen = () => {
         setOpen(true);
@@ -83,7 +75,7 @@ export default function BookletCreateSection() {
     return (
         <React.Fragment>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Create Booklet
+                Create Module
             </Button>
             <Dialog fullWidth open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
@@ -92,7 +84,7 @@ export default function BookletCreateSection() {
                         variant="h6"
                         component="div"
                     >
-                      Create Booklet
+                      Create Module
                     </Typography>
                     <IconButton
                         edge="start"
