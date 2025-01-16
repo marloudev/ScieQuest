@@ -82,7 +82,7 @@ const demoTheme = createTheme({
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    backgroundColor: 'transparent',  // Make AppBar transparent
+                    // backgroundColor: 'transparent',  // Make AppBar transparent
                     boxShadow: 'none',  // Remove any shadow
                 },
             },

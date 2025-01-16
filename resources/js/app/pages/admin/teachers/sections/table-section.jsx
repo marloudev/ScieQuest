@@ -21,13 +21,9 @@ export default function TableSection() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                        <TableCell>Employee ID</TableCell>
                         <TableCell>Fullname</TableCell>
                         <TableCell>Email</TableCell>
-                        <TableCell>Mobile</TableCell>
-                        {/* <TableCell>Course</TableCell> */}
-                        <TableCell>Age</TableCell>
-                        
-                         <TableCell>Address</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
                 </TableHead>
@@ -35,7 +31,7 @@ export default function TableSection() {
                     {teachers?.data.map((res, i) => {
                         const dob = moment(res.dob, "YYYY-MM-DD"); // Replace with actual date of birth
                         const age = moment().diff(dob, "years");
-                        console.log('res',res)
+                        console.log("res", res);
                         return (
                             <TableRow
                                 key={i}
@@ -45,18 +41,16 @@ export default function TableSection() {
                                     },
                                 }}
                             >
-                                <TableCell>{res.name}</TableCell>
-                                <TableCell>{res.email}</TableCell>
+                                <TableCell>{res.user_id}</TableCell>
                                 <TableCell>
-                                    {res?.mobile ?? ""}
+                                    {res.fname} {res.lname}
                                 </TableCell>
-                                <TableCell>{res.dob}</TableCell> 
-                                <TableCell>{res.address}</TableCell> 
+                                <TableCell>{res.email}</TableCell>
                                 <TableCell>
                                     <div className="flex gap-2">
                                         {/* <UpdateSection data={res} /> */}
                                         {/* <DeleteSection data={res} /> */}
-                                        
+
                                         <Button
                                             // onClick={() =>
                                             //     router.visit(

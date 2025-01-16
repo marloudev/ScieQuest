@@ -7,6 +7,9 @@ import { useState } from 'react';
 import store from '@/app/pages/store/store';
 // import { get_instructor_thunk, store_instructor_thunk } from '../redux/teachers-thunk';
 import { useSelector } from 'react-redux';
+import { store_students_thunk } from '../../students/redux/students-thunk';
+import { get_teachers_service } from '@/app/services/teachers-service';
+import { get_teachers_thunk } from '../redux/teachers-thunk';
 
 export default function CreateSection() {
     const [open, setOpen] = React.useState(false);
@@ -23,12 +26,12 @@ export default function CreateSection() {
 
     async function submitForm(params) {
         setLoading(true)
-        const result = await store.dispatch(store_instructor_thunk({
+        const result = await store.dispatch(store_students_thunk({
             ...data,
             user_type: 2
         }))
         if (result.status == 200) {
-            await store.dispatch(get_instructor_thunk())
+            await store.dispatch(get_teachers_thunk())
             setNotify(true)
             setError({})
             setLoading(false)
@@ -65,7 +68,7 @@ export default function CreateSection() {
 
                 anchor='right'
                 open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] h-full flex" role="presentation" >
+                <Box className="w-[500px] bg-white h-full flex" role="presentation" >
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3  w-full' >
                             <div className='text-2xl font-black'>
