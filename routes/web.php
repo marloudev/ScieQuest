@@ -27,7 +27,9 @@ Route::middleware('redirectBasedOnRole')->get('/register', function () {
 
 
 
-Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administrator')->group(function () {
+Route::middleware('auth:sanctum', 'administrator'
+// , 'verified'
+)->prefix('administrator')->group(function () {
 
     Route::get('/', function () {
         return redirect()->route('admin.dashboard');
@@ -110,7 +112,9 @@ Route::middleware('auth:sanctum', 'administrator', 'verified')->prefix('administ
     });
 });
 
-Route::middleware('auth:sanctum', 'teacher', 'verified')->prefix('teacher')->group(function () {
+Route::middleware('auth:sanctum', 'teacher'
+// , 'verified'
+)->prefix('teacher')->group(function () {
 
     Route::get('/', function () {
         return redirect()->route('teacher.dashboard');
@@ -166,7 +170,9 @@ Route::middleware('auth:sanctum', 'teacher', 'verified')->prefix('teacher')->gro
     })->name('teacher.settings');
 });
 
-Route::middleware('auth:sanctum', 'student', 'verified')->prefix('student')->group(function () {
+Route::middleware('auth:sanctum', 'student'
+// , 'verified'
+)->prefix('student')->group(function () {
     Route::get('/', function () {
         return redirect()->route('student.dashboard');
     })->name('dashboard');

@@ -28,7 +28,7 @@ export default function BookletTableSection() {
                 <TableHead>
                     <TableRow>
                         <TableCell>Module Name</TableCell>
-                        <TableCell>Als Level</TableCell>
+                        <TableCell>Grade</TableCell>
                         <TableCell>Created At</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
@@ -43,12 +43,12 @@ export default function BookletTableSection() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell>{res.title}</TableCell>
-                                <TableCell>{res?.als_level ?? ''}</TableCell>
+                                <TableCell>{res?.grade ?? ''}</TableCell>
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2'>
                                         <Button
-                                            onClick={() => router.visit(`/administrator/booklet/${res.id}`)}
+                                            onClick={() => router.visit(`/administrator/modules/${res.id}`)}
                                             size='small'
                                             variant='contained'
                                             color='success'>

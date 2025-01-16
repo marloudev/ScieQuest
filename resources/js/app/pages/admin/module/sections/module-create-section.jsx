@@ -12,10 +12,12 @@ import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
 import {
+    Box,
     FormControl,
     InputLabel,
     MenuItem,
     Select,
+    TextareaAutosize,
     TextField,
 } from "@mui/material";
 import { useState } from "react";
@@ -23,13 +25,19 @@ import store from "@/app/pages/store/store";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
 import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
+import { Editor } from "react-draft-wysiwyg";
+import { EditorState } from "draft-js";
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 
 export default function BookletCreateSection() {
+    const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        grade: "Grade 4",
+    });
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-   
+
     const handleClickOpen = () => {
         setOpen(true);
     };
@@ -46,10 +54,10 @@ export default function BookletCreateSection() {
                 }),
             );
             if (result.status == 200) {
-                await store.dispatch(get_booklet_thunk())
+                await store.dispatch(get_booklet_thunk());
                 setLoading(false);
                 setOpen(false);
-                setData({})
+                setData({});
             } else {
                 setLoading(false);
                 setError(result.response.data.errors);
@@ -59,17 +67,17 @@ export default function BookletCreateSection() {
         }
     }
 
-    async function als_level_function(e) {
+    async function grade_function(e) {
         setLoading(true);
-        if ('Elementary Level' == e.target.value) {
-            await store.dispatch(get_examinations_thunk('Elementary'));
-        } else if ('Junior High Level' == e.target.value) {
-            await store.dispatch(get_examinations_thunk('Junior High School'));
+        if ("Elementary Level" == e.target.value) {
+            await store.dispatch(get_examinations_thunk("Elementary"));
+        } else if ("Junior High Level" == e.target.value) {
+            await store.dispatch(get_examinations_thunk("Junior High School"));
         }
         setData({
             ...data,
             [e.target.name]: e.target.value,
-        })
+        });
         setLoading(false);
     }
     return (
@@ -84,7 +92,7 @@ export default function BookletCreateSection() {
                         variant="h6"
                         component="div"
                     >
-                      Create Module
+                        Create Module
                     </Typography>
                     <IconButton
                         edge="start"
@@ -114,31 +122,98 @@ export default function BookletCreateSection() {
                     />
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full mt-2">
-                    <FormControl fullWidth error={!!error?.als_level}>
+                    <FormControl fullWidth error={!!error?.grade}>
                         <InputLabel id="demo-simple-select-label">
-                            ALS Level
+                            Grade
                         </InputLabel>
                         <Select
+                            disabled
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
-                            name="als_level"
+                            name="grade"
                             label="ALS Level"
-                            onChange={(e) => als_level_function(e)}
-                            value={data.als_level ?? ""}
+                            onChange={(e) => grade_function(e)}
+                            value={data.grade ?? ""}
                         >
                             <MenuItem selected disabled></MenuItem>
-                            <MenuItem value="Elementary Level">Elementary Level</MenuItem>
-                            <MenuItem value="Junior High Level">Junior High Level</MenuItem>
-                         
+                            <MenuItem value="Grade 1">Grade 1</MenuItem>
+                            <MenuItem value="Grade 2">Grade 2</MenuItem>
+                            <MenuItem value="Grade 3">Grade 3</MenuItem>
+                            <MenuItem value="Grade 4">Grade 4</MenuItem>
+                            <MenuItem value="Grade 5">Grade 5</MenuItem>
+                            <MenuItem value="Grade 6">Grade 6</MenuItem>
                         </Select>
-                        {error?.specification && (
+                        {error?.grade && (
+                            <FormHelperText>{error.grade}</FormHelperText>
+                        )}
+                    </FormControl>
+                </Toolbar>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                    <FormControl fullWidth error={!!error?.introductory}>
+                        <TextareaAutosize
+                            className="p-3"
+                            name="introductory"
+                            placeholder="Introductory Message"
+                            value={data.introductory ?? ""}
+                            onChange={(e) => grade_function(e)}
+                            minRows={10}
+                        />
+                        {error?.introductory && (
                             <FormHelperText>
-                                {error.specification}
+                                {error.introductory}
                             </FormHelperText>
                         )}
                     </FormControl>
                 </Toolbar>
-                
+                <Toolbar className=" flex-col gap-3 flex w-full mt-2">
+                    <FormControl fullWidth error={!!error?.wintn}>
+                        <TextareaAutosize
+                            className="p-3"
+                            name="wintn"
+                            placeholder="What I Need to Know"
+                            value={data.wintn ?? ""}
+                            onChange={(e) => grade_function(e)}
+                            minRows={10}
+                        />
+                        {error?.wintn && (
+                            <FormHelperText>{error.wintn}</FormHelperText>
+                        )}
+                    </FormControl>
+
+                    {/* <Box
+                        sx={{
+                            display: "flex",
+                            justifyContent: "center",
+                            border: 1,
+                        }}
+                    >
+                        <Editor
+                            className="border-2 border-black"
+                            editorState={editorState}
+                            toolbar={{
+                                options: [
+                                    "inline",
+                                    "blockType",
+                                    "fontSize",
+                                    "list",
+                                    "textAlign",
+                                    "history",
+                                ],
+                                inline: {
+                                    options: ["bold", "italic", "underline"],
+                                },
+                                blockType: { inDropdown: true },
+                                fontSize: {
+                                    options: [
+                                        8, 10, 12, 14, 16, 18, 24, 30, 48,
+                                    ],
+                                },
+                            }}
+                            wrapperClassName="demo-wrapper"
+                            editorClassName="demo-editor"
+                        />
+                    </Box> */}
+                </Toolbar>
                 <Toolbar>
                     <Typography
                         sx={{ ml: 2, flex: 1 }}

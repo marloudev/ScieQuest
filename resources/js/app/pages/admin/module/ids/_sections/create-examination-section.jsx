@@ -64,7 +64,7 @@ export default function CreateExaminationSection() {
     return (
         <React.Fragment>
             <Button variant="outlined" onClick={handleClickOpen}>
-                Create Examination
+                Create Question
             </Button>
             <Dialog fullWidth open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
@@ -73,7 +73,7 @@ export default function CreateExaminationSection() {
                         variant="h6"
                         component="div"
                     >
-                        Create Examination
+                        Create Question
                     </Typography>
                     <IconButton
                         edge="start"

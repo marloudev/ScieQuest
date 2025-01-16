@@ -1,27 +1,41 @@
-import React from 'react'
-import AdminLayout from '../../layout'
-import CreateExaminationSection from './_sections/create-examination-section'
-import { useEffect } from 'react';
-import store from '@/app/pages/store/store';
-import { get_booklet_by_id_thunk, get_examinations_by_id_thunk } from '../redux/booklet-thunk';
-import ExaminationsTableSection from './_sections/examination-table-section';
-import { useSelector } from 'react-redux';
+import React from "react";
+import AdminLayout from "../../layout";
+import CreateQuestionnaireSection from "./sections/create-questionnaire-section";
+ import QuestionnaireCardSection from "./sections/questionnaire-card-section";
+import { useEffect } from "react";
+import store from "@/app/pages/store/store";
 
-export default function BookletIDPage() {
-    const booklet_id = window.location.pathname.split('/')[3]
-    const {booklet}=useSelector((store)=>store.booklets)
+import QuestionnaireTabsSection from "./sections/questionnaire-tabs-section";
+import CreateSpecificationSection from "./sections/create-specification-section";
+import SpecificationCardSection from "./sections/specification-card-section";
+import { get_questionnaires_by_id_thunk, get_specifications_by_id_thunk } from "../../literacy_test/_redux/questionaires-thunk";
+
+export default function LiteracyTestIDPage() {
+    const examination_id = window.location.pathname.split("/")[4];
     useEffect(() => {
-        store.dispatch(get_booklet_by_id_thunk(booklet_id))
-        store.dispatch(get_examinations_by_id_thunk(booklet_id));
+        store.dispatch(get_questionnaires_by_id_thunk(examination_id));
+        store.dispatch(get_specifications_by_id_thunk(examination_id));
     }, []);
-
-
     return (
         <AdminLayout>
-            <CreateExaminationSection />
-            <div className='py-5'>
-                <ExaminationsTableSection />
-            </div>
+            <QuestionnaireTabsSection
+                tab1={
+                    <>
+                        <div className="my-3">
+                            <CreateQuestionnaireSection />
+                        </div>
+                        <div>
+                            <QuestionnaireCardSection />
+                        </div>
+                    </>
+                }
+                tab2={
+                    <div className="flex flex-col gap-4">
+                        <CreateSpecificationSection />
+                        <SpecificationCardSection />
+                    </div>
+                }
+            />
         </AdminLayout>
-    )
+    );
 }

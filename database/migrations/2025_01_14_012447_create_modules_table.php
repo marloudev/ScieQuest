@@ -14,7 +14,9 @@ return new class extends Migration
         Schema::create('modules', function (Blueprint $table) {
             $table->id();
             $table->string('title')->nullable();
-            $table->string('grades')->nullable();
+            $table->string('grade')->nullable();
+            $table->longText('introductory')->nullable();
+            $table->longText('wintn')->nullable();
             $table->timestamps();
         });
     }
