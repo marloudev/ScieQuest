@@ -31,6 +31,7 @@ Route::post('/rate-paragraph', [ChatGPTController::class, 'rateParagraph']);
 
 
 
+Route::post('/auth/login', [AccountController::class, 'login']);
 Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
 Route::resource('teachers', TeacherController::class);

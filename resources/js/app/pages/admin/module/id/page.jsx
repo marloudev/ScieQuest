@@ -1,24 +1,26 @@
 import React from "react";
 import AdminLayout from "../../layout";
 import CreateQuestionnaireSection from "./sections/create-questionnaire-section";
- import QuestionnaireCardSection from "./sections/questionnaire-card-section";
+import QuestionnaireCardSection from "./sections/questionnaire-card-section";
 import { useEffect } from "react";
 import store from "@/app/pages/store/store";
 
 import QuestionnaireTabsSection from "./sections/questionnaire-tabs-section";
 import CreateSpecificationSection from "./sections/create-specification-section";
 import SpecificationCardSection from "./sections/specification-card-section";
-import { get_questionnaires_by_id_thunk, get_specifications_by_id_thunk } from "../../literacy_test/_redux/questionaires-thunk";
+import {
+    get_questionnaires_by_id_thunk,
+    get_specifications_by_id_thunk,
+} from "../../literacy_test/_redux/questionaires-thunk";
 
 export default function LiteracyTestIDPage() {
-    const examination_id = window.location.pathname.split("/")[4];
+    const examination_id = window.location.pathname.split("/")[3];
     useEffect(() => {
         store.dispatch(get_questionnaires_by_id_thunk(examination_id));
-        store.dispatch(get_specifications_by_id_thunk(examination_id));
     }, []);
     return (
         <AdminLayout>
-            <QuestionnaireTabsSection
+            {/* <QuestionnaireTabsSection
                 tab1={
                     <>
                         <div className="my-3">
@@ -35,7 +37,13 @@ export default function LiteracyTestIDPage() {
                         <SpecificationCardSection />
                     </div>
                 }
-            />
+            /> */}
+            <div className="my-3">
+                <CreateQuestionnaireSection />
+            </div>
+            <div>
+                <QuestionnaireCardSection />
+            </div>
         </AdminLayout>
     );
 }

@@ -51,6 +51,7 @@ export default function BookletCreateSection() {
                 store_booklet_thunk({
                     unique_id: moment().format("MMDDYYYYHHmmss"),
                     ...data,
+                    grade: "Grade 4",
                 }),
             );
             if (result.status == 200) {

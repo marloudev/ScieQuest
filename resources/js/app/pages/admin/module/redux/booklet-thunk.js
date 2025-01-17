@@ -8,7 +8,7 @@ export function get_booklet_thunk() {
   return async function (dispatch, getState) {
     // dispatch(appSlice.actions.incrementByAmount(10));
     const res =await get_booklet_service()
-    dispatch(bookletSlice.actions.setBooklets(res.data.response));
+    dispatch(bookletSlice.actions.setBooklets(res.data.data));
     return res
   };
 }

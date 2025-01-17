@@ -9,19 +9,21 @@ class ModuleController extends Controller
 {
     public function index()
     {
-        $module = Module::get();
+        $modules = Module::get();
         return response()->json([
-            'response' => $module,
+            'status' => 'success',
+            'message' => 'User is logged in successfully.',
+            'data' => $modules,
         ], 200);
     }
 
 
     public function show($id)
     {
-        $module = Module::where('id', $id)->with(['examinations'])
-        ->orderBy('created_at', 'asc')->first();
+        $module = Module::where('id', $id)->first();
         return response()->json([
-            'response' =>$module,
+            'status' => 'success',
+            'data' =>$module,
         ], 200);
     }
  
