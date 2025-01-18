@@ -69,4 +69,13 @@ class ExamTypeController extends Controller
             'message' => 'Assessment has been created.',
         ], 200);
     }
+
+    public function show($id)
+    {
+        $exam_type = ExamType::where('module_id', $id)->with(['fill_in_the_blank', 'true_or_false', 'multiple_choice', 'matching', 'identification'])->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $exam_type,
+        ], 200);
+    }
 }

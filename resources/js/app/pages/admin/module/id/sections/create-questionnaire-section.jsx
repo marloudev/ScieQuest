@@ -41,7 +41,7 @@ import {
     store_questionnaires_thunk,
 } from "@/app/pages/admin/literacy_test/_redux/questionaires-thunk";
 import moment from "moment";
-import { store_exam_type_thunk } from "../../redux/booklet-thunk";
+import { get_exam_type_by_id_thunk, store_exam_type_thunk } from "../../redux/booklet-thunk";
 // import {
 //     get_examinations_thunk,
 //     store_examinations_thunk,
@@ -90,7 +90,7 @@ export default function CreateQuestionnaireSection() {
                 }),
             );
             if (result.status == 200) {
-                // await store.dispatch(get_questionnaires_by_id_thunk(module_id));
+               await store.dispatch(get_exam_type_by_id_thunk(module_id));
                 setData({
                     values: [
                         {

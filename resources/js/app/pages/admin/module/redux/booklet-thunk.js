@@ -38,7 +38,7 @@ export function store_exam_type_thunk(data) {
 export function get_exam_type_by_id_thunk(id) {
   return async function (dispatch, getState) {
     const res = await get_exam_type_by_id_service(id)
-    dispatch(bookletSlice.actions.setExamTypes(res.data.response));
+    dispatch(bookletSlice.actions.setExamTypes(res.data.data));
     return res
   };
 }

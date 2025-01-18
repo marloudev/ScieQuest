@@ -9,7 +9,7 @@ export const bookletSlice = createSlice({
     booklets: [],
     booklet: {},
     examinations:[],
-    exam_type:{}
+    exam_types:[]
   },
   reducers: {
     setBooklets: (state, action) => {
@@ -22,7 +22,7 @@ export const bookletSlice = createSlice({
       state.examinations = action.payload
     },
     setExamTypes: (state, action) => {
-      state.exam_type = action.payload
+      state.exam_types = action.payload
     },
     
   },
