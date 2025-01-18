@@ -8,7 +8,8 @@ export const bookletSlice = createSlice({
   initialState: {
     booklets: [],
     booklet: {},
-    examinations:[]
+    examinations:[],
+    exam_type:{}
   },
   reducers: {
     setBooklets: (state, action) => {
@@ -20,9 +21,14 @@ export const bookletSlice = createSlice({
     setExaminations: (state, action) => {
       state.examinations = action.payload
     },
+    setExamTypes: (state, action) => {
+      state.exam_type = action.payload
+    },
+    
   },
 })
 export const { 
+  setExamTypes,
   setBooklets,
   setBooklet,
   setExaminations

@@ -14,9 +14,9 @@ import {
 } from "../../literacy_test/_redux/questionaires-thunk";
 
 export default function LiteracyTestIDPage() {
-    const examination_id = window.location.pathname.split("/")[3];
+    const module_id = window.location.pathname.split("/")[3];
     useEffect(() => {
-        store.dispatch(get_questionnaires_by_id_thunk(examination_id));
+        store.dispatch(get_questionnaires_by_id_thunk(module_id));
     }, []);
     return (
         <AdminLayout>

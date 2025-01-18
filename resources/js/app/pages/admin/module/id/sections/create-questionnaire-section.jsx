@@ -11,7 +11,7 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import CloseIcon from "@mui/icons-material/Close";
 import Slide from "@mui/material/Slide";
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
 import {
     FormControl,
@@ -34,9 +34,14 @@ import store from "@/app/pages/store/store";
 // } from "../../../_redux/questionaires-thunk";
 import { Check, CloudUpload } from "@mui/icons-material";
 import { useSelector } from "react-redux";
-import ReactQuill from 'react-quill';
-import 'react-quill/dist/quill.snow.css';
-import { get_questionnaires_by_id_thunk, store_questionnaires_thunk } from "@/app/pages/admin/literacy_test/_redux/questionaires-thunk";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import {
+    get_questionnaires_by_id_thunk,
+    store_questionnaires_thunk,
+} from "@/app/pages/admin/literacy_test/_redux/questionaires-thunk";
+import moment from "moment";
+import { store_exam_type_thunk } from "../../redux/booklet-thunk";
 // import {
 //     get_examinations_thunk,
 //     store_examinations_thunk,
@@ -44,64 +49,63 @@ import { get_questionnaires_by_id_thunk, store_questionnaires_thunk } from "@/ap
 
 export default function CreateQuestionnaireSection() {
     const [open, setOpen] = React.useState(false);
-    const [data, setData] = useState({});
+    const [data, setData] = useState({
+        values: [
+            {
+                question: "",
+                answer_key: "",
+            },
+        ],
+        matches: [
+            {
+                column_a: "",
+                column_b: "",
+                answer_key: "",
+            },
+        ],
+    });
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-    const examination_id = window.location.pathname.split("/")[4];
-    const { specifications } = useSelector((store) => store.questionnaires);
-    console.log('specification', data)
+    const module_id = window.location.pathname.split("/")[3];
+    console.log("data", data);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        setOpen(false);
+    const handleClose = (_, reason) => {
+        if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
+            setOpen(false);
+        }
     };
 
-
     async function submit_form(params) {
-        const fd = new FormData()
-        fd.append('examination_id', examination_id)
-        if (data.question) {
-            fd.append('question', data.question)
-        }
-        if (data.answer_key) {
-            fd.append('answer_key', data.answer_key)
-        }
-        if (data.specification) {
-            fd.append('specification', data.specification)
-        }
-        if (data.a) {
-            fd.append('a', data.a)
-        }
-        if (data.b) {
-            fd.append('b', data.b)
-        }
-        if (data.c) {
-            fd.append('c', data.c)
-        }
-        if (data.d) {
-            fd.append('d', data.d)
-        }
-        fd.append('e', data.e)
-        fd.append('title', data.title)
-        fd.append('item_number', data.item_number)
-        fd.append('image_a', data.image_a)
-        fd.append('image_b', data.image_b)
-        fd.append('image_c', data.image_c)
-        fd.append('image_d', data.image_d)
-        fd.append('image_e', data.image_e)
-        fd.append('image_header', data.image_header)
-
         try {
             setLoading(true);
             const result = await store.dispatch(
-                store_questionnaires_thunk(fd),
+                store_exam_type_thunk({
+                    ...data,
+                    module_id: module_id,
+                    unique: moment().format("MMDDYYYYhhmmss"),
+                }),
             );
             if (result.status == 200) {
-                await store.dispatch(get_questionnaires_by_id_thunk(examination_id));
-                setData({});
+                // await store.dispatch(get_questionnaires_by_id_thunk(module_id));
+                setData({
+                    values: [
+                        {
+                            question: "",
+                            answer_key: "",
+                        },
+                    ],
+                    matches: [
+                        {
+                            column_a: "",
+                            column_b: "",
+                            answer_key: "",
+                        },
+                    ],
+                });
                 setLoading(false);
                 setOpen(false);
             } else {
@@ -114,17 +118,15 @@ export default function CreateQuestionnaireSection() {
         }
     }
 
-
-
-    const VisuallyHiddenInput = styled('input')({
-        clip: 'rect(0 0 0 0)',
-        clipPath: 'inset(50%)',
+    const VisuallyHiddenInput = styled("input")({
+        clip: "rect(0 0 0 0)",
+        clipPath: "inset(50%)",
         height: 1,
-        overflow: 'hidden',
-        position: 'absolute',
+        overflow: "hidden",
+        position: "absolute",
         bottom: 0,
         left: 0,
-        whiteSpace: 'nowrap',
+        whiteSpace: "nowrap",
         width: 1,
     });
     return (
@@ -132,7 +134,7 @@ export default function CreateQuestionnaireSection() {
             <Button variant="outlined" onClick={handleClickOpen}>
                 Create Questionnaire
             </Button>
-            <Dialog fullWidth open={open} onClose={handleClose}>
+            <Dialog maxWidth="lg" fullWidth open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
                     <Typography
                         sx={{ ml: 2, flex: 1 }}
@@ -152,229 +154,675 @@ export default function CreateQuestionnaireSection() {
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex items-start justify-start w-full">
                     <div className="w-full flex gap-4 flex-col">
-                        {/* <TextField
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                            error={error?.title ? true : false}
-                            helperText={error?.title ?? ""}
-                            name="title"
-                            type="text"
-                            id="outlined-basic"
-                            label="Title"
-                            variant="outlined"
-                            className="w-full"
-                        /> */}
-                        <TextField
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                            error={error?.item_number ? true : false}
-                            helperText={error?.item_number ?? ""}
-                            name="item_number"
-                            type="number"
-                            id="outlined-basic"
-                            label="Item Number"
-                            variant="outlined"
-                            className="w-full"
-                        />
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-
-                            startIcon={data?.image_header ? <Check /> : <CloudUpload />}
-                        >
-                            {
-                                data?.image_header ? data?.image_header.name : "Upload files"
-                            }
-                            <VisuallyHiddenInput
-                                name="image_header"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
-
-                        <div className="bg-white ">
-                            {
-                                error?.question && <div className="text-red-600">
-                                    {error?.question}
-                                </div>
-                            }
-                            <div className="text-black p-3 font-black">
-                                Questions
-                            </div>
-                            <ReactQuill theme="snow"
-                                //   value={value} 
-                                className="text-black  h-52"
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        question: e,
-                                    })
-                                } />
-                        </div>
-
-
-                    </div>
-                    <div className="flex items-start justify-start w-full mt-12">
-                        <FormControl error={!!error?.answer_key}>
-                            <FormLabel id="demo-row-radio-buttons-group-label">
-                                Answer Key
-                            </FormLabel>
-                            <RadioGroup
+                        <FormControl fullWidth error={!!error?.exam_type}>
+                            <InputLabel id="demo-simple-select-label">
+                                Exam Type
+                            </InputLabel>
+                            <Select
+                                labelId="demo-simple-select-label"
+                                id="demo-simple-select"
+                                name="type"
+                                label="Exam Type"
                                 onChange={(e) =>
                                     setData({
                                         ...data,
                                         [e.target.name]: e.target.value,
                                     })
                                 }
-                                row
-                                aria-labelledby="demo-row-radio-buttons-group-label"
-                                name="answer_key"
+                                value={data.type ?? ""}
                             >
-
-                                <div>
-                                    <FormControlLabel
-                                        value="A"
-                                        control={<Radio />}
-                                        label="A"
-                                    />
-                                </div>
-
-                                <FormControlLabel
-                                    value="B"
-                                    control={<Radio />}
-                                    label="B"
-                                />
-                                <FormControlLabel
-                                    value="C"
-                                    control={<Radio />}
-                                    label="C"
-                                />
-                                <FormControlLabel
-                                    value="D"
-                                    control={<Radio />}
-                                    label="D"
-                                />
-                                {/* <FormControlLabel
-                                    value="E"
-                                    control={<Radio />}
-                                    label="E"
-                                /> */}
-                            </RadioGroup>
-                            {error?.answer_key && (
-                                <FormHelperText>
-                                    {error.answer_key}
-                                </FormHelperText>
+                                <MenuItem selected disabled></MenuItem>
+                                <MenuItem value="Fill In The Blank">
+                                    Fill In The Blank
+                                </MenuItem>
+                                <MenuItem value="Multiple Choice">
+                                    Multiple Choice
+                                </MenuItem>
+                                <MenuItem value="Matching">Matching</MenuItem>
+                                <MenuItem value="Indentification">
+                                    Indentification
+                                </MenuItem>
+                                <MenuItem value="True Or False">
+                                    True Or False
+                                </MenuItem>
+                            </Select>
+                            {error?.type && (
+                                <FormHelperText>{error.type}</FormHelperText>
                             )}
                         </FormControl>
+                        {(data.type == "Fill In The Blank" ||
+                            data.type == "Indentification") && (
+                            <Button
+                                component="label"
+                                role={undefined}
+                                variant="contained"
+                                startIcon={
+                                    data?.file ? <Check /> : <CloudUpload />
+                                }
+                            >
+                                {data?.file ? data?.file.name : "Upload files"}
+                                <VisuallyHiddenInput
+                                    name="file"
+                                    type="file"
+                                    // onChange={(event) => console.log(event.target.files)}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            [e.target.name]:
+                                                URL.createObjectURL(
+                                                    e.target.files[0],
+                                                ),
+                                        })
+                                    }
+                                    accept="image/*"
+                                />
+                            </Button>
+                        )}
+
+                        <div className="bg-white ">
+                            {error?.direction && (
+                                <div className="text-red-600">
+                                    {error?.direction}
+                                </div>
+                            )}
+                            <div className="text-black p-3 font-black">
+                                Direction
+                            </div>
+                            <ReactQuill
+                                theme="snow"
+                                //   value={value}
+                                className="text-black  h-52"
+                                onChange={(e) =>
+                                    setData({
+                                        ...data,
+                                        direction: e,
+                                    })
+                                }
+                            />
+                        </div>
+                    </div>
+                    <div className="flex w-full items-end justify-end">
+                        <div className="mt-12">
+                            {(data.type == "Multiple Choice" ||
+                                data.type == "Fill In The Blank" ||
+                                data.type == "Indentification" ||
+                                data.type == "True Or False") && (
+                                <Button
+                                    variant="contained"
+                                    autoFocus
+                                    onClick={() =>
+                                        setData({
+                                            ...data,
+                                            values: [
+                                                ...data.values,
+                                                {
+                                                    question: "",
+                                                    answer: "",
+                                                    answer_key: "",
+                                                },
+                                            ],
+                                        })
+                                    }
+                                >
+                                    add fields
+                                </Button>
+                            )}
+                            {data.type == "Matching" && (
+                                <Button
+                                    variant="contained"
+                                    autoFocus
+                                    onClick={() =>
+                                        setData({
+                                            ...data,
+                                            matches: [
+                                                ...data.matches,
+                                                {
+                                                    column_a: "",
+                                                    column_b: "",
+                                                    answer_key: "",
+                                                },
+                                            ],
+                                        })
+                                    }
+                                >
+                                    add fields
+                                </Button>
+                            )}
+                        </div>
                     </div>
 
-                    <FormControl fullWidth error={!!error?.specification}>
-                        <InputLabel id="demo-simple-select-label">
-                            Specification
-                        </InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="specification"
-                            label="Specification"
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                            value={data.specification ?? ""}
-                        >
-                            <MenuItem selected disabled></MenuItem>
-                            {/* Uncomment and use the map to dynamically render options from departments */}
-                            {specifications.data.map((res, i) => (
-                                <MenuItem key={i} value={res.specification}>{res.specification}</MenuItem>
-                            ))}
-                            {/* <MenuItem value="aaaa">aaaa</MenuItem>
-                            <MenuItem value="bbbb">bbbb</MenuItem>
-                            <MenuItem value="cccc">cccc</MenuItem> */}
-                        </Select>
-                        {error?.specification && (
-                            <FormHelperText>
-                                {error.specification}
-                            </FormHelperText>
-                        )}
-                    </FormControl>
-                    {data?.image_a?.name ?? ''}
-                    <div className="flex gap-3 w-full">
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={data?.image_a ? <Check /> : <CloudUpload />}
-                        >
-                            <VisuallyHiddenInput
-                                name="image_a"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
-                        <TextField
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                            error={error?.a ? true : false}
-                            helperText={error?.a ?? ""}
-                            name="a"
-                            type="text"
-                            id="outlined-basic"
-                            label="Answer A"
-                            variant="outlined"
-                            className="w-full"
-                        />
-                    </div>
-                    {data?.image_b?.name ?? ''}
-                    <div className="flex gap-3 w-full">
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={data?.image_b ? <Check /> : <CloudUpload />}
-                        >
-                            <VisuallyHiddenInput
-                                name="image_b"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
+                    {data.type == "True Or False" &&
+                        data.values.map((res, i) => {
+                            return (
+                                <div
+                                    key={i}
+                                    className="flex flex-col gap-4 w-full border-b pb-4"
+                                >
+                                    <div className="flex items-center justify-between w-full">
+                                        {i != 0 && (
+                                            <div className="flex items-end justify-end">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    onClick={() =>
+                                                        setData({
+                                                            ...data,
+                                                            values: data.values.filter(
+                                                                (_, index) =>
+                                                                    index !== i,
+                                                            ),
+                                                        })
+                                                    }
+                                                >
+                                                    Delete Field
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex gap-3 w-full">
+                                        <TextField
+                                            multiline
+                                            rows={3}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    values: data.values.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      question:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`question-${i}`]}
+                                            helperText={
+                                                error?.[`question-${i}`] ?? ""
+                                            }
+                                            value={res.question}
+                                            name={`question-${i}`}
+                                            type="text"
+                                            label={`Question-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+                                        <FormControl>
+                                            <FormLabel id="demo-radio-buttons-group-label">
+                                                Answer Key
+                                            </FormLabel>
+                                            <RadioGroup
+                                                row
+                                                onChange={(e) =>
+                                                    setData({
+                                                        ...data,
+                                                        values: data.values.map(
+                                                            (item, index) =>
+                                                                index === i
+                                                                    ? {
+                                                                          ...item,
+                                                                          answer_key:
+                                                                              e
+                                                                                  .target
+                                                                                  .value,
+                                                                      }
+                                                                    : item,
+                                                        ),
+                                                    })
+                                                }
+                                                aria-labelledby="demo-row-radio-buttons-group-label"
+                                                name="answer_key"
+                                            >
+                                                <FormControlLabel
+                                                    value="true"
+                                                    control={<Radio />}
+                                                    label="True"
+                                                />
+                                                <FormControlLabel
+                                                    value="false"
+                                                    control={<Radio />}
+                                                    label="False"
+                                                />
+                                            </RadioGroup>
+                                        </FormControl>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    {(data.type == "Fill In The Blank" ||
+                        data.type == "Indentification") &&
+                        data.values.map((res, i) => {
+                            return (
+                                <div
+                                    key={i}
+                                    className="flex flex-col gap-4 w-full border-b pb-4"
+                                >
+                                    <div className="flex items-center justify-between w-full">
+                                        {i != 0 && (
+                                            <div className="flex items-end justify-end">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    onClick={() =>
+                                                        setData({
+                                                            ...data,
+                                                            values: data.values.filter(
+                                                                (_, index) =>
+                                                                    index !== i,
+                                                            ),
+                                                        })
+                                                    }
+                                                >
+                                                    Delete Field
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex gap-3 w-full">
+                                        <TextField
+                                            multiline
+                                            rows={2}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    values: data.values.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      question:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`question-${i}`]}
+                                            helperText={
+                                                error?.[`question-${i}`] ?? ""
+                                            }
+                                            value={res.question}
+                                            name={`question-${i}`}
+                                            type="text"
+                                            label={`Question-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+
+                                        <TextField
+                                            multiline
+                                            rows={2}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    values: data.values.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      answer_key:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`answer_key-${i}`]}
+                                            helperText={
+                                                error?.[`answer_key-${i}`] ?? ""
+                                            }
+                                            value={res.answer_key}
+                                            name={`answer_key-${i}`}
+                                            type="text"
+                                            label={`Answer Key-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+                                    </div>
+
+                                    {/* <TextField
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            values: data.values.map(
+                                                (item, index) =>
+                                                    index === i
+                                                        ? {
+                                                              ...item,
+                                                              answer: e.target
+                                                                  .value,
+                                                          }
+                                                        : item,
+                                            ),
+                                        })
+                                    }
+                                    error={!!error?.[`answer-${i}`]}
+                                    helperText={error?.[`answer-${i}`] ?? ""}
+                                    value={res.answer}
+                                    name={`answer-${i}`}
+                                    type="text"
+                                    label={`Answer ${i + 1}`}
+                                    variant="outlined"
+                                    className="w-full"
+                                /> */}
+                                </div>
+                            );
+                        })}
+
+                    {data.type == "Matching" &&
+                        data.matches.map((res, i) => {
+                            return (
+                                <div
+                                    key={i}
+                                    className="flex flex-col gap-4 w-full border-b pb-4"
+                                >
+                                    <div className="flex items-center justify-between w-full">
+                                        {i != 0 && (
+                                            <div className="flex items-end justify-end">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    onClick={() =>
+                                                        setData({
+                                                            ...data,
+                                                            matches:
+                                                                data.matches.filter(
+                                                                    (
+                                                                        _,
+                                                                        index,
+                                                                    ) =>
+                                                                        index !==
+                                                                        i,
+                                                                ),
+                                                        })
+                                                    }
+                                                >
+                                                    Delete Field
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </div>
+                                    <div className="flex gap-3 w-full">
+                                        <TextField
+                                            multiline
+                                            rows={2}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    matches: data.matches.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      column_a:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`column_a-${i}`]}
+                                            helperText={
+                                                error?.[`column_a-${i}`] ?? ""
+                                            }
+                                            value={res.column_a}
+                                            name={`column_a-${i}`}
+                                            type="text"
+                                            label={`Column A-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+
+                                        <TextField
+                                            multiline
+                                            rows={2}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    matches: data.matches.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      column_b:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`column_b-${i}`]}
+                                            helperText={
+                                                error?.[`column_b-${i}`] ?? ""
+                                            }
+                                            value={res.column_b}
+                                            name={`column_b-${i}`}
+                                            type="text"
+                                            label={`Column B-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+                                        <TextField
+                                            multiline
+                                            rows={2}
+                                            onChange={(e) =>
+                                                setData({
+                                                    ...data,
+                                                    matches: data.matches.map(
+                                                        (item, index) =>
+                                                            index === i
+                                                                ? {
+                                                                      ...item,
+                                                                      answer_key:
+                                                                          e
+                                                                              .target
+                                                                              .value,
+                                                                  }
+                                                                : item,
+                                                    ),
+                                                })
+                                            }
+                                            error={!!error?.[`answer_key-${i}`]}
+                                            helperText={
+                                                error?.[`answer_key-${i}`] ?? ""
+                                            }
+                                            value={res.answer_key}
+                                            name={`answer_key-${i}`}
+                                            type="text"
+                                            label={`Answer Key-${i + 1}`}
+                                            variant="outlined"
+                                            className="w-full"
+                                        />
+                                    </div>
+
+                                    {/* <TextField
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            values: data.values.map(
+                                                (item, index) =>
+                                                    index === i
+                                                        ? {
+                                                              ...item,
+                                                              answer: e.target
+                                                                  .value,
+                                                          }
+                                                        : item,
+                                            ),
+                                        })
+                                    }
+                                    error={!!error?.[`answer-${i}`]}
+                                    helperText={error?.[`answer-${i}`] ?? ""}
+                                    value={res.answer}
+                                    name={`answer-${i}`}
+                                    type="text"
+                                    label={`Answer ${i + 1}`}
+                                    variant="outlined"
+                                    className="w-full"
+                                /> */}
+                                </div>
+                            );
+                        })}
+
+                    {data.type == "Multiple Choice" &&
+                        data.values.map((res, i) => {
+                            return (
+                                <div
+                                    key={i}
+                                    className="flex flex-col gap-4 w-full border-b pb-4"
+                                >
+                                    <div className="flex items-center justify-between w-full">
+                                        <FormControl
+                                            error={!!error?.answer_key}
+                                        >
+                                            <FormLabel id={`answer-key-${i}`}>
+                                                Answer Key {i + 1}
+                                            </FormLabel>
+                                            <RadioGroup
+                                                onChange={(e) =>
+                                                    setData({
+                                                        ...data,
+                                                        values: data.values.map(
+                                                            (item, index) =>
+                                                                index === i
+                                                                    ? {
+                                                                          ...item,
+                                                                          answer_key:
+                                                                              e
+                                                                                  .target
+                                                                                  .value,
+                                                                      }
+                                                                    : item,
+                                                        ),
+                                                    })
+                                                }
+                                                row
+                                                aria-labelledby={`answer-key-${i}`}
+                                                name="answer_key"
+                                                value={res.answer_key}
+                                            >
+                                                <FormControlLabel
+                                                    value="A"
+                                                    control={<Radio />}
+                                                    label="A"
+                                                />
+                                                <FormControlLabel
+                                                    value="B"
+                                                    control={<Radio />}
+                                                    label="B"
+                                                />
+                                                <FormControlLabel
+                                                    value="C"
+                                                    control={<Radio />}
+                                                    label="C"
+                                                />
+                                                <FormControlLabel
+                                                    value="D"
+                                                    control={<Radio />}
+                                                    label="D"
+                                                />
+                                            </RadioGroup>
+                                            {error?.answer_key && (
+                                                <FormHelperText>
+                                                    {error.answer_key}
+                                                </FormHelperText>
+                                            )}
+                                        </FormControl>
+                                        {i != 0 && (
+                                            <div className="flex items-end justify-end">
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    onClick={() =>
+                                                        setData({
+                                                            ...data,
+                                                            values: data.values.filter(
+                                                                (_, index) =>
+                                                                    index !== i,
+                                                            ),
+                                                        })
+                                                    }
+                                                >
+                                                    Delete Field
+                                                </Button>
+                                            </div>
+                                        )}
+                                    </div>
+
+                                    <TextField
+                                        multiline
+                                        rows={3}
+                                        onChange={(e) =>
+                                            setData({
+                                                ...data,
+                                                values: data.values.map(
+                                                    (item, index) =>
+                                                        index === i
+                                                            ? {
+                                                                  ...item,
+                                                                  question:
+                                                                      e.target
+                                                                          .value,
+                                                              }
+                                                            : item,
+                                                ),
+                                            })
+                                        }
+                                        error={!!error?.[`question-${i}`]}
+                                        helperText={
+                                            error?.[`question-${i}`] ?? ""
+                                        }
+                                        value={res.question}
+                                        name={`question-${i}`}
+                                        type="text"
+                                        label={`Question ${i + 1}`}
+                                        variant="outlined"
+                                        className="w-full"
+                                    />
+
+                                    {/* <TextField
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            values: data.values.map(
+                                                (item, index) =>
+                                                    index === i
+                                                        ? {
+                                                              ...item,
+                                                              answer: e.target
+                                                                  .value,
+                                                          }
+                                                        : item,
+                                            ),
+                                        })
+                                    }
+                                    error={!!error?.[`answer-${i}`]}
+                                    helperText={error?.[`answer-${i}`] ?? ""}
+                                    value={res.answer}
+                                    name={`answer-${i}`}
+                                    type="text"
+                                    label={`Answer ${i + 1}`}
+                                    variant="outlined"
+                                    className="w-full"
+                                /> */}
+                                </div>
+                            );
+                        })}
+
+                    {/* <div className="flex gap-3 w-full">
+                      
                         <TextField
                             onChange={(e) =>
                                 setData({
@@ -392,27 +840,8 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_c?.name ?? ''}
                     <div className="flex gap-3 w-full">
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={data?.image_c ? <Check /> : <CloudUpload />}
-                        >
-                            <VisuallyHiddenInput
-                                name="image_c"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
+                       
                         <TextField
                             onChange={(e) =>
                                 setData({
@@ -430,27 +859,8 @@ export default function CreateQuestionnaireSection() {
                             className="w-full"
                         />
                     </div>
-                    {data?.image_d?.name ?? ''}
                     <div className="flex gap-3 w-full">
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={data?.image_d ? <Check /> : <CloudUpload />}
-                        >
-                            <VisuallyHiddenInput
-                                name="image_d"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
+                       
                         <TextField
                             onChange={(e) =>
                                 setData({
@@ -464,44 +874,6 @@ export default function CreateQuestionnaireSection() {
                             type="text"
                             id="outlined-basic"
                             label="Answer D"
-                            variant="outlined"
-                            className="w-full"
-                        />
-                    </div>
-                    {/* {data?.image_e?.name ?? ''}
-                    <div className="flex gap-3 w-full">
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={data?.image_e ? <Check /> : <CloudUpload />}
-                        >
-                            <VisuallyHiddenInput
-                                name="image_e"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        [e.target.name]: e.target.files[0],
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
-                        <TextField
-                            onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
-                                })
-                            }
-                            error={error?.e ? true : false}
-                            helperText={error?.e ?? ""}
-                            name="e"
-                            type="text"
-                            id="outlined-basic"
-                            label="Answer E"
                             variant="outlined"
                             className="w-full"
                         />

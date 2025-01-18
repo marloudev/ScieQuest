@@ -1,4 +1,4 @@
-import { store_booklet_service, delete_booklet_service, update_booklet_service, get_booklet_by_id_service, get_booklet_service } from "@/app/services/booklet-service";
+import { store_booklet_service, delete_booklet_service, update_booklet_service, get_booklet_by_id_service, get_booklet_service, store_exam_type_service, get_exam_type_by_id_service } from "@/app/services/booklet-service";
 import { bookletSlice } from "./booklet-slice";
 import { get_examinations_by_id_service } from "@/app/services/examinations-service";
 
@@ -27,6 +27,22 @@ export function store_booklet_thunk(data) {
     return res
   };
 }
+
+export function store_exam_type_thunk(data) {
+  return async function (dispatch, getState) {
+    const res = store_exam_type_service(data)
+    return res
+  };
+}
+
+export function get_exam_type_by_id_thunk(id) {
+  return async function (dispatch, getState) {
+    const res = await get_exam_type_by_id_service(id)
+    dispatch(bookletSlice.actions.setExamTypes(res.data.response));
+    return res
+  };
+}
+
 
 export function update_booklet_thunk(data) {
   return async function (dispatch, getState) {

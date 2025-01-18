@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('matchings', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('exam_types_id')->nullable();
-            $table->longText('direction')->nullable();
             $table->longText('column_a')->nullable();
             $table->longText('column_b')->nullable();
             $table->string('answer')->nullable();

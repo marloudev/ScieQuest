@@ -11,5 +11,6 @@ class ExamType extends Model
     protected $fillable = [
         'module_id',
         'type',
+        'direction'
     ];
 }
