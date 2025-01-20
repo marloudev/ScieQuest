@@ -57,7 +57,7 @@ export default function LoginPage() {
                             label="Password"
                             variant="outlined"
                         />
-                        <div className="block mt-4">
+                        {/* <div className="block mt-4">
                             <label className="flex flex-row items-center justify-between">
                                <div>
                                <Checkbox
@@ -71,7 +71,7 @@ export default function LoginPage() {
                                     Account Registration
                                 </a>
                             </label>
-                        </div>
+                        </div> */}
                         <div>
                             <Button
                                 type="submit"
