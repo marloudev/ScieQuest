@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\ExamType;
 use App\Models\FillInTheBlank;
+use App\Models\Identification;
 use App\Models\Indentification;
 use App\Models\Matching;
 use App\Models\MultipleChoice;
@@ -48,7 +49,7 @@ class ExamTypeController extends Controller
             }
         } else if ($request->type == 'Identification') {
             foreach ($values as $key => $value) {
-                Indentification::create([
+                Identification::create([
                     'exam_types_id' => $exam_type->id,
                     'question' => $value['question'],
                     'answer_key' => $value['answer_key'],

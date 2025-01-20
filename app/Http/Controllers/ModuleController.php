@@ -20,7 +20,7 @@ class ModuleController extends Controller
 
     public function show($id)
     {
-        $module = Module::where('id', $id)->first();
+        $module = Module::where('id', $id)->with(['exam_type'])->first();
         return response()->json([
             'status' => 'success',
             'data' =>$module,

@@ -179,8 +179,8 @@ export default function CreateQuestionnaireSection() {
                                     Multiple Choice
                                 </MenuItem>
                                 <MenuItem value="Matching">Matching</MenuItem>
-                                <MenuItem value="Indentification">
-                                    Indentification
+                                <MenuItem value="Identification">
+                                    Identification
                                 </MenuItem>
                                 <MenuItem value="True Or False">
                                     True Or False
@@ -191,7 +191,7 @@ export default function CreateQuestionnaireSection() {
                             )}
                         </FormControl>
                         {(data.type == "Fill In The Blank" ||
-                            data.type == "Indentification") && (
+                            data.type == "Identification") && (
                             <Button
                                 component="label"
                                 role={undefined}
@@ -245,7 +245,7 @@ export default function CreateQuestionnaireSection() {
                         <div className="mt-12">
                             {(data.type == "Multiple Choice" ||
                                 data.type == "Fill In The Blank" ||
-                                data.type == "Indentification" ||
+                                data.type == "Identification" ||
                                 data.type == "True Or False") && (
                                 <Button
                                     variant="contained"
@@ -394,7 +394,7 @@ export default function CreateQuestionnaireSection() {
                             );
                         })}
                     {(data.type == "Fill In The Blank" ||
-                        data.type == "Indentification") &&
+                        data.type == "Identification") &&
                         data.values.map((res, i) => {
                             return (
                                 <div

@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class TrueOrFalse extends Model
 {
@@ -16,4 +17,8 @@ class TrueOrFalse extends Model
         'answer_key',
         'points',
     ];
+    public function exam_type(): HasOne
+    {
+        return $this->hasOne(ExamType::class,'id','exam_types_id');
+    }
 }

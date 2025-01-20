@@ -17,22 +17,22 @@ class ExamType extends Model
 
     public function fill_in_the_blank(): HasMany
     {
-        return $this->hasMany(FillInTheBlank::class, 'exam_types_id', 'id');
+        return $this->hasMany(FillInTheBlank::class, 'exam_types_id', 'id')->with(['exam_type']);
     }
     public function true_or_false(): HasMany
     {
-        return $this->hasMany(TrueOrFalse::class, 'exam_types_id', 'id');
+        return $this->hasMany(TrueOrFalse::class, 'exam_types_id', 'id')->with(['exam_type']);
     }
     public function multiple_choice(): HasMany
     {
-        return $this->hasMany(MultipleChoice::class, 'exam_types_id', 'id');
+        return $this->hasMany(MultipleChoice::class, 'exam_types_id', 'id')->with(['exam_type']);
     }
     public function matching(): HasMany
     {
-        return $this->hasMany(Matching::class, 'exam_types_id', 'id');
+        return $this->hasMany(Matching::class, 'exam_types_id', 'id')->with(['exam_type']);
     }
     public function identification(): HasMany
     {
-        return $this->hasMany(Indentification::class, 'exam_types_id', 'id');
+        return $this->hasMany(Identification::class, 'exam_types_id', 'id')->with(['exam_type']);
     }
 }
