@@ -19,6 +19,9 @@ class ExamTypeController extends Controller
             'module_id' => $request->module_id,
             'type' => $request->type,
             'direction' => $request->direction,
+            'subject_matter' => $request->subject_matter,
+            'discussions' => $request->discussions,
+            'link' => $request->link,
         ]);
         $values =  $request->values;
         if ($request->type == 'Fill In The Blank') {

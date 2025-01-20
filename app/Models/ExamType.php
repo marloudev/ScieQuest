@@ -11,6 +11,9 @@ class ExamType extends Model
     use HasFactory;
     protected $fillable = [
         'module_id',
+        'subject_matter',
+        'discussions',
+        'link',
         'type',
         'direction'
     ];

@@ -15,24 +15,6 @@ export default function LiteracyTestIDPage() {
     }, []);
     return (
         <AdminLayout>
-            {/* <QuestionnaireTabsSection
-                tab1={
-                    <>
-                        <div className="my-3">
-                            <CreateQuestionnaireSection />
-                        </div>
-                        <div>
-                            <QuestionnaireCardSection />
-                        </div>
-                    </>
-                }
-                tab2={
-                    <div className="flex flex-col gap-4">
-                        <CreateSpecificationSection />
-                        <SpecificationCardSection />
-                    </div>
-                }
-            /> */}
             <div className="my-3">
                 <CreateQuestionnaireSection />
             </div>

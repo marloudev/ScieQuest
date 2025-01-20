@@ -14,6 +14,9 @@ return new class extends Migration
         Schema::create('exam_types', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('module_id')->nullable();
+            $table->string('subject_matter')->nullable();
+            $table->longText('discussions')->nullable();
+            $table->longText('link')->nullable();
             $table->string('type')->nullable();
             $table->longText('direction')->nullable();
             $table->timestamps();
