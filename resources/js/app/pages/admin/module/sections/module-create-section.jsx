@@ -28,6 +28,7 @@ import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import { Add } from "@mui/icons-material";
 
 export default function BookletCreateSection() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -83,9 +84,13 @@ export default function BookletCreateSection() {
     }
     return (
         <React.Fragment>
-            <Button variant="outlined" onClick={handleClickOpen}>
-                Create Module
-            </Button>
+            <button
+                type="button"
+                onClick={handleClickOpen}
+                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
+                <Add />
+                <b>Create Module</b>
+            </button>
             <Dialog fullWidth open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
                     <Typography

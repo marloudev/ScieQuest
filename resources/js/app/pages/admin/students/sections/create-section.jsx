@@ -8,6 +8,7 @@ import store from '@/app/pages/store/store';
 // import { get_student_thunk, store_student_thunk } from '../redux/student-thunk';
 import { useSelector } from 'react-redux';
 import { get_students_thunk, store_students_thunk } from '../redux/students-thunk';
+import { Add } from '@mui/icons-material';
 
 export default function CreateSection() {
     const [open, setOpen] = React.useState(false);
@@ -61,7 +62,13 @@ export default function CreateSection() {
                     Successfully Created!
                 </Alert>
             </Snackbar>
-            <Button variant='contained' onClick={toggleDrawer(true)}>Create student</Button>
+            <button
+                type="button"
+                onClick={toggleDrawer(true)}
+                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
+                <Add />
+                <b>Create Student</b>
+            </button>
             <Drawer
 
                 anchor='right'
