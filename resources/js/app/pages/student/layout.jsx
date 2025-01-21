@@ -115,8 +115,8 @@ function StudentLayout({ children }, props) {
             theme={demoTheme}
             window={demoWindow}
             branding={{
-                logo: <img src="/images/logo.png" />,
-                title: "Alternative Learning System",
+                logo: <img src="/images/logo.jpg" />,
+                title: "Science Quest",
             }}
         >
             <DashboardLayout>

@@ -1,1 +1,0 @@
-import{r as s,R as n}from"./app-Bsek6FUQ.js";let a=0;function f(t){const[e,o]=s.useState(t),c=t||e;return s.useEffect(()=>{e==null&&(a+=1,o(`mui-${a}`))},[e]),c}const l={...n},u=l.useId;function I(t){if(u!==void 0){const e=u();return t??e}return f(t)}export{I as u};

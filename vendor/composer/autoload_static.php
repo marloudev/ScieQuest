@@ -666,17 +666,12 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         'App\\Http\\Controllers\\ExaminationController' => __DIR__ . '/../..' . '/app/Http/Controllers/ExaminationController.php',
         'App\\Http\\Controllers\\ExaminerController' => __DIR__ . '/../..' . '/app/Http/Controllers/ExaminerController.php',
         'App\\Http\\Controllers\\FileController' => __DIR__ . '/../..' . '/app/Http/Controllers/FileController.php',
-<<<<<<< HEAD
-        'App\\Http\\Controllers\\LearningCenterController' => __DIR__ . '/../..' . '/app/Http/Controllers/LearningCenterController.php',
-        'App\\Http\\Controllers\\ModuleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ModuleController.php',
-=======
         'App\\Http\\Controllers\\FillInTheBlankController' => __DIR__ . '/../..' . '/app/Http/Controllers/FillInTheBlankController.php',
         'App\\Http\\Controllers\\IdentificationController' => __DIR__ . '/../..' . '/app/Http/Controllers/IdentificationController.php',
         'App\\Http\\Controllers\\LearningCenterController' => __DIR__ . '/../..' . '/app/Http/Controllers/LearningCenterController.php',
         'App\\Http\\Controllers\\MatchingController' => __DIR__ . '/../..' . '/app/Http/Controllers/MatchingController.php',
         'App\\Http\\Controllers\\ModuleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ModuleController.php',
         'App\\Http\\Controllers\\MultipleChoiceController' => __DIR__ . '/../..' . '/app/Http/Controllers/MultipleChoiceController.php',
->>>>>>> 6cbd75db48be0ce3cc01940751aaeabcdb3f2db8
         'App\\Http\\Controllers\\ProfileController' => __DIR__ . '/../..' . '/app/Http/Controllers/ProfileController.php',
         'App\\Http\\Controllers\\QuestionnaireController' => __DIR__ . '/../..' . '/app/Http/Controllers/QuestionnaireController.php',
         'App\\Http\\Controllers\\ScheduleController' => __DIR__ . '/../..' . '/app/Http/Controllers/ScheduleController.php',
@@ -695,13 +690,6 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         'App\\Kernel' => __DIR__ . '/..' . '/laravel/pint/app/Kernel.php',
         'App\\Models\\Answer' => __DIR__ . '/../..' . '/app/Models/Answer.php',
         'App\\Models\\Booklet' => __DIR__ . '/../..' . '/app/Models/Booklet.php',
-<<<<<<< HEAD
-        'App\\Models\\Examination' => __DIR__ . '/../..' . '/app/Models/Examination.php',
-        'App\\Models\\Examiner' => __DIR__ . '/../..' . '/app/Models/Examiner.php',
-        'App\\Models\\File' => __DIR__ . '/../..' . '/app/Models/File.php',
-        'App\\Models\\LearningCenter' => __DIR__ . '/../..' . '/app/Models/LearningCenter.php',
-        'App\\Models\\Module' => __DIR__ . '/../..' . '/app/Models/Module.php',
-=======
         'App\\Models\\ExamType' => __DIR__ . '/../..' . '/app/Models/ExamType.php',
         'App\\Models\\Examination' => __DIR__ . '/../..' . '/app/Models/Examination.php',
         'App\\Models\\Examiner' => __DIR__ . '/../..' . '/app/Models/Examiner.php',
@@ -712,7 +700,6 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         'App\\Models\\Matching' => __DIR__ . '/../..' . '/app/Models/Matching.php',
         'App\\Models\\Module' => __DIR__ . '/../..' . '/app/Models/Module.php',
         'App\\Models\\MultipleChoice' => __DIR__ . '/../..' . '/app/Models/MultipleChoice.php',
->>>>>>> 6cbd75db48be0ce3cc01940751aaeabcdb3f2db8
         'App\\Models\\Questionnaire' => __DIR__ . '/../..' . '/app/Models/Questionnaire.php',
         'App\\Models\\Schedule' => __DIR__ . '/../..' . '/app/Models/Schedule.php',
         'App\\Models\\ScoreSheet' => __DIR__ . '/../..' . '/app/Models/ScoreSheet.php',

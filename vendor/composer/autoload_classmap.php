@@ -54,17 +54,12 @@ return array(
     'App\\Http\\Controllers\\ExaminationController' => $baseDir . '/app/Http/Controllers/ExaminationController.php',
     'App\\Http\\Controllers\\ExaminerController' => $baseDir . '/app/Http/Controllers/ExaminerController.php',
     'App\\Http\\Controllers\\FileController' => $baseDir . '/app/Http/Controllers/FileController.php',
-<<<<<<< HEAD
-    'App\\Http\\Controllers\\LearningCenterController' => $baseDir . '/app/Http/Controllers/LearningCenterController.php',
-    'App\\Http\\Controllers\\ModuleController' => $baseDir . '/app/Http/Controllers/ModuleController.php',
-=======
     'App\\Http\\Controllers\\FillInTheBlankController' => $baseDir . '/app/Http/Controllers/FillInTheBlankController.php',
     'App\\Http\\Controllers\\IdentificationController' => $baseDir . '/app/Http/Controllers/IdentificationController.php',
     'App\\Http\\Controllers\\LearningCenterController' => $baseDir . '/app/Http/Controllers/LearningCenterController.php',
     'App\\Http\\Controllers\\MatchingController' => $baseDir . '/app/Http/Controllers/MatchingController.php',
     'App\\Http\\Controllers\\ModuleController' => $baseDir . '/app/Http/Controllers/ModuleController.php',
     'App\\Http\\Controllers\\MultipleChoiceController' => $baseDir . '/app/Http/Controllers/MultipleChoiceController.php',
->>>>>>> 6cbd75db48be0ce3cc01940751aaeabcdb3f2db8
     'App\\Http\\Controllers\\ProfileController' => $baseDir . '/app/Http/Controllers/ProfileController.php',
     'App\\Http\\Controllers\\QuestionnaireController' => $baseDir . '/app/Http/Controllers/QuestionnaireController.php',
     'App\\Http\\Controllers\\ScheduleController' => $baseDir . '/app/Http/Controllers/ScheduleController.php',
@@ -83,13 +78,6 @@ return array(
     'App\\Kernel' => $vendorDir . '/laravel/pint/app/Kernel.php',
     'App\\Models\\Answer' => $baseDir . '/app/Models/Answer.php',
     'App\\Models\\Booklet' => $baseDir . '/app/Models/Booklet.php',
-<<<<<<< HEAD
-    'App\\Models\\Examination' => $baseDir . '/app/Models/Examination.php',
-    'App\\Models\\Examiner' => $baseDir . '/app/Models/Examiner.php',
-    'App\\Models\\File' => $baseDir . '/app/Models/File.php',
-    'App\\Models\\LearningCenter' => $baseDir . '/app/Models/LearningCenter.php',
-    'App\\Models\\Module' => $baseDir . '/app/Models/Module.php',
-=======
     'App\\Models\\ExamType' => $baseDir . '/app/Models/ExamType.php',
     'App\\Models\\Examination' => $baseDir . '/app/Models/Examination.php',
     'App\\Models\\Examiner' => $baseDir . '/app/Models/Examiner.php',
@@ -100,7 +88,6 @@ return array(
     'App\\Models\\Matching' => $baseDir . '/app/Models/Matching.php',
     'App\\Models\\Module' => $baseDir . '/app/Models/Module.php',
     'App\\Models\\MultipleChoice' => $baseDir . '/app/Models/MultipleChoice.php',
->>>>>>> 6cbd75db48be0ce3cc01940751aaeabcdb3f2db8
     'App\\Models\\Questionnaire' => $baseDir . '/app/Models/Questionnaire.php',
     'App\\Models\\Schedule' => $baseDir . '/app/Models/Schedule.php',
     'App\\Models\\ScoreSheet' => $baseDir . '/app/Models/ScoreSheet.php',
