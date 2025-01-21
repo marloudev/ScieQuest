@@ -7,6 +7,7 @@ import { useState } from 'react';
 import store from '@/app/pages/store/store';
 // import { get_student_thunk, store_student_thunk } from '../redux/student-thunk';
 import { useSelector } from 'react-redux';
+import { get_students_thunk, store_students_thunk } from '../redux/students-thunk';
 
 export default function CreateSection() {
     const [open, setOpen] = React.useState(false);
@@ -23,12 +24,12 @@ export default function CreateSection() {
 
     async function submitForm(params) {
         setLoading(true)
-        const result = await store.dispatch(store_student_thunk({
+        const result = await store.dispatch(store_students_thunk({
             ...data,
             user_type: 3
         }))
         if (result.status == 200) {
-            await store.dispatch(get_student_thunk())
+            await store.dispatch(get_students_thunk())
             setNotify(true)
             setError({})
             setLoading(false)
@@ -65,7 +66,7 @@ export default function CreateSection() {
 
                 anchor='right'
                 open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] h-full flex" role="presentation" >
+                <Box className="w-[500px] h-full flex bg-white z-50" role="presentation" >
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3  w-full' >
                             <div className='text-2xl font-black'>
@@ -197,6 +198,7 @@ export default function CreateSection() {
                             onClick={submitForm}
                             disabled={loading}
                             variant='contained'
+                            type='submit'
                             className=' w-full'>
                             {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
                         </Button>

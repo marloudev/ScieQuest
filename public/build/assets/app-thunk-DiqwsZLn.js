@@ -1,1 +1,0 @@
-import{f as e,n}from"./app-BEIpjE_9.js";async function s(){try{return(await e.get("/api/user")).data}catch(t){return t}}function o(){return async function(t,a){const r=await s();return t(n.actions.setUser(r)),r}}export{o as g};

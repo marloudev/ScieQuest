@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChatGPTController;
 use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\ExaminerController;
+use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\LearningCenterController;
 use App\Http\Controllers\ModuleController;
 use App\Http\Controllers\QuestionnaireController;
@@ -31,6 +32,7 @@ Route::post('/rate-paragraph', [ChatGPTController::class, 'rateParagraph']);
 
 
 
+Route::post('/auth/login', [AccountController::class, 'login']);
 Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
 Route::resource('teachers', TeacherController::class);
@@ -43,6 +45,7 @@ Route::resource('schedule', ScheduleController::class);
 Route::resource('learning_centers', LearningCenterController::class);
 Route::resource('answers', AnswerController::class);
 Route::resource('booklet', ModuleController::class);
+Route::resource('exam_type', ExamTypeController::class);
 
 Route::resource('examiner', ExaminerController::class);
 Route::get('/get_examiner_by_examiner_id/{id}', [ExaminerController::class, 'get_examiner_by_examiner_id']);

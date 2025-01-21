@@ -5,10 +5,48 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class AccountController extends Controller
 {
-   
+    public function login(Request $request)
+    {
+        $validate = Validator::make($request->all(), [
+            'email' => 'required|string|email',
+            'password' => 'required|string'
+        ]);
+
+        if($validate->fails()){
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Validation Error!',
+                'data' => $validate->errors(),
+            ], 403);
+        }
+
+        // Check email exist
+        $user = User::where('email', $request->email)->first();
+
+        // Check password
+        if(!$user || !Hash::check($request->password, $user->password)) {
+            return response()->json([
+                'status' => 'failed',
+                'message' => 'Invalid credentials'
+                ], 401);
+        }
+
+        $data['token'] = $user->createToken($request->email)->plainTextToken;
+        $data['user'] = $user;
+
+        $response = [
+            'status' => 'success',
+            'message' => 'User is logged in successfully.',
+            'data' => $data,
+        ];
+
+        return response()->json($response, 200);
+    }
+
     public function index(Request $request)
     {
         // Fetch paginated users, you can specify how many items per page, e.g., 10
@@ -44,10 +82,8 @@ class AccountController extends Controller
         $validatedData = $request->validate([
             'user_id' => 'required|unique:users,user_id',  // Corrected 'unique' validation for 'user_id'
             'email' => 'required|email|unique:users,email', // Unique validation for email
-            // 'address' => 'required|string|max:255',  // Address must be a string with a max length of 255
-            'course_id' => 'max:255',  // Course must be a string with a max length of 255
-            'department_id' => 'required',  // Department must be a string with a max length of 255
-            // 'dob' => 'required|date',  // Date of birth must be a valid date
+            'course_id' => 'nullable|max:255',  // Course must be a string with a max length of 255
+            'department_id' => 'nullable',  // Department must be a string with a max length of 255
             'fname' => 'required|string|max:255',  // First name must be a string with a max length of 255
             'lname' => 'required|string|max:255',  // Last name must be a string with a max length of 255
             'password' => 'required|string|min:8',  // Password must be a string with a minimum length of 8
@@ -57,10 +93,6 @@ class AccountController extends Controller
         User::create([
             'user_id' => $validatedData['user_id'],
             'email' => $validatedData['email'],
-            // 'address' => $request->address??'',
-            'course_id' => $validatedData['course_id'] ?? null,
-            'department_id' => $validatedData['department_id'],
-            // 'dob' =>  $request->dob??'',
             'fname' => $validatedData['fname'],
             'lname' => $validatedData['lname'],
             'user_type' => $request->user_type,

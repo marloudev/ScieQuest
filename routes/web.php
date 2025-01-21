@@ -106,8 +106,8 @@ Route::middleware('auth:sanctum', 'administrator'
         Route::get('/{id}', function () {
             return Inertia::render('admin/module/id/page');
         });
-        Route::get('/{id}/{examination_id}', function () {
-            return Inertia::render('admin/module/id/id/page');
+        Route::get('/{id}/create', function () {
+            return Inertia::render('admin/module/id/create/page');
         });
     });
 });

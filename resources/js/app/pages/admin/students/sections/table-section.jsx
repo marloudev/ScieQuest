@@ -25,10 +25,11 @@ export default function TableSection() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
+          <TableCell>Student ID</TableCell>
             <TableCell>Fullname</TableCell>
-            <TableCell>Email</TableCell>
+            {/* <TableCell>Email</TableCell>
             <TableCell>Mobile</TableCell>
-            <TableCell>Age</TableCell>
+            <TableCell>Age</TableCell> */}
 
             <TableCell>Address</TableCell>
             <TableCell>Action</TableCell>
@@ -44,15 +45,17 @@ export default function TableSection() {
                 key={i}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
+                
+                <TableCell>{res.user_id}</TableCell>
                 <TableCell>
-                  {res.name}
+                  {res.fname}   {res.lname}
                 </TableCell>
                 <TableCell>{res.email}</TableCell>
-                <TableCell>
+                {/* <TableCell>
                   {res.mobile}
                 </TableCell>
                 <TableCell>{res?.dob ?? ''}</TableCell>
-                <TableCell>{res?.address ?? ''}</TableCell>
+                <TableCell>{res?.address ?? ''}</TableCell> */}
                 {/* <TableCell>{age}</TableCell> */}
                 {/* <TableCell>{res.address}</TableCell> */}
                 <TableCell>
