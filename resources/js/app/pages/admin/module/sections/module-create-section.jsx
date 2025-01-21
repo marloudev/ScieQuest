@@ -28,13 +28,9 @@ import moment from "moment";
 import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-<<<<<<< HEAD
-import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
-=======
 import { Add } from "@mui/icons-material";
->>>>>>> e12ed24a27fa52dcafd3e59f399857fa02a25b68
+import ReactQuill from "react-quill";
 
 export default function BookletCreateSection() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());

@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/extendSxProp-DT_4iHDo.js
-import{p as c,j as l}from"./identifier-BaslHc3D.js";const a=t=>{var s;const e={systemProps:{},otherProps:{}},o=((s=t==null?void 0:t.theme)==null?void 0:s.unstable_sxConfig)??c;return Object.keys(t).forEach(n=>{o[n]?e.systemProps[n]=t[n]:e.otherProps[n]=t[n]}),e};function x(t){const{sx:e,...o}=t,{systemProps:s,otherProps:n}=a(o);let r;return Array.isArray(e)?r=[s,...e]:typeof e=="function"?r=(...f)=>{const i=e(...f);return l(i)?{...s,...i}:s}:r={...s,...e},{...n,sx:r}}export{x as e};
-========
-import{p as c,j as l}from"./identifier-lKn5mbc2.js";const a=t=>{var s;const e={systemProps:{},otherProps:{}},o=((s=t==null?void 0:t.theme)==null?void 0:s.unstable_sxConfig)??c;return Object.keys(t).forEach(n=>{o[n]?e.systemProps[n]=t[n]:e.otherProps[n]=t[n]}),e};function x(t){const{sx:e,...o}=t,{systemProps:s,otherProps:n}=a(o);let r;return Array.isArray(e)?r=[s,...e]:typeof e=="function"?r=(...f)=>{const i=e(...f);return l(i)?{...s,...i}:s}:r={...s,...e},{...n,sx:r}}export{x as e};
->>>>>>>> e12ed24a27fa52dcafd3e59f399857fa02a25b68:public/build/assets/extendSxProp-CdtnWz38.js
