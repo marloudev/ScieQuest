@@ -12,15 +12,16 @@ export default function CreateQuestionnaireSection() {
     const module_id = window.location.pathname.split("/")[3];
 
     return (
-    <React.Fragment>
-            <Button
-                variant="outlined"
+        <React.Fragment>
+            <button
+                type="button"
                 onClick={() =>
                     router.visit(`/administrator/modules/${module_id}/create`)
                 }
-            >
-                Create Exercise
-            </Button>
+                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
+                <Add />
+                <b>Create Exercise</b>
+            </button>
         </React.Fragment>
     );
 }
