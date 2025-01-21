@@ -11,7 +11,7 @@ import Paper from "@mui/material/Paper";
 import { useSelector } from "react-redux";
 import moment from "moment";
 import { Button } from "@mui/material";
-import { Visibility } from "@mui/icons-material";
+import { Edit, EditNote, Visibility } from "@mui/icons-material";
 import { router } from "@inertiajs/react";
 
 export default function TableSection() {
@@ -62,6 +62,18 @@ export default function TableSection() {
                                             color="success"
                                         >
                                             <Visibility />
+                                        </Button>
+                                        <Button
+                                            // onClick={() =>
+                                            //     router.visit(
+                                            //         `/administrator/teachers/${res.id}/create_grades`,
+                                            //     )
+                                            // }
+                                            size="small"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            <EditNote />
                                         </Button>
                                     </div>
                                 </TableCell>

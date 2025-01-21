@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { router } from '@inertiajs/react';
 import { Button } from '@mui/material';
-import { Visibility } from '@mui/icons-material';
+import { EditNote, Visibility } from '@mui/icons-material';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
 // import { router } from '@inertiajs/react';
@@ -27,7 +27,7 @@ export default function BookletTableSection() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
-                    <TableCell>Quarter</TableCell>
+                        <TableCell>Quarter</TableCell>
                         <TableCell>Module Name</TableCell>
                         <TableCell>Grade</TableCell>
                         <TableCell>Created At</TableCell>
@@ -55,6 +55,18 @@ export default function BookletTableSection() {
                                             variant='contained'
                                             color='success'>
                                             <Visibility />
+                                        </Button>
+                                        <Button
+                                            // onClick={() =>
+                                            //     router.visit(
+                                            //         `/administrator/teachers/${res.id}/create_grades`,
+                                            //     )
+                                            // }
+                                            size="small"
+                                            variant="contained"
+                                            color="primary"
+                                        >
+                                            <EditNote />
                                         </Button>
                                     </div>
                                 </TableCell>

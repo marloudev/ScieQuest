@@ -13,7 +13,7 @@ import moment from 'moment';
 // import { Visibility } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { router } from '@inertiajs/react';
-import { Checklist, ListAlt } from '@mui/icons-material';
+import { Checklist, EditNote, ListAlt } from '@mui/icons-material';
 // import { router } from '@inertiajs/react';
 // import AddEnrollmentSection from './add-enrollment-section';
 
@@ -25,7 +25,7 @@ export default function TableSection() {
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
         <TableHead>
           <TableRow>
-          <TableCell>Student ID</TableCell>
+            <TableCell>Student ID</TableCell>
             <TableCell>Fullname</TableCell>
             {/* <TableCell>Email</TableCell>
             <TableCell>Mobile</TableCell>
@@ -39,13 +39,13 @@ export default function TableSection() {
           {students?.data.map((res, i) => {
             const dob = moment(res.dob, 'YYYY-MM-DD'); // Replace with actual date of birth
             const age = moment().diff(dob, 'years');
-            
+
             return (
               <TableRow
                 key={i}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                
+
                 <TableCell>{res.user_id}</TableCell>
                 <TableCell>
                   {res.fname}   {res.lname}
@@ -80,6 +80,18 @@ export default function TableSection() {
                         variant='contained'
                         color='success'>
                         <Checklist />
+                      </Button>
+                      <Button
+                        // onClick={() =>
+                        //     router.visit(
+                        //         `/administrator/teachers/${res.id}/create_grades`,
+                        //     )
+                        // }
+                        size="small"
+                        variant="contained"
+                        color="primary"
+                      >
+                        <EditNote />
                       </Button>
                     </a>
                   </div>

@@ -40,11 +40,11 @@ const NAVIGATION = [
         title: "Modules",
         icon: <AutoStories />,
     },
- 
+
     {
         kind: "divider",
     },
-    
+
     {
         segment: "logout",
         title: "Logout",
@@ -90,7 +90,7 @@ const demoTheme = createTheme({
         MuiDrawer: {
             styleOverrides: {
                 paper: {
-                    backgroundColor: 'transparent',  // Make Drawer transparent
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',   // Make Drawer transparent
                     boxShadow: 'none',  // Remove any shadow
                 },
             },
@@ -104,9 +104,9 @@ function AdminLayout({ children }, props) {
     const [open, setOpen] = React.useState(false);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         store.dispatch(get_user_login_thunk())
-    },[])
+    }, [])
 
     const router = React.useMemo(() => {
         return {
@@ -115,15 +115,15 @@ function AdminLayout({ children }, props) {
             navigate: (path) => {
                 if (path == '/logout') {
                     setOpen(true)
-                }else{  
+                } else {
                     if (path == '/instructor' || path == '/students/registered' || path == '/students/enrollment') {
-                        route.visit(String("/administrator" + path+'?page=1'));
-                    }else{
+                        route.visit(String("/administrator" + path + '?page=1'));
+                    } else {
                         route.visit(String("/administrator" + path));
                     }
                     dispatch(setPathname(path));
                 }
-               
+
             },
         };
     }, [pathname]);
@@ -138,12 +138,12 @@ function AdminLayout({ children }, props) {
             theme={demoTheme}
             window={demoWindow}
             branding={{
-                logo: <img src="/images/logo.jpg" />,
+                logo: <img src="/images/logo2.png" />,
                 title: "Science Quest",
             }}
         >
             <DashboardLayout>
-                <LogoutSection open={open} setOpen={setOpen}/>
+                <LogoutSection open={open} setOpen={setOpen} />
                 <div className="p-4">{children}</div>
             </DashboardLayout>
         </AppProvider>

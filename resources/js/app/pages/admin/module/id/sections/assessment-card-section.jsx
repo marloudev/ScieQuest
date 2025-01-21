@@ -29,14 +29,16 @@ export default function AssessmentCardSection() {
                 const htmlString = res.direction; // The direction content you want to display
                 return (
                     <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow" key={i}>
-                        <div className="w-full items-center justify-center flex">
-                            <img src="/images/logo.jpg" className="h-24 flex items-center justify-center" alt="" />
+                        <div className="w-full py-2 items-center justify-center flex rounded-lg bg-slate-200">
+                            <img src="/images/logo2.png" className="h-24 flex items-center justify-center" alt="" />
+                        </div>
+                        <div className="">
+                            <a href="#">
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Sample Assessment</h5>
+                            </a>
+                            <p className="mb-3 font-normal text-gray-700">Direction: Sample Direction</p>
                         </div>
 
-                        <a href="#">
-                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Sample Assessment</h5>
-                        </a>
-                        <p className="mb-3 font-normal text-gray-700">Direction: Sample Direction</p>
 
                         {/* Toggle Button */}
                         <div
