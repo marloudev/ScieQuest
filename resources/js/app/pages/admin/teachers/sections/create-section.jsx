@@ -10,6 +10,7 @@ import { useSelector } from 'react-redux';
 import { store_students_thunk } from '../../students/redux/students-thunk';
 import { get_teachers_service } from '@/app/services/teachers-service';
 import { get_teachers_thunk } from '../redux/teachers-thunk';
+import { Add } from '@mui/icons-material';
 
 export default function CreateSection() {
     const [open, setOpen] = React.useState(false);
@@ -63,7 +64,13 @@ export default function CreateSection() {
                     Successfully Created!
                 </Alert>
             </Snackbar>
-            <Button variant='contained' onClick={toggleDrawer(true)}>Create Teacher</Button>
+            <button
+                type="button"
+                onClick={toggleDrawer(true)}
+                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
+                <Add />
+                <b>Create Teacher</b>
+            </button>
             <Drawer
 
                 anchor='right'

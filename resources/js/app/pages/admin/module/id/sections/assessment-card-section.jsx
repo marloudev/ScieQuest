@@ -1,12 +1,8 @@
 import * as React from "react";
 import { styled } from "@mui/material/styles";
-import Card from "@mui/material/Card";
-import CardMedia from "@mui/material/CardMedia";
-import CardContent from "@mui/material/CardContent";
 import IconButton from "@mui/material/IconButton";
-import Typography from "@mui/material/Typography";
 import { useSelector } from "react-redux";
-import CollapseComponent from "../components/collapse-component";
+import { ArrowDownwardOutlined, ArrowUpwardOutlined } from "@mui/icons-material";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -16,57 +12,49 @@ const ExpandMore = styled((props) => {
     transition: theme.transitions.create("transform", {
         duration: theme.transitions.duration.shortest,
     }),
-    variants: [
-        {
-            props: ({ expand }) => !expand,
-            style: {
-                transform: "rotate(0deg)",
-            },
-        },
-        {
-            props: ({ expand }) => !!expand,
-            style: {
-                transform: "rotate(180deg)",
-            },
-        },
-    ],
+    transform: ({ expand }) => (expand ? "rotate(180deg)" : "rotate(0deg)"),
 }));
 
 export default function AssessmentCardSection() {
-
     const { exam_types } = useSelector((store) => store.booklets);
- 
-    console.log("exam_types", exam_types);
+    const [expandedIndex, setExpandedIndex] = React.useState(null); // Track expanded card
+
+    const handleExpandClick = (index) => {
+        setExpandedIndex((prevIndex) => (prevIndex === index ? null : index)); // Toggle expand/collapse
+    };
 
     return (
-        <div className="w-full flex  flex-col gap-5 items-center justify-center">
+        <div className="w-full flex flex-col gap-5">
             {exam_types.map((res, i) => {
-                const htmlString = res.direction;
+                const htmlString = res.direction; // The direction content you want to display
                 return (
-                    <Card sx={{ minWidth: 645, maxWidth: 645 }}>
-                        <CardMedia
-                            component="img"
-                            height="194"
-                            image="/images/logo.jpg"
-                            alt="Paella dish"
-                        />
-                        <CardContent>
-                            <Typography
-                                variant="body2"
-                                sx={{ color: "text.secondary" }}
-                            >
-                                <div className="text-xl font-black">
-                                    Direction
-                                </div>
-                                <div
-                                    dangerouslySetInnerHTML={{
-                                        __html: htmlString,
-                                    }}
-                                />
-                            </Typography>
-                        </CardContent>
-                        <CollapseComponent data={res}/>
-                    </Card>
+                    <div className="w-full p-6 bg-white border border-gray-200 rounded-lg shadow" key={i}>
+                        <div className="w-full items-center justify-center flex">
+                            <img src="/images/logo.jpg" className="h-24 flex items-center justify-center" alt="" />
+                        </div>
+
+                        <a href="#">
+                            <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Sample Assessment</h5>
+                        </a>
+                        <p className="mb-3 font-normal text-gray-700">Direction: Sample Direction</p>
+
+                        {/* Toggle Button */}
+                        <div
+                            className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
+                            onClick={() => handleExpandClick(i)}
+                        >
+                            Read more &nbsp;
+                            {/* Conditionally render the correct arrow icon */}
+                            {expandedIndex === i ? <ArrowUpwardOutlined /> : <ArrowDownwardOutlined />}
+                        </div>
+
+                        {/* Expanded Content */}
+                        {expandedIndex === i && (
+                            <div className="mt-4">
+                                <h3><b>Multiple Choice</b></h3>
+                            </div>
+                        )}
+                    </div>
                 );
             })}
         </div>

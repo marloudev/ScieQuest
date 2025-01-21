@@ -17,12 +17,11 @@ export default function StudentsPage() {
         <AdminLayout>
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
-                    {/* <CreateSection /> */}
+                    <CreateSection />
                     <SearchSection />
                 </div>
                 <div className="flex flex-col items-center justify-between h-[82vh] w-full">
                     <div className="w-full flex flex-col gap-3">
-                        <CreateSection />
                         <TableSection />
                     </div>
                     <PaginationSection />
