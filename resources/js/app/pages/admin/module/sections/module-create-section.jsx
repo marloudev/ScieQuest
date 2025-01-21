@@ -14,6 +14,7 @@ import Slide from "@mui/material/Slide";
 import {
     Box,
     FormControl,
+    FormHelperText,
     InputLabel,
     MenuItem,
     Select,
@@ -28,6 +29,8 @@ import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function BookletCreateSection() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -104,6 +107,35 @@ export default function BookletCreateSection() {
                         <CloseIcon />
                     </IconButton>
                 </Toolbar>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                    <FormControl fullWidth error={!!error?.quarter}>
+                        <InputLabel id="demo-simple-select-label">
+                            Select Quarter
+                        </InputLabel>
+                        <Select
+                            labelId="demo-simple-select-label"
+                            id="demo-simple-select"
+                            name="quarter"
+                            label="Select Quarter"
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    [e.target.name]: e.target.value,
+                                })
+                            }
+                            value={data.quarter ?? ""}
+                        >
+                            <MenuItem selected disabled></MenuItem>
+                            <MenuItem value="1st Quarter">1st Quarter</MenuItem>
+                            <MenuItem value="2nd Quarter">2nd Quarter</MenuItem>
+                            <MenuItem value="3rd Quarter">3rd Quarter</MenuItem>
+                            <MenuItem value="4th Quarter">4th Quarter</MenuItem>
+                        </Select>
+                        {error?.grade && (
+                            <FormHelperText>{error.grade}</FormHelperText>
+                        )}
+                    </FormControl>
+                </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full">
                     <TextField
                         onChange={(e) =>
@@ -149,79 +181,40 @@ export default function BookletCreateSection() {
                         )}
                     </FormControl>
                 </Toolbar>
-                <Toolbar className="flex-col gap-3 flex w-full mt-2">
-                    <FormControl fullWidth error={!!error?.introductory}>
-                        <TextareaAutosize
-                            className="p-3"
-                            name="introductory"
-                            placeholder="Introductory Message"
-                            value={data.introductory ?? ""}
-                            onChange={(e) => grade_function(e)}
-                            minRows={10}
-                        />
-                        {error?.introductory && (
-                            <FormHelperText>
-                                {error.introductory}
-                            </FormHelperText>
-                        )}
-                    </FormControl>
-                </Toolbar>
-                <Toolbar className=" flex-col gap-3 flex w-full mt-2">
-                    <FormControl fullWidth error={!!error?.wintn}>
-                        <TextareaAutosize
-                            className="p-3"
-                            name="wintn"
-                            placeholder="What I Need to Know"
-                            value={data.wintn ?? ""}
-                            onChange={(e) => grade_function(e)}
-                            minRows={10}
-                        />
-                        {error?.wintn && (
-                            <FormHelperText>{error.wintn}</FormHelperText>
-                        )}
-                    </FormControl>
 
-                    {/* <Box
-                        sx={{
-                            display: "flex",
-                            justifyContent: "center",
-                            border: 1,
-                        }}
-                    >
-                        <Editor
-                            className="border-2 border-black"
-                            editorState={editorState}
-                            toolbar={{
-                                options: [
-                                    "inline",
-                                    "blockType",
-                                    "fontSize",
-                                    "list",
-                                    "textAlign",
-                                    "history",
-                                ],
-                                inline: {
-                                    options: ["bold", "italic", "underline"],
-                                },
-                                blockType: { inDropdown: true },
-                                fontSize: {
-                                    options: [
-                                        8, 10, 12, 14, 16, 18, 24, 30, 48,
-                                    ],
-                                },
-                            }}
-                            wrapperClassName="demo-wrapper"
-                            editorClassName="demo-editor"
-                        />
-                    </Box> */}
+                <div className="mx-6 font-black terxt-xl">Introductory</div>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                    <ReactQuill
+                        theme="snow"
+                        value={data.introductory}
+                        className="text-black w-full h-52"
+                        onChange={(e) =>
+                            setData({
+                                ...data,
+                                introductory: e,
+                            })
+                        }
+                    />
                 </Toolbar>
-                <Toolbar>
-                    <Typography
-                        sx={{ ml: 2, flex: 1 }}
-                        variant="h6"
-                        component="div"
-                    ></Typography>
+                <div className="mt-12 mx-6 font-black terxt-xl">
+                    What I Need to Know
+                </div>
+                <Toolbar className=" flex-col gap-3 flex w-full mt-2">
+                    <ReactQuill
+                        theme="snow"
+                        value={data.wintn}
+                        className="text-black w-full h-52"
+                        onChange={(e) =>
+                            setData({
+                                ...data,
+                                wintn: e,
+                            })
+                        }
+                    />
+                </Toolbar>
+                <Toolbar className="mt-10">
                     <Button
+                        className="w-full"
                         disabled={loading}
                         variant="contained"
                         autoFocus

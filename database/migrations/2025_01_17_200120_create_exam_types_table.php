@@ -17,8 +17,10 @@ return new class extends Migration
             $table->string('subject_matter')->nullable();
             $table->longText('discussions')->nullable();
             $table->longText('link')->nullable();
-            $table->string('type')->nullable();
-            $table->longText('direction')->nullable();
+            $table->string('type1')->nullable();
+            $table->longText('direction1')->nullable();
+            $table->string('type2')->nullable();
+            $table->longText('direction2')->nullable();
             $table->timestamps();
         });
     }

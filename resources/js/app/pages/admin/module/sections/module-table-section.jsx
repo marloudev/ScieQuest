@@ -27,6 +27,7 @@ export default function BookletTableSection() {
             <Table sx={{ minWidth: 650 }} aria-label="simple table">
                 <TableHead>
                     <TableRow>
+                    <TableCell>Quarter</TableCell>
                         <TableCell>Module Name</TableCell>
                         <TableCell>Grade</TableCell>
                         <TableCell>Created At</TableCell>
@@ -42,6 +43,7 @@ export default function BookletTableSection() {
                                 key={i}
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
+                                <TableCell>{res.quarter}</TableCell>
                                 <TableCell>{res.title}</TableCell>
                                 <TableCell>{res?.grade ?? ''}</TableCell>
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>

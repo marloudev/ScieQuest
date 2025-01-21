@@ -17,7 +17,7 @@ export default function CreateQuestionnaireSection() {
             <Button variant="outlined" 
             onClick={()=>router.visit(`/administrator/modules/${module_id}/create`)}
          >
-                Create Questionnaire
+                Create Exercise
             </Button>
         </React.Fragment>
     );

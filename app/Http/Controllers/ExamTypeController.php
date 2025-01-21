@@ -17,15 +17,17 @@ class ExamTypeController extends Controller
     {
         $exam_type = ExamType::create([
             'module_id' => $request->module_id,
-            'type' => $request->type,
-            'direction' => $request->direction,
+            'type1' => $request->pre_exercise['type1'],
+            'direction1' => $request->pre_exercise['direction1'],
+            'type2' => $request->assessment['type2'],
+            'direction2' => $request->assessment['direction2'],
             'subject_matter' => $request->subject_matter,
             'discussions' => $request->discussions,
             'link' => $request->link,
         ]);
-        $values =  $request->values;
-        if ($request->type == 'Fill In The Blank') {
-            foreach ($values as $key => $value) {
+        $values1 =  $request->pre_exercise['values'];
+        if ($request->pre_exercise['type1'] == 'Fill In The Blank') {
+            foreach ($values1 as $key => $value) {
                 FillInTheBlank::create([
                     'exam_types_id' => $exam_type->id,
                     'question' => $value['question'],
@@ -33,16 +35,16 @@ class ExamTypeController extends Controller
                 ]);
             }
             //   ExamType::create($request->all());
-        } else if ($request->type == 'Multiple Choice') {
-            foreach ($values as $key => $value) {
+        } else if ($request->pre_exercise['type1'] == 'Multiple Choice') {
+            foreach ($values1 as $key => $value) {
                 MultipleChoice::create([
                     'exam_types_id' => $exam_type->id,
                     'question' => $value['question'],
                     'answer_key' => $value['answer_key'],
                 ]);
             }
-        } else if ($request->type == 'Matching') {
-            foreach ($request->matches as $key => $value) {
+        } else if ($request->pre_exercise['type1'] == 'Matching') {
+            foreach ($request->pre_exercise['matches'] as $key => $value) {
                 Matching::create([
                     'exam_types_id' => $exam_type->id,
                     'column_a' => $value['column_a'],
@@ -50,16 +52,60 @@ class ExamTypeController extends Controller
                     'answer_key' => $value['answer_key'],
                 ]);
             }
-        } else if ($request->type == 'Identification') {
-            foreach ($values as $key => $value) {
+        } else if ($request->pre_exercise['type1'] == 'Identification') {
+            foreach ($values1 as $key => $value) {
                 Identification::create([
                     'exam_types_id' => $exam_type->id,
                     'question' => $value['question'],
                     'answer_key' => $value['answer_key'],
                 ]);
             }
-        } else if ($request->type == 'True Or False') {
-            foreach ($values as $key => $value) {
+        } else if ($request->pre_exercise['type1'] == 'True Or False') {
+            foreach ($values1 as $key => $value) {
+                TrueOrFalse::create([
+                    'exam_types_id' => $exam_type->id,
+                    'question' => $value['question'],
+                    'answer_key' => $value['answer_key'],
+                ]);
+            }
+        }
+        $values2 =  $request->assessment['values'];
+        if ($request->assessment['type2'] == 'Fill In The Blank') {
+            foreach ($values2 as $key => $value) {
+                FillInTheBlank::create([
+                    'exam_types_id' => $exam_type->id,
+                    'question' => $value['question'],
+                    'answer_key' => $value['answer_key'],
+                ]);
+            }
+            //   ExamType::create($request->all());
+        } else if ($request->assessment['type2'] == 'Multiple Choice') {
+            foreach ($values2 as $key => $value) {
+                MultipleChoice::create([
+                    'exam_types_id' => $exam_type->id,
+                    'question' => $value['question'],
+                    'answer_key' => $value['answer_key'],
+                ]);
+            }
+        } else if ($request->assessment['type2'] == 'Matching') {
+            foreach ($request->assessment['matches'] as $key => $value) {
+                Matching::create([
+                    'exam_types_id' => $exam_type->id,
+                    'column_a' => $value['column_a'],
+                    'column_b' => $value['column_b'],
+                    'answer_key' => $value['answer_key'],
+                ]);
+            }
+        } else if ($request->assessment['type2'] == 'Identification') {
+            foreach ($values2 as $key => $value) {
+                Identification::create([
+                    'exam_types_id' => $exam_type->id,
+                    'question' => $value['question'],
+                    'answer_key' => $value['answer_key'],
+                ]);
+            }
+        } else if ($request->assessment['type2'] == 'True Or False') {
+            foreach ($values2 as $key => $value) {
                 TrueOrFalse::create([
                     'exam_types_id' => $exam_type->id,
                     'question' => $value['question'],

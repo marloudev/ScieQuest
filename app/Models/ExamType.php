@@ -14,8 +14,10 @@ class ExamType extends Model
         'subject_matter',
         'discussions',
         'link',
-        'type',
-        'direction'
+        'type1',
+        'direction1',
+        'type2',
+        'direction2'
     ];
 
     public function fill_in_the_blank(): HasMany
