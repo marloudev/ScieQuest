@@ -10,67 +10,64 @@ import store from '@/app/pages/store/store';
 import { get_teachers_thunk, update_teachers_thunk } from '../redux/teachers-thunk';
 import { useSelector } from 'react-redux';
 
-export default function UpdateSection({ data }) {
-    const [open, setOpen] = React.useState(false);
-    const [form, setForm] = useState({})
-    const [error, setError] = useState({})
-    const [notify, setNotify] = useState(false)
-    const [loading, setLoading] = useState(false)
-    const { departments } = useSelector((state) => state.department)
+export default function UpdateSection({ data, onClose }) {
+    const [open, setOpen] = React.useState(true); // Open by default when rendered
+    const [form, setForm] = useState(data || {});
+    const [error, setError] = useState({});
+    const [notify, setNotify] = useState(false);
+    const [loading, setLoading] = useState(false);
+    // const { departments } = useSelector((state) => state.department);
 
-    useEffect(() => {
-        setForm(data)
-    }, [])
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
+        if (!newOpen && onClose) {
+            onClose(); // Notify parent to close
+        }
     };
 
     async function submitForm(params) {
-        setLoading(true)
-        const result = await store.dispatch(update_teachers_thunk(form))
-        if (result.status == 200) {
-            await store.dispatch(get_teachers_thunk())
-            setNotify(true)
-            setError({})
-            setLoading(false)
+        setLoading(true);
+        const result = await store.dispatch(update_teachers_thunk(form));
+        if (result.status === 200) {
+            await store.dispatch(get_teachers_thunk());
+            setNotify(true);
+            setError({});
+            setLoading(false);
         } else {
-            setLoading(false)
-            setError(result.response.data.errors)
+            setLoading(false);
+            setError(result.response.data.errors);
         }
     }
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setNotify(false)
-        setOpen(false);
+
+    const handleCloseNotification = () => {
+        setNotify(false);
     };
 
     return (
         <div>
-            <Snackbar open={notify}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                autoHideDuration={3000} onClose={handleClose}>
+            <Snackbar
+                open={notify}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                autoHideDuration={3000}
+                onClose={handleCloseNotification}
+            >
                 <Alert
-                    onClose={handleClose}
+                    onClose={handleCloseNotification}
                     severity="success"
                     variant="filled"
-                    sx={{ width: '100%' }}
+                    sx={{ width: "100%" }}
                 >
                     Successfully Updated!
-                    
                 </Alert>
             </Snackbar>
-            <Button size='small' variant='contained' onClick={toggleDrawer(true)}><Edit /></Button>
             <Drawer
-
                 anchor='right'
                 open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] h-full flex" role="presentation" >
+                <Box className="w-[500px] h-full flex bg-white" role="presentation" >
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3  w-full' >
                             <div className='text-2xl font-black'>
-                                Edit teachers
+                                Update Teacher
                             </div>
                             <TextField onChange={(e) => setForm({
                                 ...data,
@@ -136,26 +133,7 @@ export default function UpdateSection({ data }) {
                                 id="outlined-basic"
                                 label="Password"
                                 variant="outlined" />
-                        
-                        <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Department</InputLabel>
-                                <Select
-                                    id="demo-simple-select"
-                                    name='department_id'
-                                    label="Department"
-                                    value={form.department_id}
-                                    onChange={(e) => setForm({
-                                        ...data,
-                                        [e.target.name]: e.target.value
-                                    })}
-                                >
-                                    {
-                                        departments.data.map((res, i) => {
-                                            return <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                            </FormControl>
+
                             {/* <TextField
                                 onChange={(e) => setForm({
                                     ...form,
