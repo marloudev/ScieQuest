@@ -10,115 +10,148 @@ use App\Models\Matching;
 use App\Models\MultipleChoice;
 use App\Models\TrueOrFalse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ExamTypeController extends Controller
 {
     public function store(Request $request)
     {
+       
+        // Decode JSON fields
+        $assessment = json_decode($request->assessment, true); // Decoding JSON into an array
+        $preExercise = json_decode($request->pre_exercise, true); // Decoding JSON into an array
+    
+        // Handle file uploads
+        $url1 = $this->uploadFile($request, 'file1');
+        $url2 = $this->uploadFile($request, 'file2');
+    
+        // Create the ExamType record
         $exam_type = ExamType::create([
             'module_id' => $request->module_id,
-            'type1' => $request->pre_exercise['type1'],
-            'direction1' => $request->pre_exercise['direction1'],
-            'type2' => $request->assessment['type2'],
-            'direction2' => $request->assessment['direction2'],
+            'type1' => $preExercise['type1'],
+            'direction1' => $preExercise['direction1'],
+            'type2' => $assessment['type2'],
+            'direction2' => $assessment['direction2'],
             'subject_matter' => $request->subject_matter,
             'discussions' => $request->discussions,
             'link' => $request->link,
+            'file1' => $url1 ?? '',
+            'file2' => $url2 ?? '',
         ]);
-        $values1 =  $request->pre_exercise['values'];
-        if ($request->pre_exercise['type1'] == 'Fill In The Blank') {
-            foreach ($values1 as $key => $value) {
-                FillInTheBlank::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-            //   ExamType::create($request->all());
-        } else if ($request->pre_exercise['type1'] == 'Multiple Choice') {
-            foreach ($values1 as $key => $value) {
-                MultipleChoice::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->pre_exercise['type1'] == 'Matching') {
-            foreach ($request->pre_exercise['matches'] as $key => $value) {
-                Matching::create([
-                    'exam_types_id' => $exam_type->id,
-                    'column_a' => $value['column_a'],
-                    'column_b' => $value['column_b'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->pre_exercise['type1'] == 'Identification') {
-            foreach ($values1 as $key => $value) {
-                Identification::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->pre_exercise['type1'] == 'True Or False') {
-            foreach ($values1 as $key => $value) {
-                TrueOrFalse::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        }
-        $values2 =  $request->assessment['values'];
-        if ($request->assessment['type2'] == 'Fill In The Blank') {
-            foreach ($values2 as $key => $value) {
-                FillInTheBlank::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-            //   ExamType::create($request->all());
-        } else if ($request->assessment['type2'] == 'Multiple Choice') {
-            foreach ($values2 as $key => $value) {
-                MultipleChoice::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->assessment['type2'] == 'Matching') {
-            foreach ($request->assessment['matches'] as $key => $value) {
-                Matching::create([
-                    'exam_types_id' => $exam_type->id,
-                    'column_a' => $value['column_a'],
-                    'column_b' => $value['column_b'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->assessment['type2'] == 'Identification') {
-            foreach ($values2 as $key => $value) {
-                Identification::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        } else if ($request->assessment['type2'] == 'True Or False') {
-            foreach ($values2 as $key => $value) {
-                TrueOrFalse::create([
-                    'exam_types_id' => $exam_type->id,
-                    'question' => $value['question'],
-                    'answer_key' => $value['answer_key'],
-                ]);
-            }
-        }
-
+    
+        // Process Pre Exercise Questions
+        $this->processQuestions($exam_type->id, $preExercise, 'pre_exercise');
+    
+        // Process Assessment Questions
+        $this->processQuestions($exam_type->id, $assessment, 'assessment');
+    
+        // Return success response
         return response()->json([
             'status' => 'success',
             'message' => 'Assessment has been created.',
         ], 200);
     }
+    
+    // File Upload Helper
+    private function uploadFile(Request $request, $fileKey)
+    {
+        if ($request->hasFile($fileKey)) {
+            $path = $request->file($fileKey)->store('personal-' . date("Y"), 's3');
+            return Storage::disk('s3')->url($path);
+        }
+        return null;
+    }
+    
+    // Process Questions Based on Type
+    private function processQuestions($examTypeId, $data, $type = 'pre_exercise')
+    {
+        $values = $data['values'] ?? [];
+        $matches = $data['matches'] ?? [];
+    
+        // Process questions based on type
+        $type1 = $data['type1'] ?? null;
+        $type2 = $data['type2'] ?? null;
+    
+        $questionType = $type === 'pre_exercise' ? $type1 : $type2;
+        
+        switch ($questionType) {
+            case 'Fill In The Blank':
+                $this->createFillInTheBlank($examTypeId, $values);
+                break;
+            case 'Multiple Choice':
+                $this->createMultipleChoice($examTypeId, $values);
+                break;
+            case 'Matching':
+                $this->createMatching($examTypeId, $matches);
+                break;
+            case 'Identification':
+                $this->createIdentification($examTypeId, $values);
+                break;
+            case 'True Or False':
+                $this->createTrueOrFalse($examTypeId, $values);
+                break;
+            default:
+                break;
+        }
+    }
+    
+    // Helper Methods for Different Question Types
+    private function createFillInTheBlank($examTypeId, $values)
+    {
+        foreach ($values as $value) {
+            FillInTheBlank::create([
+                'exam_types_id' => $examTypeId,
+                'question' => $value['question'],
+                'answer_key' => $value['answer_key'],
+            ]);
+        }
+    }
+    
+    private function createMultipleChoice($examTypeId, $values)
+    {
+        foreach ($values as $value) {
+            MultipleChoice::create([
+                'exam_types_id' => $examTypeId,
+                'question' => $value['question'],
+                'answer_key' => $value['answer_key'],
+            ]);
+        }
+    }
+    
+    private function createMatching($examTypeId, $matches)
+    {
+        foreach ($matches as $match) {
+            Matching::create([
+                'exam_types_id' => $examTypeId,
+                'column_a' => $match['column_a'],
+                'column_b' => $match['column_b'],
+                'answer_key' => $match['answer_key'],
+            ]);
+        }
+    }
+    
+    private function createIdentification($examTypeId, $values)
+    {
+        foreach ($values as $value) {
+            Identification::create([
+                'exam_types_id' => $examTypeId,
+                'question' => $value['question'],
+                'answer_key' => $value['answer_key'],
+            ]);
+        }
+    }
+    
+    private function createTrueOrFalse($examTypeId, $values)
+    {
+        foreach ($values as $value) {
+            TrueOrFalse::create([
+                'exam_types_id' => $examTypeId,
+                'question' => $value['question'],
+                'answer_key' => $value['answer_key'],
+            ]);
+        }
+    }
+    
 
     public function show($id)
     {

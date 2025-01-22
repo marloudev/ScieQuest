@@ -35,9 +35,10 @@ export default function CreateAssessment() {
         subject_matter: "",
         discussions: "",
         link: "",
+        file1: "",
+        file2: "",
         pre_exercise: {
             type1: "",
-            file: "",
             direction1: "",
             values: [
                 {
@@ -55,7 +56,6 @@ export default function CreateAssessment() {
         },
         assessment: {
             type2: "",
-            file: "",
             direction2: "",
             values: [
                 {
@@ -82,15 +82,29 @@ export default function CreateAssessment() {
         try {
             setLoading(true);
             
+            const formData = new FormData();
+
+            // Append all the regular data
+            formData.append('subject_matter', data.subject_matter);
+            formData.append('discussions', data.discussions);
+            formData.append('link', data.link);
+            formData.append('assessment', JSON.stringify(data.assessment));  // Convert JSON to string
+            formData.append('pre_exercise', JSON.stringify(data.pre_exercise)); 
+            formData.append('module_id', module_id);
+            formData.append('unique', moment().format("MMDDYYYYhhmmss"));
+    
+            // Append files if they exist
+            if (data.file1) {
+                formData.append('file1', data.file1);
+            }
+            if (data.file2) {
+                formData.append('file2', data.file2);
+            }
             const result = await store.dispatch(
-                store_exam_type_thunk({
-                    ...data,
-                    module_id: module_id,
-                    unique: moment().format("MMDDYYYYhhmmss"),
-                }),
+                store_exam_type_thunk(formData),
             );
             if (result.status == 200) {
-                // router.visit(`/administrator/modules/${module_id}`);
+                //  router.visit(`/administrator/modules/${module_id}`);
                 setLoading(false);
                 setOpen(false);
             } else {
@@ -218,7 +232,7 @@ export default function CreateAssessment() {
                         role={undefined}
                         variant="contained"
                         startIcon={
-                            data?.pre_exercise.file1 ? (
+                            data?.file1 ? (
                                 <>
                                     <Check />
                                     UPLOADED
@@ -228,8 +242,8 @@ export default function CreateAssessment() {
                             )
                         }
                     >
-                        {data?.pre_exercise.file1
-                            ? data?.pre_exercise?.file1?.name
+                        {data?.file1
+                            ? data?.file1?.name
                             : "Upload files"}
                         <VisuallyHiddenInput
                             name="file1"
@@ -238,12 +252,7 @@ export default function CreateAssessment() {
                             onChange={(e) =>
                                 setData({
                                     ...data,
-                                    pre_exercise: {
-                                        ...data.pre_exercise,
-                                        [e.target.name]: URL.createObjectURL(
-                                            e.target.files[0],
-                                        ),
-                                    },
+                                    [e.target.name]: e.target.files[0],
                                 })
                             }
                             accept="image/*"
@@ -870,7 +879,7 @@ export default function CreateAssessment() {
                         role={undefined}
                         variant="contained"
                         startIcon={
-                            data?.assessment.file2 ? (
+                            data?.file2 ? (
                                 <>
                                     <Check />
                                     UPLOADED
@@ -880,22 +889,16 @@ export default function CreateAssessment() {
                             )
                         }
                     >
-                        {data?.assessment.file2
-                            ? data?.assessment?.file2?.name
+                        {data?.file2
+                            ? data?.file2?.name
                             : "Upload files"}
                         <VisuallyHiddenInput
                             name="file2"
                             type="file"
-                            // onChange={(event) => console.log(event.target.files)}
                             onChange={(e) =>
                                 setData({
                                     ...data,
-                                    assessment: {
-                                        ...data.assessment,
-                                        [e.target.name]: URL.createObjectURL(
-                                            e.target.files[0],
-                                        ),
-                                    },
+                                    [e.target.name]:e.target.files[0],
                                 })
                             }
                             accept="image/*"
