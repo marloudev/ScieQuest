@@ -87,24 +87,15 @@ export default function TableSection() {
                                                 </Button>
                                             </Tooltip>
                                             <Tooltip title="Update Teacher">
-                                                <Button
-                                                    onClick={() => handleEditClick(res)}
-                                                    size="small"
-                                                    variant="contained"
-                                                    color="primary"
-                                                >
-                                                    <EditNote />
-                                                </Button>
+                                                <UpdateSection
+                                                    data={res}
+                                                />
+
                                             </Tooltip>
                                             <Tooltip title="Remove Teacher">
-                                                <Button
-                                                    onClick={() => handleDeleteClick(res)}
-                                                    size="small"
-                                                    variant="contained"
-                                                    color="error"
-                                                >
-                                                    <Delete />
-                                                </Button>
+                                                <RemoveTeacherSection
+                                                    data={res}
+                                                />
                                             </Tooltip>
                                         </div>
                                     </TableCell>
@@ -115,23 +106,23 @@ export default function TableSection() {
                 </Table>
             </TableContainer>
 
-            {
+            {/* {
                 selectedTeacher && (
                     <UpdateSection
                         data={selectedTeacher}
                         onClose={handleCloseUpdateSection}
                     />
                 )
-            }
+            } */}
 
-            {
+            {/* {
                 selectedRemoveTeacher && (
                     <RemoveTeacherSection
                         data={selectedRemoveTeacher}
                         onClose={handleCloseUpdateSection}
                     />
                 )
-            }
+            } */}
         </>
     );
 }

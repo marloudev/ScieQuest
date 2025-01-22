@@ -41,6 +41,6 @@ export async function delete_teachers_service(id) {
         const res = await axios.delete(`/api/teachers/${id}`);
         return res;
     } catch (error) {
-        return error;
+        return error; 
     }
 }

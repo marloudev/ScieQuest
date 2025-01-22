@@ -54,7 +54,7 @@ export default function CreateSection() {
         <div>
             <Snackbar open={notify}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                autoHideDuration={3000} onClose={handleClose}>
+                autoHideDuration={400} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
                     severity="success"

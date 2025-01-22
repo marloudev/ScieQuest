@@ -1,27 +1,55 @@
-import { Alert, Box, Button, CircularProgress, Drawer, Snackbar, TextField } from '@mui/material'
-import React from 'react'
-import { useState } from 'react';
+import React, { useState } from "react";
+import {
+    Dialog,
+    DialogActions,
+    DialogContent,
+    DialogContentText,
+    DialogTitle,
+    Button,
+    CircularProgress,
+    Snackbar,
+    Alert
+} from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import { delete_teachers_thunk, get_teachers_thunk } from "../redux/teachers-thunk";
+import store from "@/app/pages/store/store";
 
-export default function RemoveTeacherSection({ data, onClose }) {
-    const [open, setOpen] = React.useState(true); // Open by default when rendered
-    const [form, setForm] = useState(data || {});
-    const [error, setError] = useState({});
+export default function RemoveTeacherSection({ data }) {
+    const [open, setOpen] = useState(false); // Open by default when rendered
     const [notify, setNotify] = useState(false);
     const [loading, setLoading] = useState(false);
 
-    const toggleDrawer = (newOpen) => () => {
-        setOpen(newOpen);
-        if (!newOpen && onClose) {
-            onClose(); // Notify parent to close
-        }
+    const handleClose = () => {
+        setOpen(false);
+    };
+
+    const handleRemove = async () => {
+        setLoading(true);
+        await store.dispatch(delete_teachers_thunk(data?.id));
+        await store.dispatch(get_teachers_thunk())
+        setTimeout(() => {
+            setLoading(false);
+            setNotify(true);
+            handleClose();// Notify parent of successful removal
+        }, 1500);
     };
 
     const handleCloseNotification = () => {
         setNotify(false);
+        setOpen(false);
     };
 
     return (
         <div>
+            <Button
+                onClick={() => setOpen(true)}
+                size="small"
+                variant="contained"
+                color="error"
+            >
+                <Delete />
+            </Button>
+            {/* Snackbar for Notification */}
             <Snackbar
                 open={notify}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -34,130 +62,39 @@ export default function RemoveTeacherSection({ data, onClose }) {
                     variant="filled"
                     sx={{ width: "100%" }}
                 >
-                    Removed Succesfully!
+                    Teacher Removed Successfully!
                 </Alert>
             </Snackbar>
-            <Drawer
-                anchor='right'
-                open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] h-full flex bg-white" role="presentation" >
-                    <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
-                        <div className='flex flex-col gap-3  w-full' >
-                            <div className='text-2xl font-black'>
-                                Update Teacher
-                            </div>
-                            <TextField onChange={(e) => setForm({
-                                ...data,
-                                [e.target.name]: e.target.value
-                            })}
-                                value={form.user_id}
-                                error={error?.user_id ? true : false}
-                                helperText={error?.user_id ?? ''}
-                                name="user_id"
-                                type='text'
-                                id="outlined-basic"
-                                label="Employee ID"
-                                variant="outlined"
-                            />
-                            <TextField onChange={(e) => setForm({
-                                ...form,
-                                [e.target.name]: e.target.value
-                            })}
-                                value={form.fname}
-                                error={error?.fname ? true : false}
-                                helperText={error?.fname ?? ''}
-                                name="fname"
-                                type='text'
-                                id="outlined-basic"
-                                label="First Name"
-                                variant="outlined"
-                            />
-                            <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                value={form.lname}
-                                error={error?.lname ? true : false}
-                                helperText={error?.lname ?? ''}
-                                name='lname'
-                                type='text'
-                                id="outlined-basic"
-                                label="Last Name"
-                                variant="outlined" />
-                            {/* <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                value={form.email}
-                                error={error?.email ? true : false}
-                                helperText={error?.email ?? ''}
-                                name='email'
-                                type='email'
-                                id="outlined-basic"
-                                label="Email"
-                                variant="outlined" /> */}
-                            <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.password ? true : false}
-                                helperText={error?.password ?? ''}
-                                name='password'
-                                type='password'
-                                id="outlined-basic"
-                                label="Password"
-                                variant="outlined" />
 
-                            {/* <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.course ? true : false}
-                                helperText={error?.course ?? ''}
-                                name='course'
-                                id="outlined-basic"
-                                label="Course"
-                                variant="outlined" /> */}
-                            {/* <TextField
-                                value={form.dob}
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.dob ? true : false}
-                                helperText={error?.dob ?? ''}
-                                name='dob'
-                                type='date'
-                                id="outlined-basic"
-                                variant="outlined" />
-                            <TextField
-
-                                value={form.address}
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.address ? true : false}
-                                helperText={error?.address ?? ''}
-                                name='address'
-                                id="outlined-basic"
-                                label="Address"
-                                variant="outlined" /> */}
-                        </div>
-                        <Button
-                            // onClick={submitForm}
-                            disabled={loading}
-                            variant='contained'
-                            className=' w-full'>
-                            {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
-                        </Button>
-                    </div>
-                </Box>
-            </Drawer>
+            {/* Confirmation Modal */}
+            <Dialog
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="remove-teacher-title"
+                aria-describedby="remove-teacher-description"
+            >
+                <DialogTitle id="remove-teacher-title">
+                    Confirm Removal
+                </DialogTitle>
+                <DialogContent>
+                    <DialogContentText id="remove-teacher-description">
+                        Are you sure you want to remove the teacher <strong>{data?.fname} {data?.lname}</strong>? This action cannot be undone.
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleClose} color="primary">
+                        Cancel
+                    </Button>
+                    <Button
+                        onClick={handleRemove}
+                        color="error"
+                        variant="contained"
+                        disabled={loading}
+                    >
+                        {loading ? <CircularProgress size={24} color="inherit" /> : "Yes"}
+                    </Button>
+                </DialogActions>
+            </Dialog>
         </div>
-    )
+    );
 }

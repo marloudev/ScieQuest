@@ -4,19 +4,23 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Edit } from '@mui/icons-material';
+import { Edit, EditNote } from '@mui/icons-material';
 import { useEffect } from 'react';
 import store from '@/app/pages/store/store';
 import { get_teachers_thunk, update_teachers_thunk } from '../redux/teachers-thunk';
 import { useSelector } from 'react-redux';
 
-export default function UpdateSection({ data, onClose }) {
-    const [open, setOpen] = React.useState(true); // Open by default when rendered
-    const [form, setForm] = useState(data || {});
+export default function UpdateSection({ data }) {
+    const [open, setOpen] = useState(false); // Open by default when rendered
+    const [form, setForm] = useState({});
     const [error, setError] = useState({});
     const [notify, setNotify] = useState(false);
     const [loading, setLoading] = useState(false);
     // const { departments } = useSelector((state) => state.department);
+
+    useEffect(() => {
+        setForm(data)
+    }, [])
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
@@ -42,9 +46,17 @@ export default function UpdateSection({ data, onClose }) {
     const handleCloseNotification = () => {
         setNotify(false);
     };
-
+    console.log('datadata', data)
     return (
         <div>
+            <Button
+                onClick={() => setOpen(true)}
+                size="small"
+                variant="contained"
+                color="primary"
+            >
+                <EditNote />
+            </Button>
             <Snackbar
                 open={notify}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
@@ -108,68 +120,6 @@ export default function UpdateSection({ data, onClose }) {
                                 id="outlined-basic"
                                 label="Last Name"
                                 variant="outlined" />
-                            {/* <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                value={form.email}
-                                error={error?.email ? true : false}
-                                helperText={error?.email ?? ''}
-                                name='email'
-                                type='email'
-                                id="outlined-basic"
-                                label="Email"
-                                variant="outlined" /> */}
-                            <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.password ? true : false}
-                                helperText={error?.password ?? ''}
-                                name='password'
-                                type='password'
-                                id="outlined-basic"
-                                label="Password"
-                                variant="outlined" />
-
-                            {/* <TextField
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.course ? true : false}
-                                helperText={error?.course ?? ''}
-                                name='course'
-                                id="outlined-basic"
-                                label="Course"
-                                variant="outlined" /> */}
-                            {/* <TextField
-                                value={form.dob}
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.dob ? true : false}
-                                helperText={error?.dob ?? ''}
-                                name='dob'
-                                type='date'
-                                id="outlined-basic"
-                                variant="outlined" />
-                            <TextField
-
-                                value={form.address}
-                                onChange={(e) => setForm({
-                                    ...form,
-                                    [e.target.name]: e.target.value
-                                })}
-                                error={error?.address ? true : false}
-                                helperText={error?.address ?? ''}
-                                name='address'
-                                id="outlined-basic"
-                                label="Address"
-                                variant="outlined" /> */}
                         </div>
                         <Button
                             onClick={submitForm}

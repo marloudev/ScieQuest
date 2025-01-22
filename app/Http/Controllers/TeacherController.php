@@ -36,32 +36,18 @@ class TeacherController extends Controller
     {
 
         $validatedData = $request->validate([
-            // 'user_id' => 'required|unique:users,user_id',
-            // // 'email' => 'required|email|unique:users,email',
-            // 'course_id' => 'max:255',
-            // 'address' => 'required|string|max:255',
-            // 'department' => 'required|string|max:255',
-            // 'dob' => 'required|date',
-            // 'fname' => 'required|string|max:255',
-            // 'lname' => 'required|string|max:255',
-            // 'password' => 'nullable|string|min:8', // Password is nullable
+            'id' => 'required|unique:users,id',
+            'fname' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
         ]);
 
         $user = User::findOrFail($id);
         // Prepare data for update
         $dataToUpdate = [
-            // 'user_id' => $validatedData['user_id'],
-            // // 'email' => $validatedData['email'],
-            // 'course_id' => $validatedData['course_id'] ?? null,
-            // 'address' => $validatedData['address'],
-            // 'department' => $validatedData['department'],
-            // 'dob' => $validatedData['dob'],
-            // 'fname' => $validatedData['fname'],
-            // 'lname' => $validatedData['lname'],
+            'id' => $validatedData['id'],
+            'fname' => $validatedData['fname'],
+            'lname' => $validatedData['lname'],
         ];
-        if ($request->filled('password')) {
-            $dataToUpdate['password'] = Hash::make($validatedData['password']);
-        }
         $user->update($dataToUpdate);
     }
 
