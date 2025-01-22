@@ -77,34 +77,33 @@ export default function CreateAssessment() {
     const module_id = window.location.pathname.split("/")[3];
     console.log("data", data);
 
-
     async function submit_form(params) {
         try {
             setLoading(true);
-            
+
             const formData = new FormData();
 
             // Append all the regular data
-            formData.append('subject_matter', data.subject_matter);
-            formData.append('discussions', data.discussions);
-            formData.append('link', data.link);
-            formData.append('assessment', JSON.stringify(data.assessment));  // Convert JSON to string
-            formData.append('pre_exercise', JSON.stringify(data.pre_exercise)); 
-            formData.append('module_id', module_id);
-            formData.append('unique', moment().format("MMDDYYYYhhmmss"));
-    
+            formData.append("subject_matter", data.subject_matter);
+            formData.append("discussions", data.discussions);
+            formData.append("link", data.link);
+            formData.append("assessment", JSON.stringify(data.assessment)); // Convert JSON to string
+            formData.append("pre_exercise", JSON.stringify(data.pre_exercise));
+            formData.append("module_id", module_id);
+            formData.append("unique", moment().format("MMDDYYYYhhmmss"));
+
             // Append files if they exist
             if (data.file1) {
-                formData.append('file1', data.file1);
+                formData.append("file1", data.file1);
             }
             if (data.file2) {
-                formData.append('file2', data.file2);
+                formData.append("file2", data.file2);
             }
             const result = await store.dispatch(
                 store_exam_type_thunk(formData),
             );
             if (result.status == 200) {
-                //  router.visit(`/administrator/modules/${module_id}`);
+                router.visit(`/administrator/modules/${module_id}`);
                 setLoading(false);
                 setOpen(false);
             } else {
@@ -242,9 +241,7 @@ export default function CreateAssessment() {
                             )
                         }
                     >
-                        {data?.file1
-                            ? data?.file1?.name
-                            : "Upload files"}
+                        {data?.file1 ? data?.file1?.name : "Upload files"}
                         <VisuallyHiddenInput
                             name="file1"
                             type="file"
@@ -889,16 +886,14 @@ export default function CreateAssessment() {
                             )
                         }
                     >
-                        {data?.file2
-                            ? data?.file2?.name
-                            : "Upload files"}
+                        {data?.file2 ? data?.file2?.name : "Upload files"}
                         <VisuallyHiddenInput
                             name="file2"
                             type="file"
                             onChange={(e) =>
                                 setData({
                                     ...data,
-                                    [e.target.name]:e.target.files[0],
+                                    [e.target.name]: e.target.files[0],
                                 })
                             }
                             accept="image/*"
