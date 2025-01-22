@@ -21,6 +21,8 @@ return new class extends Migration
             $table->longText('direction1')->nullable();
             $table->string('type2')->nullable();
             $table->longText('direction2')->nullable();
+            $table->string('file1')->nullable();
+            $table->string('file2')->nullable();
             $table->timestamps();
         });
     }

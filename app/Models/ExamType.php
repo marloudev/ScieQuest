@@ -17,7 +17,9 @@ class ExamType extends Model
         'type1',
         'direction1',
         'type2',
-        'direction2'
+        'direction2',
+        'file1',
+        'file2'
     ];
 
     public function fill_in_the_blank(): HasMany

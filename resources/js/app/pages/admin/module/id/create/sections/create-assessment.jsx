@@ -32,7 +32,7 @@ import { router } from "@inertiajs/react";
 export default function CreateAssessment() {
     const [open, setOpen] = React.useState(false);
     const [data, setData] = useState({
-        subject_matters: "",
+        subject_matter: "",
         discussions: "",
         link: "",
         pre_exercise: {
@@ -77,19 +77,11 @@ export default function CreateAssessment() {
     const module_id = window.location.pathname.split("/")[3];
     console.log("data", data);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-
-    const handleClose = (_, reason) => {
-        if (reason !== "backdropClick" && reason !== "escapeKeyDown") {
-            setOpen(false);
-        }
-    };
 
     async function submit_form(params) {
         try {
             setLoading(true);
+            
             const result = await store.dispatch(
                 store_exam_type_thunk({
                     ...data,
@@ -135,10 +127,10 @@ export default function CreateAssessment() {
                                 [e.target.name]: e.target.value,
                             })
                         }
-                        error={!!error?.[`subject_matters`]}
-                        helperText={error?.[`subject_matters`] ?? ""}
-                        value={data.subject_matters}
-                        name={`subject_matters`}
+                        error={!!error?.[`subject_matter`]}
+                        helperText={error?.[`subject_matter`] ?? ""}
+                        value={data.subject_matter}
+                        name={`subject_matter`}
                         type="text"
                         label={`Subject Matters`}
                         variant="outlined"
@@ -220,43 +212,43 @@ export default function CreateAssessment() {
                             <FormHelperText>{error.type}</FormHelperText>
                         )}
                     </FormControl>
-                    {(data.pre_exercise.type1 == "Fill In The Blank" ||
-                        data.pre_exercise.type1 == "Identification") && (
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={
-                                data?.pre_exercise.file ? (
+
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        startIcon={
+                            data?.pre_exercise.file1 ? (
+                                <>
                                     <Check />
-                                ) : (
-                                    <CloudUpload />
-                                )
+                                    UPLOADED
+                                </>
+                            ) : (
+                                <CloudUpload />
+                            )
+                        }
+                    >
+                        {data?.pre_exercise.file1
+                            ? data?.pre_exercise?.file1?.name
+                            : "Upload files"}
+                        <VisuallyHiddenInput
+                            name="file1"
+                            type="file"
+                            // onChange={(event) => console.log(event.target.files)}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    pre_exercise: {
+                                        ...data.pre_exercise,
+                                        [e.target.name]: URL.createObjectURL(
+                                            e.target.files[0],
+                                        ),
+                                    },
+                                })
                             }
-                        >
-                            {data?.pre_exercise.file
-                                ? data?.pre_exercise?.file?.name
-                                : "Upload files"}
-                            <VisuallyHiddenInput
-                                name="file"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        pre_exercise: {
-                                            ...data.pre_exercise,
-                                            [e.target.name]:
-                                                URL.createObjectURL(
-                                                    e.target.files[0],
-                                                ),
-                                        },
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
-                    )}
+                            accept="image/*"
+                        />
+                    </Button>
 
                     <div className="bg-white ">
                         {error?.direction1 && (
@@ -872,43 +864,43 @@ export default function CreateAssessment() {
                             <FormHelperText>{error.type}</FormHelperText>
                         )}
                     </FormControl>
-                    {(data.assessment.type2 == "Fill In The Blank" ||
-                        data.assessment.type2 == "Identification") && (
-                        <Button
-                            component="label"
-                            role={undefined}
-                            variant="contained"
-                            startIcon={
-                                data?.assessment.file ? (
+
+                    <Button
+                        component="label"
+                        role={undefined}
+                        variant="contained"
+                        startIcon={
+                            data?.assessment.file2 ? (
+                                <>
                                     <Check />
-                                ) : (
-                                    <CloudUpload />
-                                )
+                                    UPLOADED
+                                </>
+                            ) : (
+                                <CloudUpload />
+                            )
+                        }
+                    >
+                        {data?.assessment.file2
+                            ? data?.assessment?.file2?.name
+                            : "Upload files"}
+                        <VisuallyHiddenInput
+                            name="file2"
+                            type="file"
+                            // onChange={(event) => console.log(event.target.files)}
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    assessment: {
+                                        ...data.assessment,
+                                        [e.target.name]: URL.createObjectURL(
+                                            e.target.files[0],
+                                        ),
+                                    },
+                                })
                             }
-                        >
-                            {data?.assessment.file
-                                ? data?.assessment?.file?.name
-                                : "Upload files"}
-                            <VisuallyHiddenInput
-                                name="file"
-                                type="file"
-                                // onChange={(event) => console.log(event.target.files)}
-                                onChange={(e) =>
-                                    setData({
-                                        ...data,
-                                        assessment: {
-                                            ...data.assessment,
-                                            [e.target.name]:
-                                                URL.createObjectURL(
-                                                    e.target.files[0],
-                                                ),
-                                        },
-                                    })
-                                }
-                                accept="image/*"
-                            />
-                        </Button>
-                    )}
+                            accept="image/*"
+                        />
+                    </Button>
 
                     <div className="bg-white ">
                         {error?.direction1 && (
@@ -1480,16 +1472,16 @@ export default function CreateAssessment() {
                             </div>
                         );
                     })}
-                    
-                    <Button
+
+                <Button
                     className="w-full"
-                            disabled={loading}
-                            variant="contained"
-                            autoFocus
-                            onClick={submit_form}
-                        >
-                            SUBMIT
-                        </Button>
+                    disabled={loading}
+                    variant="contained"
+                    autoFocus
+                    onClick={submit_form}
+                >
+                    SUBMIT
+                </Button>
             </Toolbar>
         </div>
     );

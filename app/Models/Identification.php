@@ -16,6 +16,7 @@ class Identification extends Model
         'answer',
         'answer_key',
         'points',
+        'file'
     ];
     public function exam_type(): HasOne
     {
