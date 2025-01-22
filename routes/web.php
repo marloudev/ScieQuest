@@ -55,6 +55,10 @@ Route::middleware('auth:sanctum', 'administrator'
             Route::get('/students', function () {
                 return Inertia::render('admin/teachers/id/page3');
             });
+
+            Route::get('/update_teacher', function () {
+                return Inertia::render('admin/teachers/id/update_teacher/page');
+            });
         });
     });
     Route::prefix('students')->group(function () {

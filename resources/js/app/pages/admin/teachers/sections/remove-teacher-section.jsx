@@ -1,90 +1,56 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Drawer from '@mui/material/Drawer';
-import Button from '@mui/material/Button';
-import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
+import { Alert, Box, Button, CircularProgress, Drawer, Snackbar, TextField } from '@mui/material'
+import React from 'react'
 import { useState } from 'react';
-import store from '@/app/pages/store/store';
-// import { get_instructor_thunk, store_instructor_thunk } from '../redux/teachers-thunk';
-import { useSelector } from 'react-redux';
-import { store_students_thunk } from '../../students/redux/students-thunk';
-import { get_teachers_service } from '@/app/services/teachers-service';
-import { get_teachers_thunk } from '../redux/teachers-thunk';
-import { Add } from '@mui/icons-material';
 
-export default function CreateSection() {
-    const [open, setOpen] = React.useState(false);
-    const [loading, setLoading] = useState(false)
-    const [data, setData] = useState({})
-    const [error, setError] = useState({})
-    const [notify, setNotify] = useState(false)
-    // const { departments } = useSelector((state) => state.department)
+export default function RemoveTeacherSection({ data, onClose }) {
+    const [open, setOpen] = React.useState(true); // Open by default when rendered
+    const [form, setForm] = useState(data || {});
+    const [error, setError] = useState({});
+    const [notify, setNotify] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
+        if (!newOpen && onClose) {
+            onClose(); // Notify parent to close
+        }
     };
 
-
-    async function submitForm(params) {
-        setLoading(true)
-        const result = await store.dispatch(store_students_thunk({
-            ...data,
-            user_type: 2
-        }))
-        if (result.status == 200) {
-            await store.dispatch(get_teachers_thunk())
-            setNotify(true)
-            setError({})
-            setLoading(false)
-        } else {
-            setLoading(false)
-            setError(result.response.data.errors)
-        }
-    }
-
-    const handleClose = (event, reason) => {
-        if (reason === 'clickaway') {
-            return;
-        }
-        setNotify(false)
-        setOpen(false);
+    const handleCloseNotification = () => {
+        setNotify(false);
     };
 
     return (
         <div>
-            <Snackbar open={notify}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                autoHideDuration={3000} onClose={handleClose}>
+            <Snackbar
+                open={notify}
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                autoHideDuration={3000}
+                onClose={handleCloseNotification}
+            >
                 <Alert
-                    onClose={handleClose}
+                    onClose={handleCloseNotification}
                     severity="success"
                     variant="filled"
-                    sx={{ width: '100%' }}
+                    sx={{ width: "100%" }}
                 >
-                    Successfully Created!
+                    Removed Succesfully!
                 </Alert>
             </Snackbar>
-            <button
-                type="button"
-                onClick={toggleDrawer(true)}
-                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
-                <Add />
-                <b>Create Teacher</b>
-            </button>
             <Drawer
-
                 anchor='right'
                 open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] bg-white h-full flex" role="presentation" >
+                <Box className="w-[500px] h-full flex bg-white" role="presentation" >
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3  w-full' >
                             <div className='text-2xl font-black'>
-                                Create Teacher
+                                Update Teacher
                             </div>
-                            <TextField onChange={(e) => setData({
+                            <TextField onChange={(e) => setForm({
                                 ...data,
                                 [e.target.name]: e.target.value
                             })}
+                                value={form.user_id}
                                 error={error?.user_id ? true : false}
                                 helperText={error?.user_id ?? ''}
                                 name="user_id"
@@ -93,10 +59,11 @@ export default function CreateSection() {
                                 label="Employee ID"
                                 variant="outlined"
                             />
-                            <TextField onChange={(e) => setData({
-                                ...data,
+                            <TextField onChange={(e) => setForm({
+                                ...form,
                                 [e.target.name]: e.target.value
                             })}
+                                value={form.fname}
                                 error={error?.fname ? true : false}
                                 helperText={error?.fname ?? ''}
                                 name="fname"
@@ -106,10 +73,11 @@ export default function CreateSection() {
                                 variant="outlined"
                             />
                             <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
+                                value={form.lname}
                                 error={error?.lname ? true : false}
                                 helperText={error?.lname ?? ''}
                                 name='lname'
@@ -117,21 +85,22 @@ export default function CreateSection() {
                                 id="outlined-basic"
                                 label="Last Name"
                                 variant="outlined" />
-                            <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                            {/* <TextField
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
+                                value={form.email}
                                 error={error?.email ? true : false}
                                 helperText={error?.email ?? ''}
                                 name='email'
                                 type='email'
                                 id="outlined-basic"
                                 label="Email"
-                                variant="outlined" />
+                                variant="outlined" /> */}
                             <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
                                 error={error?.password ? true : false}
@@ -142,28 +111,9 @@ export default function CreateSection() {
                                 label="Password"
                                 variant="outlined" />
 
-                            {/* <FormControl fullWidth>
-                                <InputLabel id="demo-simple-select-label">Department</InputLabel>
-                                <Select
-                                    id="demo-simple-select"
-                                    name='department_id'
-                                    label="Department"
-                                    onChange={(e) => setData({
-                                        ...data,
-                                        [e.target.name]: e.target.value
-                                    })}
-                                >
-                                    {
-                                        departments.data.map((res, i) => {
-                                            return <MenuItem key={i} value={res.id}>{res.name}</MenuItem>
-                                        })
-                                    }
-                                </Select>
-                            </FormControl> */}
-
                             {/* <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
                                 error={error?.course ? true : false}
@@ -173,8 +123,9 @@ export default function CreateSection() {
                                 label="Course"
                                 variant="outlined" /> */}
                             {/* <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                                value={form.dob}
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
                                 error={error?.dob ? true : false}
@@ -182,10 +133,12 @@ export default function CreateSection() {
                                 name='dob'
                                 type='date'
                                 id="outlined-basic"
-                                variant="outlined" /> */}
-                            {/* <TextField
-                                onChange={(e) => setData({
-                                    ...data,
+                                variant="outlined" />
+                            <TextField
+
+                                value={form.address}
+                                onChange={(e) => setForm({
+                                    ...form,
                                     [e.target.name]: e.target.value
                                 })}
                                 error={error?.address ? true : false}
@@ -196,7 +149,7 @@ export default function CreateSection() {
                                 variant="outlined" /> */}
                         </div>
                         <Button
-                            onClick={submitForm}
+                            // onClick={submitForm}
                             disabled={loading}
                             variant='contained'
                             className=' w-full'>
@@ -206,5 +159,5 @@ export default function CreateSection() {
                 </Box>
             </Drawer>
         </div>
-    );
+    )
 }
