@@ -35,10 +35,12 @@ export default function UpdateSection({ data }) {
         if (result.status === 200) {
             await store.dispatch(get_teachers_thunk());
             setNotify(true);
+            setOpen(false);
             setError({});
             setLoading(false);
         } else {
             setLoading(false);
+            setOpen(false);
             setError(result.response.data.errors);
         }
     }

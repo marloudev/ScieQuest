@@ -1,83 +1,100 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import Modal from '@mui/material/Modal';
-import { Delete } from '@mui/icons-material';
-import store from '@/app/pages/store/store';
-import { Alert, CircularProgress, Snackbar } from '@mui/material';
-import { useState } from 'react';
-
-const style = {
-  position: 'absolute',
-  top: '50%',
-  left: '50%',
-  transform: 'translate(-50%, -50%)',
-  width: 400,
-  bgcolor: 'background.paper',
-  border: '2px solid #000',
-  boxShadow: 24,
-  p: 4,
-};
+import React, { useState } from "react";
+import {
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
+  Button,
+  CircularProgress,
+  Snackbar,
+  Alert
+} from "@mui/material";
+import { Delete } from "@mui/icons-material";
+import store from "@/app/pages/store/store";
+import { delete_students_thunk, get_students_thunk } from "../redux/students-thunk";
 
 export default function DeleteSection({ data }) {
-  const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
-  const handleClose = () => setOpen(false);
-  const [notify, setNotify] = useState(false)
-  const [loading, setLoading] = useState(false)
+  const [open, setOpen] = useState(false); // Open by default when rendered
+  const [notify, setNotify] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  async function delete_data(params) {
-    setLoading(true)
-    const result = await store.dispatch(delete_student_thunk(data.id))
-    if (result.status == 200) {
-      await store.dispatch(get_student_thunk())
-      setNotify(true)
-      setLoading(false)
-    } else {
-      setLoading(false)
-    }
-  }
+  const handleClose = () => {
+    setOpen(false);
+  };
+
+  const handleRemove = async () => {
+    setLoading(true);
+    await store.dispatch(delete_students_thunk(data?.id))
+    await store.dispatch(get_students_thunk())
+    setTimeout(() => {
+      setLoading(false);
+      setNotify(true);
+      handleClose();// Notify parent of successful removal
+    }, 1500);
+  };
+
+  const handleCloseNotification = () => {
+    setNotify(false);
+    setOpen(false);
+  };
+
   return (
     <div>
-      <Snackbar open={notify}
-        anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-        autoHideDuration={3000} onClose={handleClose}>
+      <Button
+        onClick={() => setOpen(true)}
+        size="small"
+        variant="contained"
+        color="error"
+      >
+        <Delete />
+      </Button>
+      {/* Snackbar for Notification */}
+      <Snackbar
+        open={notify}
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        autoHideDuration={3000}
+        onClose={handleCloseNotification}
+      >
         <Alert
-          onClose={handleClose}
+          onClose={handleCloseNotification}
           severity="success"
           variant="filled"
-          sx={{ width: '100%' }}
+          sx={{ width: "100%" }}
         >
-          Successfully Deleted!
+          Teacher Removed Successfully!
         </Alert>
       </Snackbar>
-      <Button size='small' variant='contained' color='error' onClick={() => setOpen(true)}><Delete /></Button>
-      <Modal
+
+      {/* Confirmation Modal */}
+      <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="modal-modal-title"
-        aria-describedby="modal-modal-description"
+        aria-labelledby="remove-teacher-title"
+        aria-describedby="remove-teacher-description"
       >
-        <Box sx={style}>
-          <Typography id="modal-modal-title" variant="h6" component="h2">
-            Delete student
-          </Typography>
-          <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-            Are you sure you want to delete?
-          </Typography>
-          <div className='flex w-full pt-5 items-center justify-end'>
-            <Button
-              color="error"
-              onClick={delete_data}
-              disabled={loading}
-              variant='contained'
-              className=' w-full'>
-              {loading ? <CircularProgress size={24} color="inherit" /> : 'Delete'}
-            </Button>
-          </div>
-        </Box>
-      </Modal>
+        <DialogTitle id="remove-teacher-title">
+          Confirm Removal
+        </DialogTitle>
+        <DialogContent>
+          <DialogContentText id="remove-teacher-description">
+            Are you sure you want to remove the teacher <strong>{data?.fname} {data?.lname}</strong>?
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleClose} color="primary">
+            Cancel
+          </Button>
+          <Button
+            onClick={handleRemove}
+            color="error"
+            variant="contained"
+            disabled={loading}
+          >
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Yes"}
+          </Button>
+        </DialogActions>
+      </Dialog>
     </div>
   );
 }

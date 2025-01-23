@@ -11,9 +11,11 @@ import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 // import { Visibility } from '@mui/icons-material';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { router } from '@inertiajs/react';
 import { Checklist, EditNote, ListAlt } from '@mui/icons-material';
+import DeleteSection from './delete-section';
+import UpdateSection from './update-section';
 // import { router } from '@inertiajs/react';
 // import AddEnrollmentSection from './add-enrollment-section';
 
@@ -31,7 +33,7 @@ export default function TableSection() {
             <TableCell>Mobile</TableCell>
             <TableCell>Age</TableCell> */}
 
-            <TableCell>Address</TableCell>
+            <TableCell>Email</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
@@ -66,34 +68,17 @@ export default function TableSection() {
                      */}
                     {/* <UpdateSection data={res} />
                     <DeleteSection data={res} /> */}
-                    <a target='_blank' href={`/administrator/students/ila_assessment_form/${res.id}`}>
-                      <Button
-                        size='small'
-                        variant='contained'
-                        color='primary'>
-                        <ListAlt />
-                      </Button>
-                    </a>
-                    <a target='_blank' href={`/administrator/students/score_sheet/${res.id}`}>
-                      <Button
-                        size='small'
-                        variant='contained'
-                        color='success'>
-                        <Checklist />
-                      </Button>
-                      <Button
-                        // onClick={() =>
-                        //     router.visit(
-                        //         `/administrator/teachers/${res.id}/create_grades`,
-                        //     )
-                        // }
-                        size="small"
-                        variant="contained"
-                        color="primary"
-                      >
-                        <EditNote />
-                      </Button>
-                    </a>
+                    <Tooltip>
+                      <UpdateSection
+                        data={res}
+                      />
+                    </Tooltip>
+                    <Tooltip>
+                      <DeleteSection
+                        data={res}
+                      />
+                    </Tooltip>
+
                   </div>
                 </TableCell>
               </TableRow>
@@ -101,6 +86,6 @@ export default function TableSection() {
           })}
         </TableBody>
       </Table>
-    </TableContainer>
+    </TableContainer >
   );
 }

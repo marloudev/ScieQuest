@@ -34,10 +34,12 @@ export default function CreateSection() {
         if (result.status == 200) {
             await store.dispatch(get_teachers_thunk())
             setNotify(true)
+            setOpen(false);
             setError({})
             setLoading(false)
         } else {
             setLoading(false)
+            setOpen(false);
             setError(result.response.data.errors)
         }
     }
@@ -54,7 +56,7 @@ export default function CreateSection() {
         <div>
             <Snackbar open={notify}
                 anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-                autoHideDuration={400} onClose={handleClose}>
+                autoHideDuration={3000} onClose={handleClose}>
                 <Alert
                     onClose={handleClose}
                     severity="success"

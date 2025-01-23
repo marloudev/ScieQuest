@@ -64,6 +64,7 @@ export default function BookletCreateSection() {
                 setData({});
             } else {
                 setLoading(false);
+                setOpen(false);
                 setError(result.response.data.errors);
             }
         } catch (error) {

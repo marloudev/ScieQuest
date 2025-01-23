@@ -32,10 +32,12 @@ export default function CreateSection() {
         if (result.status == 200) {
             await store.dispatch(get_students_thunk())
             setNotify(true)
+            setOpen(false);
             setError({})
             setLoading(false)
         } else {
             setLoading(false)
+            setOpen(false);
             setError(result.response.data.errors)
         }
     }

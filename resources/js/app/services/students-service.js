@@ -2,7 +2,7 @@ import axios from "axios";
 
 export async function get_students_service(user_type) {
     try {
-        const res = await axios.get(`/api/students`+window.location.search);
+        const res = await axios.get(`/api/students` + window.location.search);
         return res;
     } catch (error) {
         return error;
@@ -31,7 +31,7 @@ export async function store_students_service(data) {
 
 export async function update_students_service(data) {
     try {
-        const res = await axios.put(`/api/account/${data.id}`, data);
+        const res = await axios.put(`/api/students/${data.id}`, data);
         return res;
     } catch (error) {
         return error;
