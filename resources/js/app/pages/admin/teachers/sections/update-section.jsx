@@ -40,7 +40,6 @@ export default function UpdateSection({ data }) {
             setLoading(false);
         } else {
             setLoading(false);
-            setOpen(false);
             setError(result.response.data.errors);
         }
     }

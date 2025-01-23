@@ -29,10 +29,7 @@ export default function TableSection() {
           <TableRow>
             <TableCell>Student ID</TableCell>
             <TableCell>Fullname</TableCell>
-            {/* <TableCell>Email</TableCell>
-            <TableCell>Mobile</TableCell>
-            <TableCell>Age</TableCell> */}
-
+            <TableCell>Adviser</TableCell>
             <TableCell>Email</TableCell>
             <TableCell>Action</TableCell>
           </TableRow>
@@ -49,6 +46,9 @@ export default function TableSection() {
               >
 
                 <TableCell>{res.user_id}</TableCell>
+                <TableCell>
+                  {res.fname}   {res.lname}
+                </TableCell>
                 <TableCell>
                   {res.fname}   {res.lname}
                 </TableCell>

@@ -39,7 +39,6 @@ export default function CreateSection() {
             setLoading(false)
         } else {
             setLoading(false)
-            setOpen(false);
             setError(result.response.data.errors)
         }
     }
