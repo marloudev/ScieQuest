@@ -11,7 +11,7 @@ import Paper from '@mui/material/Paper';
 import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { router } from '@inertiajs/react';
-import { Button } from '@mui/material';
+import { Button, Tooltip } from '@mui/material';
 import { EditNote, Visibility } from '@mui/icons-material';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
@@ -49,25 +49,29 @@ export default function BookletTableSection() {
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2'>
-                                        <Button
-                                            onClick={() => router.visit(`/administrator/modules/${res.id}`)}
-                                            size='small'
-                                            variant='contained'
-                                            color='success'>
-                                            <Visibility />
-                                        </Button>
-                                        <Button
-                                            // onClick={() =>
-                                            //     router.visit(
-                                            //         `/administrator/teachers/${res.id}/create_grades`,
-                                            //     )
-                                            // }
-                                            size="small"
-                                            variant="contained"
-                                            color="primary"
-                                        >
-                                            <EditNote />
-                                        </Button>
+                                        <Tooltip title="View Exercise(s)">
+                                            <Button
+                                                onClick={() => router.visit(`/administrator/modules/${res.id}`)}
+                                                size='small'
+                                                variant='contained'
+                                                color='success'>
+                                                <Visibility />
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip title="Edit Module">
+                                            <Button
+                                                // onClick={() =>
+                                                //     router.visit(
+                                                //         `/administrator/teachers/${res.id}/create_grades`,
+                                                //     )
+                                                // }
+                                                size="small"
+                                                variant="contained"
+                                                color="primary"
+                                            >
+                                                <EditNote />
+                                            </Button>
+                                        </Tooltip>
                                     </div>
                                 </TableCell>
                             </TableRow>

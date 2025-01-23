@@ -15,13 +15,20 @@ const ExpandMore = styled((props) => {
     transform: ({ expand }) => (expand ? "rotate(180deg)" : "rotate(0deg)"),
 }));
 
+const htmlToText = (html) => {
+    const doc = new DOMParser().parseFromString(html, "text/html");
+    return doc.body.innerText;
+};
+
 export default function AssessmentCardSection() {
-    const { exam_types } = useSelector((store) => store.booklets);
+    const { exam_types, booklets } = useSelector((store) => store.booklets);
     const [expandedIndex, setExpandedIndex] = React.useState(null); // Track expanded card
 
     const handleExpandClick = (index) => {
         setExpandedIndex((prevIndex) => (prevIndex === index ? null : index)); // Toggle expand/collapse
     };
+
+    console.log('exam_typessss', exam_types)
 
     return (
         <div className="w-full flex flex-col gap-5">
@@ -34,9 +41,18 @@ export default function AssessmentCardSection() {
                         </div>
                         <div className="">
                             <a href="#">
-                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">Sample Assessment</h5>
+                                <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">{res?.subject_matter}</h5>
                             </a>
-                            <p className="mb-3 font-normal text-gray-700">Direction: Sample Direction</p>
+                            <p className="mb-3 font-normal text-gray-700">
+                                Demo Link:{" "}
+                                {res?.link ? (
+                                    <a href={res.link} target="_blank" rel="noopener noreferrer">
+                                        {res.link}
+                                    </a>
+                                ) : (
+                                    "No link available"
+                                )}
+                            </p>
                         </div>
 
 
@@ -52,9 +68,39 @@ export default function AssessmentCardSection() {
 
                         {/* Expanded Content */}
                         {expandedIndex === i && (
-                            <div className="mt-4">
-                                <h3><b>Multiple Choice</b></h3>
+                            <div>
+                                <div className="mt-4">
+                                    <p>{htmlToText(res?.discussions)}</p>
+                                </div>
+                                <h1>PRE-EXERCISE</h1>
+                                <div className="mt-4">
+                                    <h3>{res?.type1}</h3>
+                                </div>
+                                {
+                                    res?.type1 == 'Identification' && <div>
+                                        {
+                                            htmlToText(res.direction1)
+                                        }
+                                        <div className="py-3">
+                                            {
+                                                res.identification.map((result, i) => {
+                                                    return <div key={i}>
+                                                        {result.question
+                                                        }
+                                                    </div>
+                                                })
+                                            }
+                                        </div>
+                                    </div>
+                                }
+                                <h1>ASSESSMENT</h1>
+                                <div className="mt-4">
+                                    <h3><b>{res?.type2}</b></h3>
+                                    <p>{htmlToText(res?.direction2)}</p>
+                                </div>
                             </div>
+
+
                         )}
                     </div>
                 );
