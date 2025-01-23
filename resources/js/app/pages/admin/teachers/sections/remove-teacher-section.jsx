@@ -78,7 +78,7 @@ export default function RemoveTeacherSection({ data }) {
                 </DialogTitle>
                 <DialogContent>
                     <DialogContentText id="remove-teacher-description">
-                        Are you sure you want to remove the teacher <strong>{data?.fname} {data?.lname}</strong>? This action cannot be undone.
+                        Are you sure you want to remove the teacher <strong>{data?.fname} {data?.lname}</strong>?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>

@@ -34,22 +34,36 @@ class TeacherController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Find the user or throw a 404 error
+        $user = User::findOrFail($id);
 
+        // Validate input data
         $validatedData = $request->validate([
-            'id' => 'required|unique:users,id',
+            'user_id' => 'nullable|unique:users,user_id,' . $id, // Allow unique except for the current user's ID
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
         ]);
 
-        $user = User::findOrFail($id);
         // Prepare data for update
         $dataToUpdate = [
-            'id' => $validatedData['id'],
             'fname' => $validatedData['fname'],
             'lname' => $validatedData['lname'],
         ];
+
+        // Only include 'user_id' if it's provided
+        if (!empty($validatedData['user_id'])) {
+            $dataToUpdate['user_id'] = $validatedData['user_id'];
+        }
+
+        // Update user data
         $user->update($dataToUpdate);
+
+        return response()->json([
+            'message' => 'User updated successfully',
+            'user' => $user,
+        ]);
     }
+
 
     public function destroy($id)
     {
