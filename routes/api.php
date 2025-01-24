@@ -11,7 +11,9 @@ use App\Http\Controllers\ExaminationController;
 use App\Http\Controllers\ExaminerController;
 use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\LearningCenterController;
+use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\QuestController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ScheduleController;
 use App\Http\Controllers\ScoreSheetController;
@@ -31,24 +33,17 @@ Route::get('/user', function (Request $request) {
 Route::post('/rate-paragraph', [ChatGPTController::class, 'rateParagraph']);
 
 
-
 Route::post('/auth/login', [AccountController::class, 'login']);
 Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
 Route::resource('teachers', TeacherController::class);
-Route::resource('examinations', ExaminationController::class);
-Route::resource('questionnaires', QuestionnaireController::class);
 Route::resource('score_sheets', ScoreSheetController::class);
 Route::resource('dashboard', DashboardController::class);
-Route::resource('specifications', SpecificationController::class);
-Route::resource('schedule', ScheduleController::class);
-Route::resource('learning_centers', LearningCenterController::class);
 Route::resource('answers', AnswerController::class);
-Route::resource('booklet', ModuleController::class);
-Route::resource('exam_type', ExamTypeController::class);
-
-Route::resource('examiner', ExaminerController::class);
-Route::get('/get_examiner_by_examiner_id/{id}', [ExaminerController::class, 'get_examiner_by_examiner_id']);
+Route::resource('module', ModuleController::class);
+Route::resource('lesson', LessonController::class);
+Route::resource('quest', QuestController::class);
+Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
 
 
 

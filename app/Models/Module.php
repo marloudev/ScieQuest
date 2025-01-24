@@ -17,8 +17,8 @@ class Module extends Model
         'introductory',
         'wintn',
     ];
-    public function exam_type(): HasMany
+    public function lessons(): HasMany
     {
-        return $this->hasMany(ExamType::class,'module_id','id')->with(['identification','fill_in_the_blank', 'true_or_false', 'multiple_choice', 'matching']);
+        return $this->hasMany(Lesson::class,'module_id','id')->with(['pre_exercises','assessments']);
     }
 }

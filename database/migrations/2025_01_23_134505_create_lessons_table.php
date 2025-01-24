@@ -11,15 +11,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('identifications', function (Blueprint $table) {
+
+        Schema::create('lessons', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('exam_types_id')->nullable();
-            $table->longText('question')->nullable();
-            $table->string('answer')->nullable();
-            $table->string('answer_key')->nullable();
-            $table->integer('points')->nullable();
+            $table->bigInteger('module_id')->nullable();
+            $table->string('subject_matter')->nullable();
+            $table->longText('discussion')->nullable();
+            $table->string('link')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
+        
     }
 
     /**
@@ -27,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('identifications');
+        Schema::dropIfExists('lessons');
     }
 };

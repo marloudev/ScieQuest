@@ -11,13 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('multiple_choices', function (Blueprint $table) {
+        Schema::create('pre_exercises', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('exam_types_id')->nullable();
-            $table->longText('question')->nullable();
-            $table->string('answer')->nullable();
-            $table->string('answer_key')->nullable();
-            $table->integer('points')->nullable();
+            $table->bigInteger('lesson_id')->nullable();
+            $table->string('exam_type')->nullable();
+            $table->longText('direction')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }
@@ -27,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('multiple_choices');
+        Schema::dropIfExists('pre_exercises');
     }
 };

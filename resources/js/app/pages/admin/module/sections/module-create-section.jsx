@@ -25,7 +25,7 @@ import { useState } from "react";
 import store from "@/app/pages/store/store";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
-import { get_booklet_thunk, store_booklet_thunk } from "../redux/booklet-thunk";
+import {  get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
@@ -51,14 +51,14 @@ export default function BookletCreateSection() {
         try {
             setLoading(true);
             const result = await store.dispatch(
-                store_booklet_thunk({
+                store_module_thunk({
                     unique_id: moment().format("MMDDYYYYHHmmss"),
                     ...data,
                     grade: "Grade 4",
                 }),
             );
             if (result.status == 200) {
-                await store.dispatch(get_booklet_thunk());
+                await store.dispatch(get_module_thunk());
                 setLoading(false);
                 setOpen(false);
                 setData({});
@@ -192,7 +192,7 @@ export default function BookletCreateSection() {
                     <ReactQuill
                         theme="snow"
                         value={data.introductory}
-                        className="text-black w-full h-52"
+                        className="text-black w-full h-24"
                         onChange={(e) =>
                             setData({
                                 ...data,
@@ -208,7 +208,7 @@ export default function BookletCreateSection() {
                     <ReactQuill
                         theme="snow"
                         value={data.wintn}
-                        className="text-black w-full h-52"
+                        className="text-black w-full h-24"
                         onChange={(e) =>
                             setData({
                                 ...data,

@@ -7,6 +7,14 @@ use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
+    public function get_module_by_quarter($id){
+        $modules = Module::where('quarter',$id)->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $modules,
+        ], 200);
+    }
+
     public function index()
     {
         $modules = Module::get();
@@ -20,7 +28,7 @@ class ModuleController extends Controller
 
     public function show($id)
     {
-        $module = Module::where('id', $id)->with(['exam_type'])->first();
+        $module = Module::where('id', $id)->with(['lessons'])->first();
         return response()->json([
             'status' => 'success',
             'data' =>$module,

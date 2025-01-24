@@ -1,11 +1,11 @@
-import React from 'react'
-import AdminLayout from '../../../layout'
-import CreateAssessment from './sections/create-assessment'
+import React from "react";
+import AdminLayout from "../../../layout";
+import CreateAssessment from "./sections/create-assessment";
 
 export default function ModuleIdCreatePage() {
-  return (
+    return (
         <AdminLayout>
-               <CreateAssessment />
-            </AdminLayout>
-  )
+            <CreateAssessment />
+        </AdminLayout>
+    );
 }

@@ -11,14 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('matchings', function (Blueprint $table) {
+        Schema::create('quests', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('exam_types_id')->nullable();
-            $table->longText('column_a')->nullable();
-            $table->longText('column_b')->nullable();
-            $table->string('answer')->nullable();
+            $table->bigInteger('lesson_id')->nullable();
+            $table->string('exam_type')->nullable();
+            $table->longText('direction')->nullable();
+            $table->string('question')->nullable();
             $table->string('answer_key')->nullable();
-            $table->integer('points')->nullable();
+            $table->string('file')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('matchings');
+        Schema::dropIfExists('quests');
     }
 };
