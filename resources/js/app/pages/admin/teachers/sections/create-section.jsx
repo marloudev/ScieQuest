@@ -7,9 +7,7 @@ import { useState } from 'react';
 import store from '@/app/pages/store/store';
 // import { get_instructor_thunk, store_instructor_thunk } from '../redux/teachers-thunk';
 import { useSelector } from 'react-redux';
-import { store_students_thunk } from '../../students/redux/students-thunk';
-import { get_teachers_service } from '@/app/services/teachers-service';
-import { get_teachers_thunk } from '../redux/teachers-thunk';
+import { get_teachers_thunk, store_teachers_thunk } from '../redux/teachers-thunk';
 import { Add } from '@mui/icons-material';
 
 export default function CreateSection() {
@@ -27,7 +25,7 @@ export default function CreateSection() {
 
     async function submitForm(params) {
         setLoading(true)
-        const result = await store.dispatch(store_students_thunk({
+        const result = await store.dispatch(store_teachers_thunk({
             ...data,
             user_type: 2
         }))

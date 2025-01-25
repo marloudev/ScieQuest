@@ -63,7 +63,7 @@ export default function TableSection() {
                                         },
                                     }}
                                 >
-                                    <TableCell>{res.user_id}</TableCell>
+                                    <TableCell>{res.employee_id}</TableCell>
                                     <TableCell>
                                         {res.fname} {res.lname}
                                     </TableCell>

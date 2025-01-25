@@ -25,7 +25,7 @@ export default function RemoveTeacherSection({ data }) {
 
     const handleRemove = async () => {
         setLoading(true);
-        await store.dispatch(delete_teachers_thunk(data?.id));
+        await store.dispatch(delete_teachers_thunk(data?.employee_id));
         await store.dispatch(get_teachers_thunk())
         setTimeout(() => {
             setLoading(false);
@@ -38,7 +38,7 @@ export default function RemoveTeacherSection({ data }) {
         setNotify(false);
         setOpen(false);
     };
-
+    console.log('daddada', data)
     return (
         <div>
             <Button

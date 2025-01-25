@@ -29,7 +29,7 @@ export async function store_teachers_service(data) {
 
 export async function update_teachers_service(data) {
     try {
-        const res = await axios.put(`/api/teachers/${data.id}`, data);
+        const res = await axios.put(`/api/teachers/${data.employee_id}`, data);
         return res;
     } catch (error) {
         return error;
@@ -41,6 +41,6 @@ export async function delete_teachers_service(id) {
         const res = await axios.delete(`/api/teachers/${id}`);
         return res;
     } catch (error) {
-        return error; 
+        return error;
     }
 }

@@ -2,7 +2,9 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
+import { Alert, CircularProgress, MenuItem, Select, Snackbar, TextField, FormHelperText, FormControl, InputLabel } from '@mui/material';
+
+
 import { useState } from 'react';
 import store from '@/app/pages/store/store';
 // import { get_student_thunk, store_student_thunk } from '../redux/student-thunk';
@@ -80,6 +82,30 @@ export default function CreateSection() {
                             <div className='text-2xl font-black'>
                                 Create student
                             </div>
+                            <FormControl variant="outlined" error={!!error?.user_id} fullWidth>
+                                <InputLabel id="user-id-label">Teacher/Adviser</InputLabel>
+                                <Select
+                                    labelId="user-id-label"
+                                    value={data.user_id || ''}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            user_id: e.target.value,
+                                        })
+                                    }
+                                    name="user_id"
+                                    label="Student ID"
+                                >
+                                    {/* Replace these options with your actual dropdown values */}
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    <MenuItem value={1}>Student 1</MenuItem>
+                                    <MenuItem value={2}>Student 2</MenuItem>
+                                    <MenuItem value={3}>Student 3</MenuItem>
+                                </Select>
+                                <FormHelperText>{error?.user_id ?? ''}</FormHelperText>
+                            </FormControl>
                             <TextField onChange={(e) => setData({
                                 ...data,
                                 [e.target.name]: e.target.value

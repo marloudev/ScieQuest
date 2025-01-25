@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -16,7 +17,7 @@ class AccountController extends Controller
             'password' => 'required|string'
         ]);
 
-        if($validate->fails()){
+        if ($validate->fails()) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Validation Error!',
@@ -28,11 +29,11 @@ class AccountController extends Controller
         $user = User::where('email', $request->email)->first();
 
         // Check password
-        if(!$user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             return response()->json([
                 'status' => 'failed',
                 'message' => 'Invalid credentials'
-                ], 401);
+            ], 401);
         }
 
         $data['token'] = $user->createToken($request->email)->plainTextToken;
@@ -50,12 +51,12 @@ class AccountController extends Controller
     public function index(Request $request)
     {
         // Fetch paginated users, you can specify how many items per page, e.g., 10
-        if($request->page){
+        if ($request->page) {
             $users = User::where('user_type', $request->user_type)->paginate(10);
             return response()->json([
                 'response' => $users,
             ], 200);
-        }else{
+        } else {
             $users = User::where('user_type', $request->user_type)->get();
             return response()->json([
                 'response' => [
@@ -63,15 +64,15 @@ class AccountController extends Controller
                 ],
             ], 200);
         }
-        
+
 
         // Return the paginated response
-    
+
     }
 
     public function show($id)
     {
-        $user = User::where('id', $id)->with(['score_sheet','examiner'])->first();
+        $user = User::where('id', $id)->with(['score_sheet', 'examiner'])->first();
         return response()->json([
             'response' => $user,
         ], 200);
@@ -99,12 +100,20 @@ class AccountController extends Controller
             'password' => Hash::make($validatedData['password']),
         ]);
 
+        Teacher::create([
+            'employee_id' => $validatedData['user_id'],
+            'fname' => $validatedData['fname'],
+            'lname' => $validatedData['lname'],
+            'email' => $validatedData['email'],
+        ]);
+
         // Return response
         return response()->json([
             'status' => 'success',
             'message' => 'User created successfully!',
         ], 200);
     }
+
     public function update(Request $request, $id)
     {
         // Validate the input with the proper unique rule for the email

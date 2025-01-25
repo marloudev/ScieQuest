@@ -86,14 +86,15 @@ export default function UpdateSection({ data }) {
                                 ...data,
                                 [e.target.name]: e.target.value
                             })}
-                                value={form.user_id}
-                                error={error?.user_id ? true : false}
-                                helperText={error?.user_id ?? ''}
-                                name="user_id"
+                                value={form.employee_id}
+                                error={error?.employee_id ? true : false}
+                                helperText={error?.employee_id ?? ''}
+                                name="employee_id"
                                 type='text'
                                 id="outlined-basic"
                                 label="Employee ID"
                                 variant="outlined"
+                                disabled
                             />
                             <TextField onChange={(e) => setForm({
                                 ...form,
@@ -120,6 +121,19 @@ export default function UpdateSection({ data }) {
                                 type='text'
                                 id="outlined-basic"
                                 label="Last Name"
+                                variant="outlined" />
+                            <TextField
+                                onChange={(e) => setForm({
+                                    ...form,
+                                    [e.target.name]: e.target.value
+                                })}
+                                value={form.email}
+                                error={error?.email ? true : false}
+                                helperText={error?.email ?? ''}
+                                name='email'
+                                type='email'
+                                id="outlined-basic"
+                                label="Email"
                                 variant="outlined" />
                         </div>
                         <Button
