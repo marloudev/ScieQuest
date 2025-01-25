@@ -49,7 +49,7 @@ const demoTheme = createTheme({
     cssVariables: {
         colorSchemeSelector: "data-toolpad-color-scheme",
     },
-    colorSchemes: { light: true, dark: true },
+    // colorSchemes: { light: true, dark: true },
     breakpoints: {
         values: {
             xs: 0,
@@ -125,21 +125,26 @@ function InstructorLayout({ children }, props) {
     const demoWindow = window !== undefined ? window() : undefined;
     return (
         // preview-start
-        <AppProvider
-            navigation={NAVIGATION}
-            router={router}
-            theme={demoTheme}
-            window={demoWindow}
-            branding={{
-                logo: <img src="/images/logo.jpg" />,
-                title: "Science Quest",
-            }}
-        >
-            <DashboardLayout>
-                <LogoutSection open={open} setOpen={setOpen} />
-                <div className="p-4">{children}</div>
-            </DashboardLayout>
-        </AppProvider>
+        <>
+
+            <AppProvider
+                navigation={NAVIGATION}
+                router={router}
+                theme={demoTheme}
+                window={demoWindow}
+                branding={{
+                    logo: <img src="/images/logo.jpg" />,
+                    title: "Science Quest",
+                }}
+            >
+
+                <DashboardLayout>
+                    <LogoutSection open={open} setOpen={setOpen} />
+                    <div className="p-4">{children}</div>
+                </DashboardLayout>
+            </AppProvider>
+        </>
+
         // preview-end
     );
 }
