@@ -83,7 +83,7 @@ export default function AssessmentCardSection() {
                                     className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300"
                                     onClick={() => handleExpandClick(i)}
                                 >
-                                    <b>Read more &nbsp;</b> 
+                                    <b>Read more &nbsp;</b>
                                     {/* Conditionally render the correct arrow icon */}
                                     {expandedIndex === i ? (
                                         <ArrowUpwardOutlined />
@@ -92,22 +92,60 @@ export default function AssessmentCardSection() {
                                     )}
                                 </div>
                                 <div className="flex gap-4">
-                                <CreatePreExerciseSection datas={res}/>
-                                <CreateAssessmentSection datas={res}/>
+                                    <CreatePreExerciseSection datas={res} />
+                                    <CreateAssessmentSection datas={res} />
                                 </div>
                             </div>
 
                             {/* Expanded Content */}
                             {expandedIndex === i && (
                                 <div>
-                                    <div className="mt-4">
+                                    {/* <div className="mt-4">
                                         <p>{htmlToText(res?.discussions)}</p>
-                                    </div>
+                                    </div> */}
                                     <h1>PRE-EXERCISE</h1>
-                                    <div className="mt-4">
-                                        <h3>{res?.type1}</h3>
-                                    </div>
-                                    {res?.type1 == "Identification" && (
+                                    <div className="mt-4"></div>
+                                    {res.pre_exercises.map((pre_exercise) => {
+                                        return (
+                                            <>
+                                                {pre_exercise.exam_type ==
+                                                    "True Or False" && (
+                                                    <>
+                                                        {pre_exercise.exam_type}
+                                                    </>
+                                                )}
+
+                                                {pre_exercise.exam_type ==
+                                                    "Fill In The Blank" && (
+                                                    <>
+                                                        {pre_exercise.exam_type}
+                                                    </>
+                                                )}
+
+                                                {pre_exercise.exam_type ==
+                                                    "Multiple Choice" && (
+                                                    <>
+                                                        {pre_exercise.exam_type}
+                                                    </>
+                                                )}
+
+                                                {pre_exercise.exam_type ==
+                                                    "Indentification" && (
+                                                    <>
+                                                        {pre_exercise.exam_type}
+                                                    </>
+                                                )}
+
+                                                {pre_exercise.exam_type ==
+                                                    "Matching" && (
+                                                    <>
+                                                        {pre_exercise.exam_type}
+                                                    </>
+                                                )}
+                                            </>
+                                        );
+                                    })}
+                                    {/* {res?.type1 == "Identification" && (
                                         <div>
                                             {htmlToText(res.direction1)}
                                             <div className="py-3">
@@ -124,14 +162,38 @@ export default function AssessmentCardSection() {
                                                 )}
                                             </div>
                                         </div>
-                                    )}
+                                    )} */}
                                     <h1>ASSESSMENT</h1>
-                                    <div className="mt-4">
-                                        <h3>
-                                            <b>{res?.type2}</b>
-                                        </h3>
-                                        <p>{htmlToText(res?.direction2)}</p>
-                                    </div>
+                                    {res.assessments.map((assessment) => {
+                                        return (
+                                            <>
+                                                {assessment.exam_type ==
+                                                    "True Or False" && (
+                                                    <>{assessment.exam_type}</>
+                                                )}
+
+                                                {assessment.exam_type ==
+                                                    "Fill In The Blank" && (
+                                                    <>{assessment.exam_type}</>
+                                                )}
+
+                                                {assessment.exam_type ==
+                                                    "Multiple Choice" && (
+                                                    <>{assessment.exam_type}</>
+                                                )}
+
+                                                {assessment.exam_type ==
+                                                    "Indentification" && (
+                                                    <>{assessment.exam_type}</>
+                                                )}
+
+                                                {assessment.exam_type ==
+                                                    "Matching" && (
+                                                    <>{assessment.exam_type}</>
+                                                )}
+                                            </>
+                                        );
+                                    })}
                                 </div>
                             )}
                         </div>

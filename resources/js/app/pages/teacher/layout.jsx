@@ -14,44 +14,30 @@ import { DashboardLayout } from "@toolpad/core/DashboardLayout";
 import { router as route } from "@inertiajs/react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPathname } from "@/app/redux/app-slice";
-import { AssignmentInd, CalendarMonth, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, School, SupervisedUserCircle } from "@mui/icons-material";
+import { AssignmentInd, AutoStories, CalendarMonth, Diversity1, Diversity3, Engineering, FolderShared, Groups, Groups2, HistoryEdu, PowerSettingsNew, RecentActors, School, SupervisedUserCircle } from "@mui/icons-material";
 import LogoutSection from "../_sections/logout-section";
 import store from "../store/store";
 import { get_user_login_thunk } from "@/app/redux/app-thunk";
 
 const NAVIGATION = [
     {
-        kind: "header",
-        title: "Main items",
-    },
-    {
         segment: "dashboard",
         title: "Dashboard",
         icon: <DashboardIcon />,
     },
- 
-    // {
-    //     segment: "subjects",
-    //     title: "Subjects",
-    //     icon: <HistoryEdu />,
-    // },
     {
-        segment: "schedule",
-        title: "Schedule FLT Test",
-        icon: <CalendarMonth />,
+        segment: "list",
+        title: "List of Students",
+        icon: <RecentActors />,
+    },
+    {
+        segment: "module",
+        title: "Modules",
+        icon: <AutoStories />,
     },
     {
         kind: "divider",
     },
-    {
-        kind: "header",
-        title: "Analytics",
-    },
-    // {
-    //     segment: "settings",
-    //     title: "Settings",
-    //     icon: <Engineering />,
-    // },
     {
         segment: "logout",
         title: "Logout",
@@ -63,7 +49,7 @@ const demoTheme = createTheme({
     cssVariables: {
         colorSchemeSelector: "data-toolpad-color-scheme",
     },
-    colorSchemes: { light: true, dark: true },
+    // colorSchemes: { light: true, dark: true },
     breakpoints: {
         values: {
             xs: 0,
@@ -71,6 +57,36 @@ const demoTheme = createTheme({
             md: 600,
             lg: 1200,
             xl: 1536,
+        },
+    },
+    components: {
+        // Global styles for background image
+        MuiCssBaseline: {
+            styleOverrides: {
+                body: {
+                    backgroundImage: 'url("/images/background.webp")',
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    minHeight: '100vh',
+                },
+            },
+        },
+        MuiAppBar: {
+            styleOverrides: {
+                root: {
+                    // backgroundColor: 'transparent',  // Make AppBar transparent
+                    boxShadow: 'none',  // Remove any shadow
+                },
+            },
+        },
+        MuiDrawer: {
+            styleOverrides: {
+                paper: {
+                    backgroundColor: 'rgba(0, 0, 0, 0.1)',   // Make Drawer transparent
+                    boxShadow: 'none',  // Remove any shadow
+                },
+            },
         },
     },
 });
@@ -81,9 +97,9 @@ function InstructorLayout({ children }, props) {
     const [open, setOpen] = React.useState(false);
 
 
-    useEffect(()=>{
+    useEffect(() => {
         store.dispatch(get_user_login_thunk())
-    },[])
+    }, [])
 
     const router = React.useMemo(() => {
         return {
@@ -92,15 +108,15 @@ function InstructorLayout({ children }, props) {
             navigate: (path) => {
                 if (path == '/logout') {
                     setOpen(true)
-                }else{  
+                } else {
                     if (path == '/teacher' || path == '/students/registered' || path == '/students/enrollment') {
-                        route.visit(String("/teacher" + path+'?page=1'));
-                    }else{
+                        route.visit(String("/teacher" + path + '?page=1'));
+                    } else {
                         route.visit(String("/teacher" + path));
                     }
                     dispatch(setPathname(path));
                 }
-               
+
             },
         };
     }, [pathname]);
@@ -109,21 +125,26 @@ function InstructorLayout({ children }, props) {
     const demoWindow = window !== undefined ? window() : undefined;
     return (
         // preview-start
-        <AppProvider
-            navigation={NAVIGATION}
-            router={router}
-            theme={demoTheme}
-            window={demoWindow}
-            branding={{
-                logo: <img src="/images/logo.jpg" />,
-                title: "Science Quest",
-            }}
-        >
-            <DashboardLayout>
-                <LogoutSection open={open} setOpen={setOpen}/>
-                <div className="p-4">{children}</div>
-            </DashboardLayout>
-        </AppProvider>
+        <>
+
+            <AppProvider
+                navigation={NAVIGATION}
+                router={router}
+                theme={demoTheme}
+                window={demoWindow}
+                branding={{
+                    logo: <img src="/images/logo.jpg" />,
+                    title: "Science Quest",
+                }}
+            >
+
+                <DashboardLayout>
+                    <LogoutSection open={open} setOpen={setOpen} />
+                    <div className="p-4">{children}</div>
+                </DashboardLayout>
+            </AppProvider>
+        </>
+
         // preview-end
     );
 }

@@ -20,7 +20,6 @@ export default function LiteracyTestIDPage() {
                 <CreateLessonSection />
             </div>
             <div>
-                {/* <QuestionnaireCardSection /> */}
                 <AssessmentCardSection />
             </div>
         </AdminLayout>
