@@ -51,6 +51,8 @@ export default function CreateSection() {
         setOpen(false);
     };
 
+    console.log('aaaa', data)
+
     return (
         <div>
             <Snackbar open={notify}
@@ -82,27 +84,27 @@ export default function CreateSection() {
                             <div className='text-2xl font-black'>
                                 Create student
                             </div>
-                            <FormControl variant="outlined" error={!!error?.user_id} fullWidth>
+                            <FormControl variant="outlined" error={!!error?.teacher_id} fullWidth>
                                 <InputLabel id="user-id-label">Teacher/Adviser</InputLabel>
                                 <Select
                                     labelId="user-id-label"
-                                    value={data.user_id || ''}
+                                    value={data.teacher_id || ''}
                                     onChange={(e) =>
                                         setData({
                                             ...data,
-                                            user_id: e.target.value,
+                                            teacher_id: e.target.value,
                                         })
                                     }
-                                    name="user_id"
-                                    label="Student ID"
+                                    name="teacher_id"
+                                    label="Teacher ID"
                                 >
                                     {/* Replace these options with your actual dropdown values */}
                                     <MenuItem value="">
                                         <em>None</em>
                                     </MenuItem>
-                                    <MenuItem value={1}>Student 1</MenuItem>
-                                    <MenuItem value={2}>Student 2</MenuItem>
-                                    <MenuItem value={3}>Student 3</MenuItem>
+                                    <MenuItem value={1}>teacher 1</MenuItem>
+                                    <MenuItem value={2}>teacher 2</MenuItem>
+                                    <MenuItem value={3}>teacher 3</MenuItem>
                                 </Select>
                                 <FormHelperText>{error?.user_id ?? ''}</FormHelperText>
                             </FormControl>
@@ -110,9 +112,9 @@ export default function CreateSection() {
                                 ...data,
                                 [e.target.name]: e.target.value
                             })}
-                                error={error?.user_id ? true : false}
-                                helperText={error?.user_id ?? ''}
-                                name="user_id"
+                                error={error?.student ? true : false}
+                                helperText={error?.student ?? ''}
+                                name="student_id"
                                 type='text'
                                 id="outlined-basic"
                                 label="Student ID"

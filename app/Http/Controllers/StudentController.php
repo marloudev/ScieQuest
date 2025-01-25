@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
@@ -25,6 +27,43 @@ class StudentController extends Controller
 
         return response()->json([
             'response' => $users,
+        ], 200);
+    }
+
+
+    public function store(Request $request)
+    {
+        // Validate the request data
+        $validatedData = $request->validate([
+            'user_id' => 'required|unique:users,user_id',  // Corrected 'unique' validation for 'user_id'
+            'email' => 'required|email|unique:users,email', // Unique validation for email
+            'fname' => 'required|string|max:255',  // First name must be a string with a max length of 255
+            'lname' => 'required|string|max:255',  // Last name must be a string with a max length of 255
+            'password' => 'required|string|min:8',  // Password must be a string with a minimum length of 8
+        ]);
+
+        // Create the user
+        User::create([
+            'user_id' => $validatedData['user_id'],
+            'email' => $validatedData['email'],
+            'fname' => $validatedData['fname'],
+            'lname' => $validatedData['lname'],
+            'user_type' => $request->user_type,
+            'password' => Hash::make($validatedData['password']),
+        ]);
+
+        Student::create([
+            'id_user' => $validatedData['id'],
+            'teacher_id' => $validatedData['employee_id'],
+            'fname' => $validatedData['fname'],
+            'lname' => $validatedData['lname'],
+            'email' => $validatedData['email'],
+        ]);
+
+        // Return response
+        return response()->json([
+            'status' => 'success',
+            'message' => 'User created successfully!',
         ], 200);
     }
 

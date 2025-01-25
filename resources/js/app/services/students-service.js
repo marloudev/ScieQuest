@@ -22,7 +22,7 @@ export async function get_students_by_id_service(id) {
 
 export async function store_students_service(data) {
     try {
-        const res = await axios.post('/api/account', data);
+        const res = await axios.post('/api/students', data);
         return res;
     } catch (error) {
         return error;
