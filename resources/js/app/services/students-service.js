@@ -40,7 +40,7 @@ export async function update_students_service(data) {
 
 export async function delete_students_service(id) {
     try {
-        const res = await axios.delete(`/api/account/${id}`);
+        const res = await axios.delete(`/api/students/${id}`);
         return res;
     } catch (error) {
         return error;

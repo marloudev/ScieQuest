@@ -45,7 +45,7 @@ export default function TableSection() {
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
 
-                <TableCell>{res.user_id}</TableCell>
+                <TableCell>{res.student_id}</TableCell>
                 <TableCell>
                   {res.fname}   {res.lname}
                 </TableCell>

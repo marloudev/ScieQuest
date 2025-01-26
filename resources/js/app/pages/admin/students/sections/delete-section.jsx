@@ -25,7 +25,7 @@ export default function DeleteSection({ data }) {
 
   const handleRemove = async () => {
     setLoading(true);
-    await store.dispatch(delete_students_thunk(data?.id))
+    await store.dispatch(delete_students_thunk(data?.student_id))
     await store.dispatch(get_students_thunk())
     setTimeout(() => {
       setLoading(false);
@@ -38,6 +38,8 @@ export default function DeleteSection({ data }) {
     setNotify(false);
     setOpen(false);
   };
+
+  console.log('aaSSss',data)
 
   return (
     <div>

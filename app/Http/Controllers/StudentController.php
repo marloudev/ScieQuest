@@ -12,7 +12,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search'); // Get search input
-        $query = User::where('user_type', 3); // Filter by user_type
+        $query = Student::query();
 
         // Check if there's a search query, and if so, apply search across columns
         if (!empty($search)) {
@@ -23,28 +23,28 @@ class StudentController extends Controller
             });
         }
 
-        $users = $query->paginate(10);
+        $students = $query->paginate(10);
 
         return response()->json([
-            'response' => $users,
+            'response' => $students,
         ], 200);
     }
-
 
     public function store(Request $request)
     {
         // Validate the request data
         $validatedData = $request->validate([
-            'user_id' => 'required|unique:users,user_id',  // Corrected 'unique' validation for 'user_id'
             'email' => 'required|email|unique:users,email', // Unique validation for email
             'fname' => 'required|string|max:255',  // First name must be a string with a max length of 255
             'lname' => 'required|string|max:255',  // Last name must be a string with a max length of 255
             'password' => 'required|string|min:8',  // Password must be a string with a minimum length of 8
+            'student_id' => 'required|integer',  // Ensure student_id is an integer
+            'teacher_id' => 'required|integer',
         ]);
 
         // Create the user
         User::create([
-            'user_id' => $validatedData['user_id'],
+            'user_id' => $validatedData['student_id'],  // This should be fixed based on your business logic
             'email' => $validatedData['email'],
             'fname' => $validatedData['fname'],
             'lname' => $validatedData['lname'],
@@ -52,9 +52,10 @@ class StudentController extends Controller
             'password' => Hash::make($validatedData['password']),
         ]);
 
+        // Create the student record
         Student::create([
-            'id_user' => $validatedData['id'],
-            'teacher_id' => $validatedData['employee_id'],
+            'student_id' => $validatedData['student_id'],
+            'teacher_id' => $validatedData['teacher_id'],  // Make sure 'employee_id' exists in the request
             'fname' => $validatedData['fname'],
             'lname' => $validatedData['lname'],
             'email' => $validatedData['email'],
@@ -66,6 +67,7 @@ class StudentController extends Controller
             'message' => 'User created successfully!',
         ], 200);
     }
+
 
     public function update(Request $request, $id)
     {
@@ -97,5 +99,24 @@ class StudentController extends Controller
             'message' => 'User updated successfully',
             'user' => $user,
         ]);
+    }
+
+    public function destroy($id)
+    {
+        // Find and delete the User record if it exists
+        $user = User::where('user_id', $id)->first();
+        if ($user) {
+            $user->delete();
+        }
+
+        $student = Student::where('student_id', $id)->first();
+        if ($student) {
+            $student->delete();
+        }
+
+        return response()->json([
+            'response' => 'success',
+            'message' => 'User and Student records deleted successfully.',
+        ], 200);
     }
 }

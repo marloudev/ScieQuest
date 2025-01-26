@@ -106,7 +106,7 @@ export default function CreateSection() {
                                     <MenuItem value={2}>teacher 2</MenuItem>
                                     <MenuItem value={3}>teacher 3</MenuItem>
                                 </Select>
-                                <FormHelperText>{error?.user_id ?? ''}</FormHelperText>
+                                <FormHelperText>{error?.teacher_id ?? ''}</FormHelperText>
                             </FormControl>
                             <TextField onChange={(e) => setData({
                                 ...data,
