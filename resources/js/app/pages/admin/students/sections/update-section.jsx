@@ -87,15 +87,28 @@ export default function UpdateSection({ data }) {
                                 ...data,
                                 [e.target.name]: e.target.value
                             })}
-                                value={form.user_id}
-                                error={error?.user_id ? true : false}
-                                helperText={error?.user_id ?? ''}
+                                value={form.student_id}
+                                error={error?.student_id ? true : false}
+                                helperText={error?.student_id ?? ''}
                                 name="user_id"
                                 type='text'
                                 id="outlined-basic"
-                                label="Employee ID"
+                                label="Student ID"
                                 variant="outlined"
                             />
+                            <TextField
+                                onChange={(e) => setForm({
+                                    ...form,
+                                    [e.target.name]: e.target.value
+                                })}
+                                value={form.teacher_id}
+                                error={error?.teacher_id ? true : false}
+                                helperText={error?.teacher_id ?? ''}
+                                name='teacher_id'
+                                type='text'
+                                id="outlined-basic"
+                                label="Teacher/Adviser"
+                                variant="outlined" />
                             <TextField onChange={(e) => setForm({
                                 ...form,
                                 [e.target.name]: e.target.value
@@ -121,6 +134,19 @@ export default function UpdateSection({ data }) {
                                 type='text'
                                 id="outlined-basic"
                                 label="Last Name"
+                                variant="outlined" />
+                            <TextField
+                                onChange={(e) => setForm({
+                                    ...form,
+                                    [e.target.name]: e.target.value
+                                })}
+                                value={form.email}
+                                error={error?.email ? true : false}
+                                helperText={error?.email ?? ''}
+                                name='email'
+                                type='email'
+                                id="outlined-basic"
+                                label="Email"
                                 variant="outlined" />
                         </div>
                         <Button

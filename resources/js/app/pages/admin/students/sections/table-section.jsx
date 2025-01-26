@@ -50,7 +50,7 @@ export default function TableSection() {
                   {res.fname}   {res.lname}
                 </TableCell>
                 <TableCell>
-                  {res.fname}   {res.lname}
+                  {res.teacher_id}  
                 </TableCell>
                 <TableCell>{res.email}</TableCell>
                 {/* <TableCell>
