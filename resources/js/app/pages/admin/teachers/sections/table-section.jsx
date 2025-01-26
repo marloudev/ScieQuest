@@ -75,11 +75,11 @@ export default function TableSection() {
                                             {/* <DeleteSection data={res} /> */}
                                             <Tooltip title="View Teacher Details">
                                                 <Button
-                                                    // onClick={() =>
-                                                    //     router.visit(
-                                                    //         `/administrator/teachers/${res.id}/create_grades`,
-                                                    //     )
-                                                    // }
+                                                    onClick={() =>
+                                                        router.visit(
+                                                            `/list-students`,
+                                                        )
+                                                    }
                                                     size="small"
                                                     variant="contained"
                                                     color="success"

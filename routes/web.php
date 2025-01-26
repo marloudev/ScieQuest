@@ -27,8 +27,10 @@ Route::middleware('redirectBasedOnRole')->get('/register', function () {
 
 
 
-Route::middleware('auth:sanctum', 'administrator'
-// , 'verified'
+Route::middleware(
+    'auth:sanctum',
+    'administrator'
+    // , 'verified'
 )->prefix('administrator')->group(function () {
 
     Route::get('/', function () {
@@ -42,6 +44,9 @@ Route::middleware('auth:sanctum', 'administrator'
     Route::prefix('teachers')->group(function () {
         Route::get('/', function () {
             return Inertia::render('admin/teachers/page');
+        });
+        Route::get('/list-students/{user_id}', function () {
+            return Inertia::render('admin/teachers/list-students/page');
         });
         Route::prefix('{user_id}')->group(function () {
             Route::get('/', function () {
@@ -116,8 +121,10 @@ Route::middleware('auth:sanctum', 'administrator'
     });
 });
 
-Route::middleware('auth:sanctum', 'teacher'
-// , 'verified'
+Route::middleware(
+    'auth:sanctum',
+    'teacher'
+    // , 'verified'
 )->prefix('teacher')->group(function () {
 
     Route::get('/', function () {
@@ -135,7 +142,7 @@ Route::middleware('auth:sanctum', 'teacher'
         Route::get('/{id}', function () {
             return Inertia::render('teacher/schedule/id/page');
         });
-        
+
         Route::get('/{id}/ila_assessment_form/{user_id}', function () {
             return Inertia::render('teacher/schedule/id/ila_assessment_form/page');
         });
@@ -174,8 +181,10 @@ Route::middleware('auth:sanctum', 'teacher'
     })->name('teacher.settings');
 });
 
-Route::middleware('auth:sanctum', 'student'
-// , 'verified'
+Route::middleware(
+    'auth:sanctum',
+    'student'
+    // , 'verified'
 )->prefix('student')->group(function () {
     Route::get('/', function () {
         return redirect()->route('student.dashboard');
