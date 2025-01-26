@@ -134,4 +134,12 @@ class StudentController extends Controller
             'message' => 'User and Student records deleted successfully.',
         ], 200);
     }
+
+    public function show($teacher_id)
+    {
+        $student = Student::where('teacher_id', $teacher_id)->with(['teacher'])->first();
+        return response()->json([
+            'status' => $student,
+        ], 200);
+    }
 }

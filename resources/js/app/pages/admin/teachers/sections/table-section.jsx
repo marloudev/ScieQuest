@@ -73,11 +73,11 @@ export default function TableSection() {
                                         <div className="flex gap-2">
                                             {/* <UpdateSection data={res} /> */}
                                             {/* <DeleteSection data={res} /> */}
-                                            <Tooltip title="View Teacher Details">
+                                            <Tooltip title="View List of Students">
                                                 <Button
                                                     onClick={() =>
                                                         router.visit(
-                                                            `/list-students`,
+                                                            `teachers/list-students/${res?.employee_id}`,
                                                         )
                                                     }
                                                     size="small"

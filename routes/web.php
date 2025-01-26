@@ -45,7 +45,7 @@ Route::middleware(
         Route::get('/', function () {
             return Inertia::render('admin/teachers/page');
         });
-        Route::get('/list-students/{user_id}', function () {
+        Route::get('/list-students/{employee_id}', function () {
             return Inertia::render('admin/teachers/list-students/page');
         });
         Route::prefix('{user_id}')->group(function () {

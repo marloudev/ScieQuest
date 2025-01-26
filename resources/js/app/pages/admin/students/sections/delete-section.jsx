@@ -39,7 +39,7 @@ export default function DeleteSection({ data }) {
     setOpen(false);
   };
 
-  console.log('aaSSss',data)
+  console.log('aaSSss', data)
 
   return (
     <div>
@@ -64,7 +64,7 @@ export default function DeleteSection({ data }) {
           variant="filled"
           sx={{ width: "100%" }}
         >
-          Teacher Removed Successfully!
+          Student Removed Successfully!
         </Alert>
       </Snackbar>
 
@@ -72,15 +72,15 @@ export default function DeleteSection({ data }) {
       <Dialog
         open={open}
         onClose={handleClose}
-        aria-labelledby="remove-teacher-title"
-        aria-describedby="remove-teacher-description"
+        aria-labelledby="remove-student-title"
+        aria-describedby="remove-student-description"
       >
-        <DialogTitle id="remove-teacher-title">
+        <DialogTitle id="remove-student-title">
           Confirm Removal
         </DialogTitle>
         <DialogContent>
-          <DialogContentText id="remove-teacher-description">
-            Are you sure you want to remove the teacher <strong>{data?.fname} {data?.lname}</strong>?
+          <DialogContentText id="remove-student-description">
+            Are you sure you want to remove the student <strong>{data?.fname} {data?.lname}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
