@@ -90,21 +90,22 @@ export default function UpdateSection({ data }) {
                                 value={form.student_id}
                                 error={error?.student_id ? true : false}
                                 helperText={error?.student_id ?? ''}
-                                name="user_id"
+                                name="student_id"
                                 type='text'
                                 id="outlined-basic"
                                 label="Student ID"
                                 variant="outlined"
+                                disabled
                             />
                             <TextField
                                 onChange={(e) => setForm({
                                     ...form,
                                     [e.target.name]: e.target.value
                                 })}
-                                value={form.teacher_id}
-                                error={error?.teacher_id ? true : false}
-                                helperText={error?.teacher_id ?? ''}
-                                name='teacher_id'
+                                // value={`${form.teacher.fname} ${form.teacher.lname}`}
+                                error={error?.teacher ? true : false}
+                                helperText={error?.teacher ?? ''}
+                                name='teacher'
                                 type='text'
                                 id="outlined-basic"
                                 label="Teacher/Adviser"

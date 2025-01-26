@@ -22,6 +22,7 @@ import UpdateSection from './update-section';
 
 export default function TableSection() {
   const { students } = useSelector((state) => state.students)
+  console.log('sssss', students)
   return (
     <TableContainer component={Paper}>
       <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -50,7 +51,7 @@ export default function TableSection() {
                   {res.fname}   {res.lname}
                 </TableCell>
                 <TableCell>
-                  {res.teacher_id}  
+                  {res.teacher.fname}   {res.teacher.lname}
                 </TableCell>
                 <TableCell>{res.email}</TableCell>
                 {/* <TableCell>

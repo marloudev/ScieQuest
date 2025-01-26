@@ -9,10 +9,12 @@ import store from "../../store/store";
 import { get_students_thunk } from "./redux/students-thunk";
 import CreateSection from "./sections/create-section";
 import FilterStudentSection from "./sections/filter-student-section";
+import { get_teachers_thunk } from "../teachers/redux/teachers-thunk";
 
 export default function StudentsPage() {
     useEffect(() => {
         store.dispatch(get_students_thunk());
+        store.dispatch(get_teachers_thunk());
     }, []);
     return (
         <AdminLayout>

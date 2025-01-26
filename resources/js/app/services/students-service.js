@@ -31,7 +31,7 @@ export async function store_students_service(data) {
 
 export async function update_students_service(data) {
     try {
-        const res = await axios.put(`/api/students/${data.id}`, data);
+        const res = await axios.put(`/api/students/${data.student_id}`, data);
         return res;
     } catch (error) {
         return error;

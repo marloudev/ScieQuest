@@ -12,7 +12,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search'); // Get search input
-        $query = Student::query();
+        $query = Student::query()->with(['teacher']);
 
         // Check if there's a search query, and if so, apply search across columns
         if (!empty($search)) {
@@ -39,7 +39,7 @@ class StudentController extends Controller
             'lname' => 'required|string|max:255',  // Last name must be a string with a max length of 255
             'password' => 'required|string|min:8',  // Password must be a string with a minimum length of 8
             'student_id' => 'required|integer',  // Ensure student_id is an integer
-            'teacher_id' => 'required|integer',
+            'teacher' => 'required|integer',
         ]);
 
         // Create the user
@@ -55,7 +55,7 @@ class StudentController extends Controller
         // Create the student record
         Student::create([
             'student_id' => $validatedData['student_id'],
-            'teacher_id' => $validatedData['teacher_id'],  // Make sure 'employee_id' exists in the request
+            'teacher_id' => $validatedData['teacher'],  // Make sure 'employee_id' exists in the request
             'fname' => $validatedData['fname'],
             'lname' => $validatedData['lname'],
             'email' => $validatedData['email'],
@@ -71,35 +71,49 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
-        // Find the user or throw a 404 error
-        $user = User::findOrFail($id);
+        // Find the user by user_id
+        $user = User::where('user_id', $id)->first();
+        if (!$user) {
+            return response()->json([
+                'message' => 'User not found',
+                'error' => 'No user found with user_id ' . $id,
+            ], 404);
+        }
 
-        // Validate input data
-        $validatedData = $request->validate([
-            'user_id' => 'nullable|unique:users,user_id,' . $id, // Allow unique except for the current user's ID
+        $userData = $request->validate([
+            'user_id' => 'nullable|unique:users,user_id,' . $user->id, // Exclude current user's ID from unique check
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
         ]);
 
-        // Prepare data for update
-        $dataToUpdate = [
-            'fname' => $validatedData['fname'],
-            'lname' => $validatedData['lname'],
-        ];
+        $user->update(array_filter($userData));
 
-        // Only include 'user_id' if it's provided
-        if (!empty($validatedData['user_id'])) {
-            $dataToUpdate['user_id'] = $validatedData['user_id'];
+        // Find the student by student_id
+        $student = Student::where('student_id', $id)->first();
+        if (!$student) {
+            return response()->json([
+                'message' => 'Student not found',
+                'error' => 'No student found with student_id ' . $id,
+            ], 404);
         }
 
-        // Update user data
-        $user->update($dataToUpdate);
+        $studentData = $request->validate([
+            'student_id' => 'nullable|unique:students,student_id,' . $student->id, // Exclude current student's ID from unique check
+            'fname' => 'required|string|max:255',
+            'lname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'teacher_id' => 'required|integer',
+        ]);
+
+        $student->update(array_filter($studentData));
 
         return response()->json([
-            'message' => 'User updated successfully',
+            'message' => 'User and Student updated successfully',
             'user' => $user,
+            'student' => $student,
         ]);
     }
+
 
     public function destroy($id)
     {

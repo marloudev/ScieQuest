@@ -37,6 +37,7 @@ export default function TableSection() {
     const handleCloseRemoveSection = () => {
         setselectedRemoveTeacher(null);
     };
+    console.log('teacssshers', teachers)
     return (
         <>
             <TableContainer component={Paper}>

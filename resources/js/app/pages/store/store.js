@@ -7,7 +7,7 @@ import teachersSlice from "../admin/teachers/redux/teachers-slice";
 import literacyTestSlice from "../admin/literacy_test/_redux/literacy-test-slice";
 import questionnairesSlice from "../admin/literacy_test/_redux/questionaires-slice";
 import bookletSlice from "../admin/module/redux/booklet-slice";
-import lessonSlice  from "../admin/module/redux/lesson-slice";
+import lessonSlice from "../admin/module/redux/lesson-slice";
 
 const store = configureStore({
     reducer: {
@@ -19,7 +19,7 @@ const store = configureStore({
         literacyTests: literacyTestSlice,
         questionnaires: questionnairesSlice,
         booklets: bookletSlice,
-        lessons:lessonSlice
+        lessons: lessonSlice
     },
 });
 
