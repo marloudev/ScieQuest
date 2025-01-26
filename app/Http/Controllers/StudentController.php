@@ -102,9 +102,10 @@ class StudentController extends Controller
             'fname' => 'required|string|max:255',
             'lname' => 'required|string|max:255',
             'email' => 'required|email|max:255',
-            'teacher_id' => 'required|integer',
+            'teacher_id' => 'required|integer|exists:teachers,employee_id',
         ]);
 
+        // Update the student data including teacher_id
         $student->update(array_filter($studentData));
 
         return response()->json([

@@ -4,28 +4,31 @@ import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
 import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
 import { useState } from 'react';
-import { Edit, EditNote } from '@mui/icons-material';
+import { EditNote } from '@mui/icons-material';
 import { useEffect } from 'react';
 import store from '@/app/pages/store/store';
 import { useSelector } from 'react-redux';
 import { get_students_thunk, update_students_thunk } from '../redux/students-thunk';
 
 export default function UpdateSection({ data }) {
-    const [open, setOpen] = useState(false); // Open by default when rendered
+    const [open, setOpen] = useState(false);
     const [form, setForm] = useState({});
     const [error, setError] = useState({});
     const [notify, setNotify] = useState(false);
     const [loading, setLoading] = useState(false);
-    // const { departments } = useSelector((state) => state.department);
+    const { teachers } = useSelector((state) => state.teachers);
 
     useEffect(() => {
-        setForm(data)
-    }, [])
+        setForm({
+            ...data,
+            teacher: data?.teacher || {}  // Ensure teacher is not undefined
+        });
+    }, [data]);
 
     const toggleDrawer = (newOpen) => () => {
         setOpen(newOpen);
         if (!newOpen && onClose) {
-            onClose(); // Notify parent to close
+            onClose();  // Notify parent to close
         }
     };
 
@@ -48,15 +51,10 @@ export default function UpdateSection({ data }) {
         setNotify(false);
         setOpen(false);
     };
-    console.log('datadata', data)
+
     return (
         <div>
-            <Button
-                onClick={() => setOpen(true)}
-                size="small"
-                variant="contained"
-                color="primary"
-            >
+            <Button onClick={() => setOpen(true)} size="small" variant="contained" color="primary">
                 <EditNote />
             </Button>
             <Snackbar
@@ -65,61 +63,65 @@ export default function UpdateSection({ data }) {
                 autoHideDuration={3000}
                 onClose={handleCloseNotification}
             >
-                <Alert
-                    onClose={handleCloseNotification}
-                    severity="success"
-                    variant="filled"
-                    sx={{ width: "100%" }}
-                >
+                <Alert onClose={handleCloseNotification} severity="success" variant="filled" sx={{ width: "100%" }}>
                     Successfully Updated!
                 </Alert>
             </Snackbar>
-            <Drawer
-                anchor='right'
-                open={open} onClose={toggleDrawer(false)}>
-                <Box className="w-[500px] h-full flex bg-white" role="presentation" >
+            <Drawer anchor='right' open={open} onClose={toggleDrawer(false)}>
+                <Box className="w-[500px] h-full flex bg-white" role="presentation">
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
-                        <div className='flex flex-col gap-3  w-full' >
+                        <div className='flex flex-col gap-3 w-full'>
                             <div className='text-2xl font-black'>
                                 Update Student
                             </div>
-                            <TextField onChange={(e) => setForm({
-                                ...data,
-                                [e.target.name]: e.target.value
-                            })}
-                                value={form.student_id}
-                                error={error?.student_id ? true : false}
-                                helperText={error?.student_id ?? ''}
-                                name="student_id"
-                                type='text'
-                                id="outlined-basic"
-                                label="Student ID"
-                                variant="outlined"
-                                disabled
-                            />
                             <TextField
                                 onChange={(e) => setForm({
                                     ...form,
                                     [e.target.name]: e.target.value
                                 })}
-                                // value={`${form.teacher.fname} ${form.teacher.lname}`}
-                                error={error?.teacher ? true : false}
-                                helperText={error?.teacher ?? ''}
-                                name='teacher'
+                                value={form.student_id}
+                                error={error?.student_id ? true : false}
+                                helperText={error?.student_id ?? ''}
+                                name="student_id"
                                 type='text'
-                                id="outlined-basic"
-                                label="Teacher/Adviser"
-                                variant="outlined" />
-                            <TextField onChange={(e) => setForm({
-                                ...form,
-                                [e.target.name]: e.target.value
-                            })}
+                                label="Student ID"
+                                variant="outlined"
+                                disabled
+                            />
+                            <FormControl variant="outlined" error={!!error.teacher} fullWidth>
+                                <InputLabel id="teacher-id-label">Teacher/Adviser</InputLabel>
+                                <Select
+                                    labelId="teacher-id-label"
+                                    value={form.teacher_id || ''}  // Set the value to employee_id
+                                    onChange={(e) => setForm({
+                                        ...form,
+                                        teacher_id: e.target.value
+                                    })}
+                                    name="teacher"
+                                    label="Teacher/Adviser"
+                                >
+                                    <MenuItem value="">
+                                        <em>None</em>
+                                    </MenuItem>
+                                    {Array.isArray(teachers?.data) &&
+                                        teachers?.data.map((res) => (
+                                            <MenuItem value={res.employee_id} key={res.employee_id}>
+                                                {`${res.fname} ${res.lname}`}
+                                            </MenuItem>
+                                        ))}
+                                </Select>
+                            </FormControl>
+
+                            <TextField
+                                onChange={(e) => setForm({
+                                    ...form,
+                                    [e.target.name]: e.target.value
+                                })}
                                 value={form.fname}
                                 error={error?.fname ? true : false}
                                 helperText={error?.fname ?? ''}
                                 name="fname"
                                 type='text'
-                                id="outlined-basic"
                                 label="First Name"
                                 variant="outlined"
                             />
@@ -133,9 +135,9 @@ export default function UpdateSection({ data }) {
                                 helperText={error?.lname ?? ''}
                                 name='lname'
                                 type='text'
-                                id="outlined-basic"
                                 label="Last Name"
-                                variant="outlined" />
+                                variant="outlined"
+                            />
                             <TextField
                                 onChange={(e) => setForm({
                                     ...form,
@@ -146,15 +148,11 @@ export default function UpdateSection({ data }) {
                                 helperText={error?.email ?? ''}
                                 name='email'
                                 type='email'
-                                id="outlined-basic"
                                 label="Email"
-                                variant="outlined" />
+                                variant="outlined"
+                            />
                         </div>
-                        <Button
-                            onClick={submitForm}
-                            disabled={loading}
-                            variant='contained'
-                            className=' w-full'>
+                        <Button onClick={submitForm} disabled={loading} variant='contained' className=' w-full'>
                             {loading ? <CircularProgress size={24} color="inherit" /> : 'Submit'}
                         </Button>
                     </div>
