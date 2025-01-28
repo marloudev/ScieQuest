@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\Answer;
+use App\Models\Quest;
 use App\Models\ScoreSheet;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
@@ -29,40 +31,42 @@ class AnswerController extends Controller
     public function store(Request $request)
     {
 
-        $score_sheet = ScoreSheet::where('user_id', '=', $request->user['id'])->first();
 
-        if (!$score_sheet) {
-            $ss = ScoreSheet::create([
-                'booklet_id'=>$request->booklet_id,
-                'user_id' => $request->user['id'],
-                'overall_score' => 0,
-                'als_level' => $request->als_level,
-                'date' => $request->date,
+        $quest = Quest::where('id', $request->quest_id)->first();
+        $answer = Answer::where('quest_id', '=', $request->quest_id)->first();
+
+
+
+        if (!$answer) {
+            Answer::create([
+                'learning_id' => $quest->learning_id,
+                'type' => $quest->type,
+                'quest_id' => $request->quest_id,
+                'student_id' => $request->student_id,
+                'answer' => $request->answer,
+                'score' => ucfirst($quest->answer_key) == ucfirst($request->answer) ? 1 : 0,
             ]);
-
-            foreach ($request->answers as $key => $value) {
-                Answer::create([
-                    'score_sheet_id' => $ss->id,
-                    'questionnaire_id' => $value['questionnaire_id'],
-                    'answer' => $value['answer'],
-                    'score' => $value['isCorrect'] ? 1 : 0,
-                ]);
-            }
-            
-            $overall = Answer::where('score_sheet_id', $ss->id)->sum('score');
-            $ss->update([
-                'overall_score' => $overall
-            ]);
-
-            return response()->json([
-                'response' => 'success',
-            ], 200);
-
-        }else{
-            return response()->json([
-                'response' => 'exist',
-            ], 200);
         }
+        $isFinish = false;
+        $count_answer = Answer::where([
+            ['learning_id', '=', $quest->learning_id],
+            ['type', '=', $quest->type]
+        ])->count();
+        $count_quest = Quest::where([
+            ['learning_id', '=', $quest->learning_id],
+            ['type', '=', $quest->type]
+        ])->count();
+
+        if ($count_answer == $count_quest) {
+            $isFinish = true;
+        }
+
+        return response()->json([
+            'count_answer' => $count_answer,
+            'count_quest' => $count_quest,
+            'isFinish' => $isFinish,
+            'response' => 'success',
+        ], 200);
     }
 
     public function destroy($id)

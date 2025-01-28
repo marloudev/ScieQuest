@@ -20,7 +20,7 @@ class QuestController extends Controller
             $url = Storage::disk('s3')->url($path);
         }
         if ($request->type == 'pre-exercise') {
-            PreExercise::create([
+           $learning_id =  PreExercise::create([
                 'lesson_id' => $request->lesson_id,
                 'exam_type' => $request->exam_type,
                 'direction' => $request->direction,
@@ -29,15 +29,18 @@ class QuestController extends Controller
 
             foreach ($questions as $key => $value) {
                 Quest::create([
+                    'learning_id'=>$learning_id->id,
                     'lesson_id' => $request->lesson_id,
                     'exam_type' => $request->exam_type,
+                    'type' => $request->type,
                     'question' => $value['question'],
-                    'answer_key' => $url ?? null,
+                    'answer_key' => $value['answer_key'],
+                    'file' => $url ?? null,
                 ]);
             }
         }
         if ($request->type == 'assessment') {
-            Assessment::create([
+            $learning_id =  Assessment::create([
                 'lesson_id' => $request->lesson_id,
                 'exam_type' => $request->exam_type,
                 'direction' => $request->direction,
@@ -46,10 +49,13 @@ class QuestController extends Controller
 
             foreach ($questions as $key => $value) {
                 Quest::create([
+                    'learning_id'=>$learning_id->id,
                     'lesson_id' => $request->lesson_id,
                     'exam_type' => $request->exam_type,
+                    'type' => $request->type,
                     'question' => $value['question'],
-                    'answer_key' => $url ?? null,
+                    'answer_key' => $value['answer_key'],
+                    'file' => $url ?? null,
                 ]);
             }
         }

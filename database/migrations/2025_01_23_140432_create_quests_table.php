@@ -13,7 +13,9 @@ return new class extends Migration
     {
         Schema::create('quests', function (Blueprint $table) {
             $table->id();
+            $table->bigInteger('learning_id')->nullable();
             $table->bigInteger('lesson_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('exam_type')->nullable();
             $table->longText('direction')->nullable();
             $table->string('question')->nullable();

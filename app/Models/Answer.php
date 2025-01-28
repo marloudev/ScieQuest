@@ -10,8 +10,10 @@ class Answer extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'score_sheet_id',
-        'questionnaire_id',
+        'learning_id',
+        'quest_id',
+        'student_id',
+        'type',
         'answer',
         'score',
     ];

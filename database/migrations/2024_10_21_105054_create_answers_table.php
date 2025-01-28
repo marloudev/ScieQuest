@@ -13,8 +13,10 @@ return new class extends Migration
     {
         Schema::create('answers', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('score_sheet_id')->nullable();
-            $table->bigInteger('questionnaire_id')->nullable();
+            $table->bigInteger('learning_id')->nullable();
+            $table->bigInteger('student_id')->nullable();
+            $table->bigInteger('quest_id')->nullable();
+            $table->string('type')->nullable();
             $table->string('answer')->nullable();
             $table->string('score')->nullable();
             $table->timestamps();

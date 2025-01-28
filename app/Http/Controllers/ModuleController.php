@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class ModuleController extends Controller
 {
     public function get_module_by_quarter($id){
-        $modules = Module::where('quarter',$id)->get();
+        $modules = Module::where('quarter',$id)->with(['lessons'])->get();
         return response()->json([
             'status' => 'success',
             'data' => $modules,

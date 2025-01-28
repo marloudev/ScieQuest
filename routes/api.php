@@ -21,9 +21,10 @@ use App\Http\Controllers\SpecificationController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/user', function (Request $request) {
-    return User::where('id',$request->user()['id'])->with(['score_sheet'])->first();
+    return Auth::user();
 })->middleware('auth:sanctum');
 
 // Route::get('/user', function (Request $request) {
@@ -43,6 +44,7 @@ Route::resource('answers', AnswerController::class);
 Route::resource('module', ModuleController::class);
 Route::resource('lesson', LessonController::class);
 Route::resource('quest', QuestController::class);
+Route::resource('answer', AnswerController::class);
 Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
 
 
