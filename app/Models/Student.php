@@ -17,6 +17,7 @@ class Student extends Model
         'lname',
         'email',
     ];
+
     public function teacher(): BelongsTo
     {
         return $this->belongsTo(Teacher::class, "teacher_id", "employee_id");

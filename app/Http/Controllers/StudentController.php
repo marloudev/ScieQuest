@@ -135,9 +135,9 @@ class StudentController extends Controller
         ], 200);
     }
 
-    public function show($teacher_id)
+    public function show($id)
     {
-        $student = Student::where('teacher_id', $teacher_id)->with(['teacher'])->first();
+        $student = Student::where('teacher_id', $id)->with(['teacher'])->first();
         return response()->json([
             'status' => $student,
         ], 200);
