@@ -13,7 +13,7 @@ export async function get_students_service(user_type) {
 
 export async function get_students_by_id_service(teacher_id) {
     try {
-        const res = await axios.get(`/api/students/${teacher_id}`);
+        const res = await axios.get(`/api/students/${teacher_id}${window.location.search}`);
         return res;
     } catch (error) {
         return error;

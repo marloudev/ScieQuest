@@ -15,7 +15,7 @@ export function get_students_thunk() {
 export function get_students_by_id_thunk(id) {
   return async function (dispatch, getState) {
     const res = await get_students_by_id_service(id)
-    dispatch(studentsSlice.actions.setStudent(res.data.response));
+    dispatch(studentsSlice.actions.setStudents(res.data.status));
     return res
   };
 }

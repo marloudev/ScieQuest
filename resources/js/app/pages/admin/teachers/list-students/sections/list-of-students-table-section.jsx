@@ -19,15 +19,10 @@ export default function ListOfStudentsTableSection() {
 
     useEffect(() => {
         dispatch(get_students_by_id_thunk(teacher_id));
-    }, [dispatch, teacher_id]);
+    }, []);
 
-    useEffect(() => {
-        if (students?.data) {
-            const filtered = students.data.filter(student => student.teacher_id === teacher_id);
-            setFilteredStudents(filtered);
-        }
-    }, [students, teacher_id]);
 
+console.log('students',students)
     return (
         <>
             <TableContainer component={Paper}>
@@ -41,7 +36,7 @@ export default function ListOfStudentsTableSection() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredStudents?.map((res, i) => (
+                        {students?.data.map((res, i) => (
                             <TableRow
                                 key={i}
                                 sx={{

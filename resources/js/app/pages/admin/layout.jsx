@@ -146,11 +146,11 @@ function AdminLayout({ children }, props) {
             }}
         >
             <DashboardLayout>
-                <div className="username-section p-4 text-2xl text-green-500 items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
+                <div className="username-section mt-4 mb-1 px-5 text-2xl text-green-500 items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
                     <span><b>Welcome, {username}</b></span>
                 </div>
                 <LogoutSection open={open} setOpen={setOpen} />
-                <div className="p-4">{children}</div>
+                <div className="p-4">{children}</div>   
             </DashboardLayout>
         </AppProvider>
         // preview-end

@@ -12,6 +12,7 @@ import "react-quill/dist/quill.snow.css";
 import store from "@/app/pages/store/store";
 import { store_lesson_thunk } from "../../redux/lesson-thunk";
 import { useEffect } from "react";
+import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
 
 const style = {
     position: "absolute",
@@ -63,6 +64,7 @@ export default function CreateLessonSection() {
 
             const result = await store.dispatch(store_lesson_thunk(formData));
             if (result.status == 200) {
+                store.dispatch(get_module_by_id_thunk(module_id));
                 setLoading(false);
                 setOpen(false);
                 setData({
