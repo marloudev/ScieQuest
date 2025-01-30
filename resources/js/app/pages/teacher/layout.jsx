@@ -26,7 +26,7 @@ const NAVIGATION = [
         icon: <DashboardIcon />,
     },
     {
-        segment: "list",
+        segment: "list-students",
         title: "List of Students",
         icon: <RecentActors />,
     },
@@ -95,10 +95,12 @@ function InstructorLayout({ children }, props) {
     const { window } = props;
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
+    const { user } = useSelector((state) => state.app);
 
+    const username = user?.fname ? `${user.fname}` : "Guest";
 
     useEffect(() => {
-        store.dispatch(get_user_login_thunk())
+        store.dispatch(get_user_login_thunk()) 
     }, [])
 
     const router = React.useMemo(() => {
@@ -139,6 +141,9 @@ function InstructorLayout({ children }, props) {
             >
 
                 <DashboardLayout>
+                    <div className="username-section mt-4 mb-1 px-5 text-2xl text-green-600 items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
+                        <span><b>Welcome, Teacher {username}</b></span>
+                    </div>
                     <LogoutSection open={open} setOpen={setOpen} />
                     <div className="p-4">{children}</div>
                 </DashboardLayout>
