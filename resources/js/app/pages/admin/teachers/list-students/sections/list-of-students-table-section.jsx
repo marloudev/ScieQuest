@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
@@ -14,12 +14,19 @@ import { get_students_by_id_thunk } from '../../../students/redux/students-thunk
 export default function ListOfStudentsTableSection() {
     const dispatch = useDispatch();
     const { students } = useSelector((state) => state.students);
-    const teacher_id = window.location.pathname.split('/')[4]
+    const [filteredStudents, setFilteredStudents] = useState([]);
+    const teacher_id = window.location.pathname.split('/')[4];
 
     useEffect(() => {
-        // Dispatch an action to fetch students when the component mounts
         dispatch(get_students_by_id_thunk(teacher_id));
-    }, [dispatch]);
+    }, [dispatch, teacher_id]);
+
+    useEffect(() => {
+        if (students?.data) {
+            const filtered = students.data.filter(student => student.teacher_id === teacher_id);
+            setFilteredStudents(filtered);
+        }
+    }, [students, teacher_id]);
 
     return (
         <>
@@ -34,7 +41,7 @@ export default function ListOfStudentsTableSection() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {students?.data?.map((res, i) => (
+                        {filteredStudents?.map((res, i) => (
                             <TableRow
                                 key={i}
                                 sx={{
