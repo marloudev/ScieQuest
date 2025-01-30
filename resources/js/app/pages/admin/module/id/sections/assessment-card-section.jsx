@@ -143,7 +143,7 @@ export default function AssessmentCardSection() {
                                                     "Multiple Choice" && (
                                                         <>
                                                             <MultipleChoiceComponent
-                                                                direction="Sample Directionsssssssss"
+                                                                direction="Chose the letter of the correct answer"
                                                                 question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
                                                                 image="/images/logo2.png"
                                                                 answers="A"
@@ -222,7 +222,7 @@ export default function AssessmentCardSection() {
                                                     "Fill In The Blank" && (
                                                         <>
                                                             <FillInTheBlankComponent
-                                                                direction="Sample Directionsssssssss"
+                                                                direction="Fill in the blanks provided"
                                                                 question="What is asked in the blank?"
                                                                 image="/images/background.jpg"
                                                                 answers="Sample Answer"
@@ -234,7 +234,7 @@ export default function AssessmentCardSection() {
                                                     "Multiple Choice" && (
                                                         <>
                                                             <MultipleChoiceComponent
-                                                                direction="Sample Directionsssssssss"
+                                                                direction="Chose the letter of the correct answer"
                                                                 question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
                                                                 image="/images/logo2.png"
                                                                 answers="A"
@@ -246,7 +246,7 @@ export default function AssessmentCardSection() {
                                                     "Identification" && (
                                                         <>
                                                             <IdentificationComponent
-                                                                direction="Sample Directionsssssssss"
+                                                                direction="Identify the answer of the questions"
                                                                 question="What is asked in the blank?"
                                                                 image="/images/background.jpg"
                                                                 answers="Sample Answer"
