@@ -5,12 +5,14 @@ import store from '@/app/pages/store/store';
 import InstructorLayout from '../layout';
 import { get_students_by_id_thunk } from '../../admin/students/redux/students-thunk';
 import { useSelector } from 'react-redux';
+import { get_teachers_thunk } from '../../admin/teachers/redux/teachers-thunk';
 
 export default function ListStudentsPage() {
     const { user } = useSelector((state) => state.app);
     const teacher_id = user?.user_id;
     useEffect(() => {
         store.dispatch(get_students_by_id_thunk(teacher_id))
+        store.dispatch(get_teachers_thunk());
     }, []);
     return (
         <InstructorLayout>

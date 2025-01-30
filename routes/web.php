@@ -139,6 +139,11 @@ Route::middleware(
         return Inertia::render('teacher/dashboard/page');
     })->name('teacher.dashboard');
 
+    Route::get('/module', function () {
+        return Inertia::render('teacher/module/page');
+    })->name('teacher.module');
+
+
     Route::prefix('schedule')->group(function () {
         Route::get('/', function () {
             return Inertia::render('teacher/schedule/page');
