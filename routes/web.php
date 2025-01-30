@@ -131,6 +131,10 @@ Route::middleware(
         return redirect()->route('teacher.dashboard');
     })->name('dashboard');
 
+    Route::get('/list-students', function () {
+        return Inertia::render('teacher/list-students/page');
+    })->name('teacher.list-students');
+
     Route::get('/dashboard', function () {
         return Inertia::render('teacher/dashboard/page');
     })->name('teacher.dashboard');

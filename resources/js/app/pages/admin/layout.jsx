@@ -19,6 +19,7 @@ import LogoutSection from "../_sections/logout-section";
 import store from "../store/store";
 import { get_user_login_thunk } from "@/app/redux/app-thunk";
 
+
 const NAVIGATION = [
     {
         segment: "dashboard",
@@ -102,7 +103,9 @@ function AdminLayout({ children }, props) {
     const { window } = props;
     const dispatch = useDispatch();
     const [open, setOpen] = React.useState(false);
+    const { user } = useSelector((state) => state.app);
 
+    const username = user?.fname && user?.lname ? `${user.fname} ${user.lname}` : "Guest";
 
     useEffect(() => {
         store.dispatch(get_user_login_thunk())
@@ -143,6 +146,9 @@ function AdminLayout({ children }, props) {
             }}
         >
             <DashboardLayout>
+                <div className="username-section p-4 text-2xl text-green-500 items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
+                    <span><b>Welcome, {username}</b></span>
+                </div>
                 <LogoutSection open={open} setOpen={setOpen} />
                 <div className="p-4">{children}</div>
             </DashboardLayout>

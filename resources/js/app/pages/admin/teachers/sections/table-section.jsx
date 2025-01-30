@@ -45,7 +45,7 @@ export default function TableSection() {
                     <TableHead>
                         <TableRow>
                             <TableCell>Employee ID</TableCell>
-                            <TableCell>Fullname</TableCell>
+                            <TableCell>Teacher's Fullname</TableCell>
                             <TableCell>Email</TableCell>
                             <TableCell>Action</TableCell>
                         </TableRow>
