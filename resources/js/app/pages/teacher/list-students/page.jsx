@@ -6,6 +6,7 @@ import InstructorLayout from '../layout';
 import { get_students_by_id_thunk } from '../../admin/students/redux/students-thunk';
 import { useSelector } from 'react-redux';
 import { get_teachers_thunk } from '../../admin/teachers/redux/teachers-thunk';
+import CreateSection from '../../admin/students/sections/create-section';
 
 export default function ListStudentsPage() {
     const { user } = useSelector((state) => state.app);
@@ -16,7 +17,12 @@ export default function ListStudentsPage() {
     }, []);
     return (
         <InstructorLayout>
-            <ListOfStudentsTableSection />
+            <div>
+                <CreateSection />
+            </div>
+            <div className='mt-4'>
+                <ListOfStudentsTableSection />
+            </div>
         </InstructorLayout>
     )
 }
