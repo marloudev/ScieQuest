@@ -23,7 +23,7 @@ class PreExercise extends Model
 
     public function questions(): HasMany
     {
-        return $this->hasMany(Quest::class,'lesson_id','id')->where('type','pre-exercise');
+        return $this->hasMany(Quest::class,'learning_id','id')->where('type','pre-exercise');
     }
     public function answer(): HasMany
     {

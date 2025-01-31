@@ -18,7 +18,7 @@ class Assessment extends Model
 
     public function questions(): HasMany
     {
-        return $this->hasMany(Quest::class,'lesson_id','id')->where('type','assessment');
+        return $this->hasMany(Quest::class,'learning_id','id')->where('type','assessment');
     }
     public function answer(): HasMany
     {

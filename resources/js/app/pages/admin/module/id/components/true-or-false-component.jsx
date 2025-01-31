@@ -1,18 +1,11 @@
 import React from 'react'
 
-export default function TrueOrFalseComponent({ question, answers, direction, image }) {
+export default function TrueOrFalseComponent({ question, answers }) {
   return (
     <div>
       <div>
-        <h3>Direction: {direction}</h3>
-      </div>
-      <div>
         <p>__________ {question}</p>
-        {image && (
-          <div className='flex flex-1 gap-3'>
-            <img className='w-24' src={image} alt="Question related" />
-          </div>
-        )}
+      
       </div>
       <div>
         <p>Answer key: {answers}</p>

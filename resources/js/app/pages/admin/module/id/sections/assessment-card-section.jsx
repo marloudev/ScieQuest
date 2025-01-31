@@ -109,72 +109,141 @@ export default function AssessmentCardSection() {
                                         <p>{htmlToText(res?.discussions)}</p>
                                     </div> */}
                                     <div className="flex items-center justify-center mt-4">
-                                        <h1><u>PRE-EXERCISE</u></h1>
+                                        <h1>
+                                            <u>PRE-EXERCISE</u>
+                                        </h1>
                                     </div>
-                                    <div className="flex items-center justify-center mb-6">Exam Type</div>
+
                                     {res.pre_exercises.map((pre_exercise) => {
+                                        console.log(
+                                            "pre_exercise",
+                                            pre_exercise,
+                                        );
                                         return (
                                             <>
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6">
+                                                    {pre_exercise.exam_type}
+                                                </div>
+                                                <div>
+                                                    <h3>
+                                                        Direction:
+                                                        {htmlToText(
+                                                            pre_exercise.direction,
+                                                        )}
+                                                    </h3>
+                                                    {pre_exercise?.file && (
+                                                        <div className="flex items-center justify-center flex-1 gap-3 w-full">
+                                                            <img
+                                                                className="w-1/2"
+                                                                src={
+                                                                    pre_exercise.file
+                                                                }
+                                                                alt="Question related"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 {pre_exercise.exam_type ==
                                                     "True Or False" && (
-                                                        <>
-                                                            <TrueOrFalseComponent
-                                                                direction="Put True if the sentence is true and put False if the sentence is false"
-                                                                question="The Dog is an animal."
-                                                                image="/images/background.jpg"
-                                                                answers="True"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        {pre_exercise.questions.map(
+                                                            (res, i) => {
+                                                                return (
+                                                                    <TrueOrFalseComponent
+                                                                        question={
+                                                                            res?.question
+                                                                        }
+                                                                        answers={
+                                                                            res?.answer_key
+                                                                        }
+                                                                    />
+                                                                );
+                                                            },
+                                                        )}
+                                                    </>
+                                                )}
 
                                                 {pre_exercise.exam_type ==
                                                     "Fill In The Blank" && (
-                                                        <>
-                                                            <FillInTheBlankComponent
-                                                                direction="Fill out the blank the corresponds the answer"
-                                                                question="The Dog is an ________ that plays."
-                                                                image="/images/background.jpg"
-                                                                answers="animal"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        {pre_exercise.questions.map(
+                                                            (res, i) => {
+                                                                return (
+                                                                    <FillInTheBlankComponent
+                                                                        question={
+                                                                            res?.question
+                                                                        }
+                                                                        answers={
+                                                                            res?.answer_key
+                                                                        }
+                                                                    />
+                                                                );
+                                                            },
+                                                        )}
+                                                    </>
+                                                )}
 
                                                 {pre_exercise.exam_type ==
                                                     "Multiple Choice" && (
-                                                        <>
-                                                            <MultipleChoiceComponent
-                                                                direction="Chose the letter of the correct answer"
-                                                                question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        {pre_exercise.questions.map(
+                                                            (res, i) => {
+                                                                return (
+                                                                    <MultipleChoiceComponent
+                                                                        question={
+                                                                            res?.question
+                                                                        }
+                                                                        answers={
+                                                                            res?.answer_key
+                                                                        }
+                                                                    />
+                                                                );
+                                                            },
+                                                        )}
+                                                    </>
+                                                )}
 
                                                 {pre_exercise.exam_type ==
                                                     "Identification" && (
-                                                        <>
-                                                            <IdentificationComponent
-                                                                direction="Sample Directionsssssssss"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                      {pre_exercise.questions.map(
+                                                            (res, i) => {
+                                                                return (
+                                                                    <IdentificationComponent
+                                                                    question={
+                                                                        res?.question
+                                                                    }
+                                                                    answers={
+                                                                        res?.answer_key
+                                                                    }
+                                                                />
+                                                                );
+                                                            },
+                                                        )}
+                                                       
+                                                    </>
+                                                )}
 
                                                 {pre_exercise.exam_type ==
                                                     "Matching" && (
-                                                        <>
-                                                            <MatchingComponent
-                                                                direction="Match the items in Column A to the Column B"
-                                                                question="A. Basketball"
-                                                                match="A. Sports"
-                                                                // image="/images/background.jpg"
-                                                                answers="A - B"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                         {pre_exercise.questions.map(
+                                                            (res, i) => {
+                                                                return (
+                                                                    <MatchingComponent
+                                                                    question={
+                                                                        res?.question
+                                                                    }
+                                                                    answers={
+                                                                        res?.answer_key
+                                                                    }
+                                                                />
+                                                                );
+                                                            },
+                                                        )}
+                                                       
+                                                    </>
+                                                )}
                                             </>
                                         );
                                     })}
@@ -200,76 +269,80 @@ export default function AssessmentCardSection() {
                                         <hr />
                                     </div>
                                     <div className="flex items-center justify-center mt-4">
-                                        <h1><u>ASSESSMENT</u></h1>
+                                        <h1>
+                                            <u>ASSESSMENT</u>
+                                        </h1>
                                     </div>
-                                    <div className="flex items-center justify-center mb-6">Exam Type</div>
+                                    <div className="flex items-center justify-center mb-6">
+                                        Exam Type
+                                    </div>
                                     {res.assessments.map((assessment) => {
                                         return (
                                             <>
                                                 {assessment.exam_type ==
                                                     "True Or False" && (
-                                                        <>
-                                                            <TrueOrFalseComponent
-                                                                direction="Put True if the sentence is true and put False if the sentence is false"
-                                                                question="The Dog is an animal."
-                                                                image="/images/background.jpg"
-                                                                answers="True"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        <TrueOrFalseComponent
+                                                            direction="Put True if the sentence is true and put False if the sentence is false"
+                                                            question="The Dog is an animal."
+                                                            image="/images/background.jpg"
+                                                            answers="True"
+                                                        />
+                                                    </>
+                                                )}
 
                                                 {assessment.exam_type ==
                                                     "Fill In The Blank" && (
-                                                        <>
-                                                            <FillInTheBlankComponent
-                                                                direction="Fill in the blanks provided"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/background.jpg"
-                                                                answers="Sample Answer"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        <FillInTheBlankComponent
+                                                            direction="Fill in the blanks provided"
+                                                            question="What is asked in the blank?"
+                                                            image="/images/background.jpg"
+                                                            answers="Sample Answer"
+                                                        />
+                                                    </>
+                                                )}
 
                                                 {assessment.exam_type ==
                                                     "Multiple Choice" && (
-                                                        <>
-                                                            <MultipleChoiceComponent
-                                                                direction="Chose the letter of the correct answer"
-                                                                question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        <MultipleChoiceComponent
+                                                            direction="Chose the letter of the correct answer"
+                                                            question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
+                                                            image="/images/logo2.png"
+                                                            answers="A"
+                                                        />
+                                                    </>
+                                                )}
 
                                                 {assessment.exam_type ==
                                                     "Identification" && (
-                                                        <>
-                                                            <IdentificationComponent
-                                                                direction="Identify the answer of the questions"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/background.jpg"
-                                                                answers="Sample Answer"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        <IdentificationComponent
+                                                            direction="Identify the answer of the questions"
+                                                            question="What is asked in the blank?"
+                                                            image="/images/background.jpg"
+                                                            answers="Sample Answer"
+                                                        />
+                                                    </>
+                                                )}
 
                                                 {assessment.exam_type ==
                                                     "Matching" && (
-                                                        <>
-                                                            <MatchingComponent
-                                                                direction="Match the items in Column A to the Column B"
-                                                                question="A. Basketball"
-                                                                match="A. Sports"
-                                                                image="/images/background.jpg"
-                                                                answers="A - B"
-                                                            />
-                                                        </>
-                                                    )}
+                                                    <>
+                                                        <MatchingComponent
+                                                            direction="Match the items in Column A to the Column B"
+                                                            question="A. Basketball"
+                                                            match="A. Sports"
+                                                            image="/images/background.jpg"
+                                                            answers="A - B"
+                                                        />
+                                                    </>
+                                                )}
                                             </>
                                         );
                                     })}
-                                </div >
+                                </div>
                             )}
                         </div>
                     );
