@@ -214,8 +214,8 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         'phpDocumentor\\Reflection\\' => 
         array (
             0 => __DIR__ . '/..' . '/phpdocumentor/reflection-common/src',
-            1 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
-            2 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            1 => __DIR__ . '/..' . '/phpdocumentor/type-resolver/src',
+            2 => __DIR__ . '/..' . '/phpdocumentor/reflection-docblock/src',
         ),
         'Whoops\\' => 
         array (
@@ -375,8 +375,8 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         ),
         'Psr\\Http\\Message\\' => 
         array (
-            0 => __DIR__ . '/..' . '/psr/http-factory/src',
-            1 => __DIR__ . '/..' . '/psr/http-message/src',
+            0 => __DIR__ . '/..' . '/psr/http-message/src',
+            1 => __DIR__ . '/..' . '/psr/http-factory/src',
         ),
         'Psr\\Http\\Client\\' => 
         array (
@@ -688,6 +688,8 @@ class ComposerStaticInitea5ce39a4148687aa58f4c796285b213
         'App\\Models\\Quest' => __DIR__ . '/../..' . '/app/Models/Quest.php',
         'App\\Models\\Questionnaire' => __DIR__ . '/../..' . '/app/Models/Questionnaire.php',
         'App\\Models\\ScoreSheet' => __DIR__ . '/../..' . '/app/Models/ScoreSheet.php',
+        'App\\Models\\Student' => __DIR__ . '/../..' . '/app/Models/Student.php',
+        'App\\Models\\Teacher' => __DIR__ . '/../..' . '/app/Models/Teacher.php',
         'App\\Models\\User' => __DIR__ . '/../..' . '/app/Models/User.php',
         'App\\Output\\Concerns\\InteractsWithSymbols' => __DIR__ . '/..' . '/laravel/pint/app/Output/Concerns/InteractsWithSymbols.php',
         'App\\Output\\ProgressOutput' => __DIR__ . '/..' . '/laravel/pint/app/Output/ProgressOutput.php',

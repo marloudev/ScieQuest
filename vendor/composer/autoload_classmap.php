@@ -76,6 +76,8 @@ return array(
     'App\\Models\\Quest' => $baseDir . '/app/Models/Quest.php',
     'App\\Models\\Questionnaire' => $baseDir . '/app/Models/Questionnaire.php',
     'App\\Models\\ScoreSheet' => $baseDir . '/app/Models/ScoreSheet.php',
+    'App\\Models\\Student' => $baseDir . '/app/Models/Student.php',
+    'App\\Models\\Teacher' => $baseDir . '/app/Models/Teacher.php',
     'App\\Models\\User' => $baseDir . '/app/Models/User.php',
     'App\\Output\\Concerns\\InteractsWithSymbols' => $vendorDir . '/laravel/pint/app/Output/Concerns/InteractsWithSymbols.php',
     'App\\Output\\ProgressOutput' => $vendorDir . '/laravel/pint/app/Output/ProgressOutput.php',
