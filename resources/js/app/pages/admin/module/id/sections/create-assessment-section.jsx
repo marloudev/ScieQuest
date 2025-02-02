@@ -58,10 +58,10 @@ export default function CreateAssessmentSection({ datas }) {
     const module_id = window.location.pathname.split("/")[3];
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
         clipPath: "inset(50%)",
-        height: 1,
         overflow: "hidden",
         position: "absolute",
         bottom: 0,
@@ -369,15 +369,147 @@ export default function CreateAssessmentSection({ datas }) {
                                             "Fill In The Blank" ||
                                             data.exam_type == "Matching" ||
                                             data.exam_type ==
-                                                "Identification") && (
-                                            <div className="flex flex-col gap-4 w-full border-b pb-4">
+                                            "Identification") && (
+                                                <div className="flex flex-col gap-4 w-full border-b pb-4">
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-row gap-4 w-full border-b "
+                                                    >
+                                                        <TextField
+                                                            multiline
+                                                            rows={2}
+                                                            onChange={(e) =>
+                                                                updateQuestion(
+                                                                    i,
+                                                                    "question",
+                                                                    e.target.value,
+                                                                )
+                                                            }
+                                                            value={res.question}
+                                                            label={`Question ${i + 1}`}
+                                                            variant="outlined"
+                                                            className="w-full"
+                                                        />
+                                                        <TextField
+                                                            multiline
+                                                            rows={2}
+                                                            onChange={(e) =>
+                                                                updateQuestion(
+                                                                    i,
+                                                                    "answer_key",
+                                                                    e.target.value,
+                                                                )
+                                                            }
+                                                            value={res.answer_key}
+                                                            label={`Answer Key ${i + 1}`}
+                                                            variant="outlined"
+                                                            className="w-full"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
+
+                                        {data.exam_type ==
+                                            "Multiple Choice" && (
                                                 <div
                                                     key={i}
-                                                    className="flex flex-row gap-4 w-full border-b "
+                                                    className="flex flex-col gap-4 w-full border-b pb-4"
                                                 >
+                                                    {/* Answer Key Selection */}
+                                                    <div className="flex items-center justify-between w-full">
+                                                        <FormControl
+                                                            error={
+                                                                !!error?.[
+                                                                `answer_key-${i}`
+                                                                ]
+                                                            }
+                                                        >
+                                                            <FormLabel
+                                                                id={`answer-key-${i}`}
+                                                            >
+                                                                Answer Key {i + 1}
+                                                            </FormLabel>
+                                                            <RadioGroup
+                                                                row
+                                                                aria-labelledby={`answer-key-${i}`}
+                                                                name={`answer_key-${i}`}
+                                                                value={
+                                                                    res.answer_key
+                                                                }
+                                                                onChange={(e) =>
+                                                                    updateQuestion(
+                                                                        i,
+                                                                        "answer_key",
+                                                                        e.target
+                                                                            .value,
+                                                                    )
+                                                                }
+                                                            >
+                                                                <FormControlLabel
+                                                                    value="A"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="A"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="B"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="B"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="C"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="C"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="D"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="D"
+                                                                />
+                                                            </RadioGroup>
+                                                            {error?.[
+                                                                `answer_key-${i}`
+                                                            ] && (
+                                                                    <FormHelperText>
+                                                                        {
+                                                                            error[
+                                                                            `answer_key-${i}`
+                                                                            ]
+                                                                        }
+                                                                    </FormHelperText>
+                                                                )}
+                                                        </FormControl>
+
+                                                        {/* Delete Button */}
+                                                    </div>
+
+                                                    {/* Question Text */}
                                                     <TextField
                                                         multiline
-                                                        rows={2}
+                                                        rows={3}
+                                                        value={res.question}
+                                                        name={`question-${i}`}
+                                                        type="text"
+                                                        label={`Question ${i + 1}`}
+                                                        variant="outlined"
+                                                        className="w-full"
+                                                        error={
+                                                            !!error?.[
+                                                            `question-${i}`
+                                                            ]
+                                                        }
+                                                        helperText={
+                                                            error?.[
+                                                            `question-${i}`
+                                                            ] ?? ""
+                                                        }
                                                         onChange={(e) =>
                                                             updateQuestion(
                                                                 i,
@@ -385,141 +517,9 @@ export default function CreateAssessmentSection({ datas }) {
                                                                 e.target.value,
                                                             )
                                                         }
-                                                        value={res.question}
-                                                        label={`Question ${i + 1}`}
-                                                        variant="outlined"
-                                                        className="w-full"
-                                                    />
-                                                    <TextField
-                                                        multiline
-                                                        rows={2}
-                                                        onChange={(e) =>
-                                                            updateQuestion(
-                                                                i,
-                                                                "answer_key",
-                                                                e.target.value,
-                                                            )
-                                                        }
-                                                        value={res.answer_key}
-                                                        label={`Answer Key ${i + 1}`}
-                                                        variant="outlined"
-                                                        className="w-full"
                                                     />
                                                 </div>
-                                            </div>
-                                        )}
-
-                                        {data.exam_type ==
-                                            "Multiple Choice" && (
-                                            <div
-                                                key={i}
-                                                className="flex flex-col gap-4 w-full border-b pb-4"
-                                            >
-                                                {/* Answer Key Selection */}
-                                                <div className="flex items-center justify-between w-full">
-                                                    <FormControl
-                                                        error={
-                                                            !!error?.[
-                                                                `answer_key-${i}`
-                                                            ]
-                                                        }
-                                                    >
-                                                        <FormLabel
-                                                            id={`answer-key-${i}`}
-                                                        >
-                                                            Answer Key {i + 1}
-                                                        </FormLabel>
-                                                        <RadioGroup
-                                                            row
-                                                            aria-labelledby={`answer-key-${i}`}
-                                                            name={`answer_key-${i}`}
-                                                            value={
-                                                                res.answer_key
-                                                            }
-                                                            onChange={(e) =>
-                                                                updateQuestion(
-                                                                    i,
-                                                                    "answer_key",
-                                                                    e.target
-                                                                        .value,
-                                                                )
-                                                            }
-                                                        >
-                                                            <FormControlLabel
-                                                                value="A"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="A"
-                                                            />
-                                                            <FormControlLabel
-                                                                value="B"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="B"
-                                                            />
-                                                            <FormControlLabel
-                                                                value="C"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="C"
-                                                            />
-                                                            <FormControlLabel
-                                                                value="D"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="D"
-                                                            />
-                                                        </RadioGroup>
-                                                        {error?.[
-                                                            `answer_key-${i}`
-                                                        ] && (
-                                                            <FormHelperText>
-                                                                {
-                                                                    error[
-                                                                        `answer_key-${i}`
-                                                                    ]
-                                                                }
-                                                            </FormHelperText>
-                                                        )}
-                                                    </FormControl>
-
-                                                    {/* Delete Button */}
-                                                </div>
-
-                                                {/* Question Text */}
-                                                <TextField
-                                                    multiline
-                                                    rows={3}
-                                                    value={res.question}
-                                                    name={`question-${i}`}
-                                                    type="text"
-                                                    label={`Question ${i + 1}`}
-                                                    variant="outlined"
-                                                    className="w-full"
-                                                    error={
-                                                        !!error?.[
-                                                            `question-${i}`
-                                                        ]
-                                                    }
-                                                    helperText={
-                                                        error?.[
-                                                            `question-${i}`
-                                                        ] ?? ""
-                                                    }
-                                                    onChange={(e) =>
-                                                        updateQuestion(
-                                                            i,
-                                                            "question",
-                                                            e.target.value,
-                                                        )
-                                                    }
-                                                />
-                                            </div>
-                                        )}
+                                            )}
                                     </>
                                 );
                             })}
