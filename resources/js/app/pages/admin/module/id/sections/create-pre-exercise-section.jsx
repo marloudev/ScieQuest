@@ -26,6 +26,7 @@ import {
 } from "../../redux/lesson-thunk";
 import { useEffect } from "react";
 import InputLabel from "@/Components/InputLabel";
+import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
 
 const style = {
     position: "absolute",
@@ -85,6 +86,7 @@ export default function CreatePreExerciseSection({ datas }) {
 
             const result = await store.dispatch(store_quest_thunk(formData));
             if (result.status == 200) {
+                store.dispatch(get_module_by_id_thunk(module_id));
                 setLoading(false);
                 setOpen(false);
                 setData({

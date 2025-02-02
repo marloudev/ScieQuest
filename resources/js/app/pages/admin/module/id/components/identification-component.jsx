@@ -1,11 +1,10 @@
 import React from 'react'
 
-export default function IdentificationComponent({ question, answers, direction, image }) {
+export default function IdentificationComponent({ question, answers,}) {
   return (
     <div>
       <div>
-        <p>___________ {question}</p>
-       
+        <p>{question}</p>
       </div>
       <div>
         <p>Answer key: {answers}</p>
