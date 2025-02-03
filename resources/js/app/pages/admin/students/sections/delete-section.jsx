@@ -8,7 +8,8 @@ import {
   Button,
   CircularProgress,
   Snackbar,
-  Alert
+  Alert,
+  Tooltip
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import store from "@/app/pages/store/store";
@@ -43,14 +44,16 @@ export default function DeleteSection({ data }) {
 
   return (
     <div>
-      <Button
-        onClick={() => setOpen(true)}
-        size="small"
-        variant="contained"
-        color="error"
-      >
-        <Delete />
-      </Button>
+      <Tooltip title="Remove Student">
+        <Button
+          onClick={() => setOpen(true)}
+          size="small"
+          variant="contained"
+          color="error"
+        >
+          <Delete />
+        </Button>
+      </Tooltip>
       {/* Snackbar for Notification */}
       <Snackbar
         open={notify}

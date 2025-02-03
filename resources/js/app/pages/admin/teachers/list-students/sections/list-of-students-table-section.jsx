@@ -10,6 +10,8 @@ import Paper from '@mui/material/Paper';
 import { Button, Tooltip } from '@mui/material';
 import { Visibility } from '@mui/icons-material';
 import { get_students_by_id_thunk } from '../../../students/redux/students-thunk';
+import UpdateSection from '../../../students/sections/update-section';
+import DeleteSection from '../../../students/sections/delete-section';
 
 export default function ListOfStudentsTableSection() {
     const dispatch = useDispatch();
@@ -22,7 +24,7 @@ export default function ListOfStudentsTableSection() {
     }, []);
 
 
-console.log('students',students)
+    console.log('students', students)
     return (
         <>
             <TableContainer component={Paper}>
@@ -52,14 +54,15 @@ console.log('students',students)
                                 <TableCell>{res.email}</TableCell>
                                 <TableCell>
                                     <div className="flex gap-2">
-                                        <Tooltip title="View List of Students">
-                                            <Button
-                                                size="small"
-                                                variant="contained"
-                                                color="success"
-                                            >
-                                                <Visibility />
-                                            </Button>
+                                        <Tooltip>
+                                            <UpdateSection
+                                                data={res}
+                                            />
+                                        </Tooltip>
+                                        <Tooltip>
+                                            <DeleteSection
+                                                data={res}
+                                            />
                                         </Tooltip>
                                     </div>
                                 </TableCell>

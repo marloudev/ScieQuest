@@ -13,6 +13,7 @@ import moment from 'moment';
 import { router } from '@inertiajs/react';
 import { Button, Tooltip } from '@mui/material';
 import { EditNote, Visibility } from '@mui/icons-material';
+import UpdateModuleSection from './update-module-section';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
 // import { router } from '@inertiajs/react';
@@ -58,20 +59,9 @@ export default function BookletTableSection() {
                                                 <Visibility />
                                             </Button>
                                         </Tooltip>
-                                        <Tooltip title="Edit Module">
-                                            <Button
-                                                // onClick={() =>
-                                                //     router.visit(
-                                                //         `/administrator/teachers/${res.id}/create_grades`,
-                                                //     )
-                                                // }
-                                                size="small"
-                                                variant="contained"
-                                                color="primary"
-                                            >
-                                                <EditNote />
-                                            </Button>
-                                        </Tooltip>
+                                        <UpdateModuleSection
+                                            data={res}
+                                        />
                                     </div>
                                 </TableCell>
                             </TableRow>

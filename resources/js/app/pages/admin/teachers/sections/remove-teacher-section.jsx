@@ -8,7 +8,8 @@ import {
     Button,
     CircularProgress,
     Snackbar,
-    Alert
+    Alert,
+    Tooltip
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import { delete_teachers_thunk, get_teachers_thunk } from "../redux/teachers-thunk";
@@ -41,14 +42,16 @@ export default function RemoveTeacherSection({ data }) {
     console.log('daddada', data)
     return (
         <div>
-            <Button
-                onClick={() => setOpen(true)}
-                size="small"
-                variant="contained"
-                color="error"
-            >
-                <Delete />
-            </Button>
+            <Tooltip title="Remove Teacher">
+                <Button
+                    onClick={() => setOpen(true)}
+                    size="small"
+                    variant="contained"
+                    color="error"
+                >
+                    <Delete />
+                </Button>
+            </Tooltip>
             {/* Snackbar for Notification */}
             <Snackbar
                 open={notify}

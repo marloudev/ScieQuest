@@ -87,17 +87,12 @@ export default function TableSection() {
                                                     <Visibility />
                                                 </Button>
                                             </Tooltip>
-                                            <Tooltip title="Update Teacher">
-                                                <UpdateSection
-                                                    data={res}
-                                                />
-
-                                            </Tooltip>
-                                            <Tooltip title="Remove Teacher">
-                                                <RemoveTeacherSection
-                                                    data={res}
-                                                />
-                                            </Tooltip>
+                                            <UpdateSection
+                                                data={res}
+                                            />
+                                            <RemoveTeacherSection
+                                                data={res}
+                                            />
                                         </div>
                                     </TableCell>
                                 </TableRow>

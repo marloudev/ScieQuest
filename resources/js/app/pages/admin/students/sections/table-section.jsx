@@ -69,17 +69,12 @@ export default function TableSection() {
                      */}
                     {/* <UpdateSection data={res} />
                     <DeleteSection data={res} /> */}
-                    <Tooltip>
-                      <UpdateSection
-                        data={res}
-                      />
-                    </Tooltip>
-                    <Tooltip>
-                      <DeleteSection
-                        data={res}
-                      />
-                    </Tooltip>
-
+                    <UpdateSection
+                      data={res}
+                    />
+                    <DeleteSection
+                      data={res}
+                    />
                   </div>
                 </TableCell>
               </TableRow>

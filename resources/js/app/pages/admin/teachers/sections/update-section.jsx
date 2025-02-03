@@ -2,7 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Drawer from '@mui/material/Drawer';
 import Button from '@mui/material/Button';
-import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField } from '@mui/material';
+import { Alert, CircularProgress, FormControl, InputLabel, MenuItem, Select, Snackbar, TextField, Tooltip } from '@mui/material';
 import { useState } from 'react';
 import { Edit, EditNote } from '@mui/icons-material';
 import { useEffect } from 'react';
@@ -50,14 +50,16 @@ export default function UpdateSection({ data }) {
     console.log('datadata', data)
     return (
         <div>
-            <Button
-                onClick={() => setOpen(true)}
-                size="small"
-                variant="contained"
-                color="primary"
-            >
-                <EditNote />
-            </Button>
+            <Tooltip title="Update Teacher">
+                <Button
+                    onClick={() => setOpen(true)}
+                    size="small"
+                    variant="contained"
+                    color="primary"
+                >
+                    <EditNote />
+                </Button>
+            </Tooltip>
             <Snackbar
                 open={notify}
                 anchorOrigin={{ vertical: "top", horizontal: "center" }}
