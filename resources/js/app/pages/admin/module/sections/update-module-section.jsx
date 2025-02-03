@@ -26,21 +26,27 @@ import { useState } from "react";
 import store from "@/app/pages/store/store";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
-import { get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
+import { get_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
 import { Add, EditNote } from "@mui/icons-material";
 import ReactQuill from "react-quill";
+import { useEffect } from "react";
 
-export default function UpdateModuleSection() {
+export default function UpdateModuleSection({ data }) {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [open, setOpen] = useState(false);
-    const [data, setData] = useState({
-        grade: "Grade 4",
-    });
+    const [form, setForm] = useState({});
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        setForm({
+            ...data,
+            id: data?.id || {}
+        });
+    }, [data]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -52,17 +58,17 @@ export default function UpdateModuleSection() {
         try {
             setLoading(true);
             const result = await store.dispatch(
-                store_module_thunk({
-                    unique_id: moment().format("MMDDYYYYHHmmss"),
-                    ...data,
-                    grade: "Grade 4",
-                }),
+                // store_module_thunk({
+                //     unique_id: moment().format("MMDDYYYYHHmmss"),
+                //     ...data,
+                //     grade: "Grade 4",
+                // }),
             );
             if (result.status == 200) {
                 await store.dispatch(get_module_thunk());
                 setLoading(false);
                 setOpen(false);
-                setData({});
+                setForm({});
             } else {
                 setLoading(false);
                 setOpen(false);
@@ -73,19 +79,21 @@ export default function UpdateModuleSection() {
         }
     }
 
-    async function grade_function(e) {
-        setLoading(true);
-        if ("Elementary Level" == e.target.value) {
-            await store.dispatch(get_examinations_thunk("Elementary"));
-        } else if ("Junior High Level" == e.target.value) {
-            await store.dispatch(get_examinations_thunk("Junior High School"));
-        }
-        setData({
-            ...data,
-            [e.target.name]: e.target.value,
-        });
-        setLoading(false);
-    }
+    // async function grade_function(e) {
+    //     setLoading(true);
+    //     if ("Elementary Level" == e.target.value) {
+    //         await store.dispatch(get_examinations_thunk("Elementary"));
+    //     } else if ("Junior High Level" == e.target.value) {
+    //         await store.dispatch(get_examinations_thunk("Junior High School"));
+    //     }
+    //     setForm({
+    //         ...data,
+    //         [e.target.name]: e.target.value,
+    //     });
+    //     setLoading(false);
+    // }
+
+    console.log("adadad", data)
     return (
         <React.Fragment>
             <Tooltip title="Update Module">
@@ -126,12 +134,12 @@ export default function UpdateModuleSection() {
                             name="quarter"
                             label="Select Quarter"
                             onChange={(e) =>
-                                setData({
-                                    ...data,
-                                    [e.target.name]: e.target.value,
+                                setForm({
+                                    ...form,
+                                    quarter: e.target.value,
                                 })
                             }
-                            value={data.quarter ?? ""}
+                            value={form.quarter || ''}
                         >
                             <MenuItem selected disabled></MenuItem>
                             <MenuItem value="1st Quarter">1st Quarter</MenuItem>
@@ -139,21 +147,22 @@ export default function UpdateModuleSection() {
                             <MenuItem value="3rd Quarter">3rd Quarter</MenuItem>
                             <MenuItem value="4th Quarter">4th Quarter</MenuItem>
                         </Select>
-                        {error?.grade && (
+                        {/* {error?.grade && (
                             <FormHelperText>{error.grade}</FormHelperText>
-                        )}
+                        )} */}
                     </FormControl>
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full">
                     <TextField
                         onChange={(e) =>
-                            setData({
-                                ...data,
-                                [e.target.name]: e.target.value,
+                            setForm({
+                                ...form,
+                                title: e.target.value,
                             })
                         }
-                        error={error?.title ? true : false}
-                        helperText={error?.title ?? ""}
+                        value={form.title || ''}
+                        // error={error?.title ? true : false}
+                        // helperText={error?.title ?? ""}
                         name="title"
                         type="text"
                         id="outlined-basic"
@@ -173,8 +182,13 @@ export default function UpdateModuleSection() {
                             id="demo-simple-select"
                             name="grade"
                             label="ALS Level"
-                            onChange={(e) => grade_function(e)}
-                            value={data.grade ?? ""}
+                            onChange={(e) =>
+                                setForm({
+                                    ...form,
+                                    grade: e.target.value,
+                                })
+                            }
+                            value={form.grade ?? ""}
                         >
                             <MenuItem selected disabled></MenuItem>
                             <MenuItem value="Grade 1">Grade 1</MenuItem>
@@ -184,9 +198,9 @@ export default function UpdateModuleSection() {
                             <MenuItem value="Grade 5">Grade 5</MenuItem>
                             <MenuItem value="Grade 6">Grade 6</MenuItem>
                         </Select>
-                        {error?.grade && (
+                        {/* {error?.grade && (
                             <FormHelperText>{error.grade}</FormHelperText>
-                        )}
+                        )} */}
                     </FormControl>
                 </Toolbar>
 
@@ -194,14 +208,14 @@ export default function UpdateModuleSection() {
                 <Toolbar className="flex-col gap-3 flex w-full mt-2">
                     <ReactQuill
                         theme="snow"
-                        value={data.introductory}
                         className="text-black w-full h-24"
                         onChange={(e) =>
-                            setData({
-                                ...data,
-                                introductory: e,
+                            setForm({
+                                ...form,
+                                introductory: e.target.value,
                             })
                         }
+                    // value={form?.introductory || ''}
                     />
                 </Toolbar>
                 <div className="mt-12 mx-6 font-black terxt-xl">
@@ -210,12 +224,12 @@ export default function UpdateModuleSection() {
                 <Toolbar className=" flex-col gap-3 flex w-full mt-2">
                     <ReactQuill
                         theme="snow"
-                        value={data.wintn}
+                        // value={form.wintn}
                         className="text-black w-full h-24"
                         onChange={(e) =>
-                            setData({
-                                ...data,
-                                wintn: e,
+                            setForm({
+                                ...form,
+                                wintn: e.target.value,
                             })
                         }
                     />
