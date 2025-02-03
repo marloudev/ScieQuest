@@ -23,7 +23,7 @@ import {
 } from "@mui/material";
 import { useState } from "react";
 import store from "@/app/pages/store/store";
-import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
+// import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
 import {  get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
@@ -31,6 +31,7 @@ import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
 import { Add } from "@mui/icons-material";
 import ReactQuill from "react-quill";
+import { get_examinations_thunk } from "@/app/pages/admin/literacy_test/_redux/literacy-test-thunk";
 
 export default function BookletCreateSection() {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());

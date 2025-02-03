@@ -1,9 +1,10 @@
+import { delete_specifications_thunk, get_specifications_by_id_thunk } from '@/app/pages/admin/literacy_test/_redux/questionaires-thunk';
 import store from '@/app/pages/store/store';
 import { Delete } from '@mui/icons-material'
 import { Box, Button, CircularProgress, Modal, Typography } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
-import {  delete_specifications_thunk, get_specifications_by_id_thunk } from '../../../literacy_test/_redux/questionaires-thunk';
+// import {  delete_specifications_thunk, get_specifications_by_id_thunk } from '../../literacy_test/_redux/questionaires-thunk';
 
 const style = {
     position: 'absolute',

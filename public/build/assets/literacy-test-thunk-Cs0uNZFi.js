@@ -1,1 +1,0 @@
-import{g as a,s as r}from"./examinations-service-CND5UvZO.js";import{l as i}from"./app-Bzs36K_f.js";function u(t){return async function(s,n){const e=await a(t);return s(i.actions.setLiteracyTests(e.data.response)),e}}function m(t){return async function(s,n){return r(t)}}export{u as g,m as s};

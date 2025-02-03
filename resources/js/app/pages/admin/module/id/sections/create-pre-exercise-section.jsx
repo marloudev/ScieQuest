@@ -67,7 +67,6 @@ export default function CreatePreExerciseSection({ datas }) {
         left: 0,
         whiteSpace: "nowrap",
         width: 1,
-        height: 10,
     });
 
     async function submit_form(params) {

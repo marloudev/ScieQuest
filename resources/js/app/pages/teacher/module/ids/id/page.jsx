@@ -8,7 +8,8 @@ import store from "@/app/pages/store/store";
 import QuestionnaireTabsSection from "./sections/questionnaire-tabs-section";
 import CreateSpecificationSection from "./sections/create-specification-section";
 import SpecificationCardSection from "./sections/specification-card-section";
-import { get_questionnaires_by_id_thunk, get_specifications_by_id_thunk } from "../../../literacy_test/_redux/questionaires-thunk";
+import { get_questionnaires_by_id_thunk, get_specifications_by_id_thunk } from "@/app/pages/admin/literacy_test/_redux/questionaires-thunk";
+// import { get_questionnaires_by_id_thunk, get_specifications_by_id_thunk } from "../../../literacy_test/_redux/questionaires-thunk";
 
 export default function LiteracyTestIDPage() {
     const examination_id = window.location.pathname.split("/")[4];

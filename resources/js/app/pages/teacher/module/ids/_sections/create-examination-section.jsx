@@ -9,9 +9,10 @@ import Slide from "@mui/material/Slide";
 import { TextField } from "@mui/material";
 import { useState } from "react";
 import store from "@/app/pages/store/store";
-import { get_examinations_thunk, store_examinations_thunk } from "../../../literacy_test/_redux/literacy-test-thunk";
+// import { get_examinations_thunk, store_examinations_thunk } from "../../../literacy_test/_redux/literacy-test-thunk";
 import { useSelector } from "react-redux";
 import { get_examinations_by_id_thunk } from "../../redux/booklet-thunk";
+import { store_examinations_thunk } from "@/app/pages/admin/literacy_test/_redux/literacy-test-thunk";
 // import {
 //     get_examinations_thunk,
 //     store_examinations_thunk,
