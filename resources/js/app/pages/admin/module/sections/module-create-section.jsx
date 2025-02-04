@@ -25,7 +25,7 @@ import { useState } from "react";
 import store from "@/app/pages/store/store";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
-import {  get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
+import { get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
@@ -94,7 +94,7 @@ export default function BookletCreateSection() {
                 <Add />
                 <b>Create Module</b>
             </button>
-            <Dialog fullWidth open={open} onClose={handleClose}>
+            <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
                     <Typography
                         sx={{ ml: 2, flex: 1 }}
@@ -186,37 +186,41 @@ export default function BookletCreateSection() {
                         )}
                     </FormControl>
                 </Toolbar>
-
-                <div className="mx-6 font-black terxt-xl">Introductory</div>
-                <Toolbar className="flex-col gap-3 flex w-full mt-2">
-                    <ReactQuill
-                        theme="snow"
-                        value={data.introductory}
-                        className="text-black w-full h-24"
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                introductory: e,
-                            })
-                        }
-                    />
-                </Toolbar>
-                <div className="mt-12 mx-6 font-black terxt-xl">
-                    What I Need to Know
+                <div>
+                    <div className="mx-6 font-black text-xl">Introductory</div>
+                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16">
+                        <ReactQuill
+                            theme="snow"
+                            value={data.introductory}
+                            className="text-black w-full h-60 sm:h-48 md:h-60"
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    introductory: e,
+                                })
+                            }
+                        />
+                    </Toolbar>
                 </div>
-                <Toolbar className=" flex-col gap-3 flex w-full mt-2">
-                    <ReactQuill
-                        theme="snow"
-                        value={data.wintn}
-                        className="text-black w-full h-24"
-                        onChange={(e) =>
-                            setData({
-                                ...data,
-                                wintn: e,
-                            })
-                        }
-                    />
-                </Toolbar>
+                <div>
+                    <div className="mx-6 font-black text-xl">
+                        What I Need to Know
+                    </div>
+                    <Toolbar className=" flex-col gap-3 flex w-full mt-2 mb-4">
+                        <ReactQuill
+                            theme="snow"
+                            value={data.wintn}
+                            className="text-black w-full h-60 sm:h-48 md:h-60"
+                            onChange={(e) =>
+                                setData({
+                                    ...data,
+                                    wintn: e,
+                                })
+                            }
+                        />
+                    </Toolbar>
+                </div>
+
                 <Toolbar className="mt-10">
                     <Button
                         className="w-full"

@@ -105,7 +105,7 @@ export default function UpdateModuleSection({ data }) {
                     <EditNote />
                 </Button>
             </Tooltip>
-            <Dialog fullWidth open={open} onClose={handleClose}>
+            <Dialog fullWidth maxWidth="lg" open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
                     <Typography
                         sx={{ ml: 2, flex: 1 }}
@@ -203,37 +203,41 @@ export default function UpdateModuleSection({ data }) {
                         )} */}
                     </FormControl>
                 </Toolbar>
+                <div>
+                    <div className="mx-6 font-black text-lg">Introductory</div>
+                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16">
+                        <ReactQuill
+                            theme="snow"
+                            className="text-black w-full h-60 sm:h-48 md:h-60"
+                            onChange={(value) =>
+                                setForm({
+                                    ...form,
+                                    introductory: value,  // Here, use the content directly
+                                })
+                            }
+                            value={form?.introductory || ''}
+                        />
 
-                <div className="mx-6 font-black terxt-xl">Introductory</div>
-                <Toolbar className="flex-col gap-3 flex w-full mt-2">
-                    <ReactQuill
-                        theme="snow"
-                        className="text-black w-full h-24"
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                introductory: e.target.value,
-                            })
-                        }
-                    // value={form?.introductory || ''}
-                    />
-                </Toolbar>
-                <div className="mt-12 mx-6 font-black terxt-xl">
-                    What I Need to Know
+                    </Toolbar>
                 </div>
-                <Toolbar className=" flex-col gap-3 flex w-full mt-2">
-                    <ReactQuill
-                        theme="snow"
-                        // value={form.wintn}
-                        className="text-black w-full h-24"
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                wintn: e.target.value,
-                            })
-                        }
-                    />
-                </Toolbar>
+                <div>
+                    <div className="mx-6 font-black text-lg">
+                        What I Need to Know
+                    </div>
+                    <Toolbar className=" flex-col gap-3 flex w-full mt-2 mb-4">
+                        <ReactQuill
+                            theme="snow"
+                            className="text-black w-full h-60 sm:h-48 md:h-60"
+                            onChange={(value) =>
+                                setForm({
+                                    ...form,
+                                    wintn: value,
+                                })
+                            }
+                            value={form?.wintn || ''}
+                        />
+                    </Toolbar>
+                </div>
                 <Toolbar className="mt-10">
                     <Button
                         className="w-full"
