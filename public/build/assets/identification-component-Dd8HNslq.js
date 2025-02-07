@@ -1,1 +1,0 @@
-import{j as i}from"./app-Di-BruIb.js";function s({question:n,answers:e}){return i.jsxs("div",{children:[i.jsx("div",{children:i.jsx("p",{children:n})}),i.jsx("div",{children:i.jsxs("p",{children:["Answer key: ",e]})})]})}export{s as default};
