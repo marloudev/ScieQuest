@@ -88,7 +88,7 @@ export default function CreateSection() {
                                             teacher: e.target.value,
                                         })
                                     }
-                                    name="teacher"
+                                    name="teacher_id"
                                     label="Teacher/Adviser"
                                 >
                                     <MenuItem value="">

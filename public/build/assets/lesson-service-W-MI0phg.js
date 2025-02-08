@@ -1,1 +1,0 @@
-import{i as t}from"./app-D0l2oDOf.js";async function o(s){try{return await t.post("/api/lesson",s)}catch(r){return r}}async function a(s){try{return await t.post("/api/quest",s)}catch(r){return r}}export{a,o as s};

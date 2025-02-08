@@ -39,7 +39,7 @@ class StudentController extends Controller
             'lname' => 'required|string|max:255',  // Last name must be a string with a max length of 255
             'password' => 'required|string|min:8',  // Password must be a string with a minimum length of 8
             'student_id' => 'required|integer',  // Ensure student_id is an integer
-            'teacher' => 'required|integer',
+            'teacher' => 'required',
         ]);
 
         // Create the user

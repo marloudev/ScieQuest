@@ -1,0 +1,1 @@
+import{j as e}from"./app-BgCVbkej.js";function i({question:r,answers:s}){return e.jsxs("div",{children:[e.jsx("div",{children:e.jsx("p",{children:r})}),e.jsx("div",{children:e.jsxs("p",{children:["Answer key: ",s]})})]})}export{i as default};
