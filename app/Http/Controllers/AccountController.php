@@ -26,7 +26,10 @@ class AccountController extends Controller
         }
 
         // Check email exist
-        $user = User::where('email', $request->email)->first();
+        $user = User::where([
+            ['email', '=', $request->email],
+            ['user_type', '=', '3'],
+        ])->first();
 
         // Check password
         if (!$user || !Hash::check($request->password, $user->password)) {
