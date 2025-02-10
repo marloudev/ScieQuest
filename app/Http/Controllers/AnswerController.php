@@ -10,6 +10,17 @@ use Illuminate\Support\Facades\Auth;
 
 class AnswerController extends Controller
 {
+
+    public function get_score($id)
+    {
+        $score = Answer::where('learning_id', $id)->sum('score'); // Specify the column to sum
+    
+        return response()->json([
+            'status' => 'success',
+            'data' => $score,
+        ], 200);
+    }
+    
     public function index()
     {
         $answers = Answer::get();

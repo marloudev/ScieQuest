@@ -45,6 +45,7 @@ Route::resource('module', ModuleController::class);
 Route::resource('lesson', LessonController::class);
 Route::resource('quest', QuestController::class);
 Route::resource('answer', AnswerController::class);
+Route::get('/get_score/{id}', [AnswerController::class, 'get_score']);
 Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
 
 
