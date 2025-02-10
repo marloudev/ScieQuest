@@ -14,10 +14,11 @@ class AnswerController extends Controller
     public function get_score($id)
     {
         $score = Answer::where('learning_id', $id)->sum('score'); // Specify the column to sum
-    
+        $over = Answer::where('learning_id', $id)->count();
         return response()->json([
             'status' => 'success',
             'data' => $score,
+            'over'=>$over
         ], 200);
     }
     
