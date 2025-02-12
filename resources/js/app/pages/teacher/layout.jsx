@@ -30,11 +30,11 @@ const NAVIGATION = [
         title: "List of Students",
         icon: <RecentActors />,
     },
-    {
-        segment: "module",
-        title: "Modules",
-        icon: <AutoStories />,
-    },
+    // {
+    //     segment: "module",
+    //     title: "Modules",
+    //     icon: <AutoStories />,
+    // },
     {
         kind: "divider",
     },

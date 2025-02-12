@@ -69,12 +69,12 @@ export default function TableSection() {
                      */}
                     {/* <UpdateSection data={res} />
                     <DeleteSection data={res} /> */}
-                    <UpdateSection
+                   {/*  <UpdateSection
                       data={res}
                     />
                     <DeleteSection
                       data={res}
-                    />
+                    /> */}
                   </div>
                 </TableCell>
               </TableRow>

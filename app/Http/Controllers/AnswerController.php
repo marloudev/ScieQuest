@@ -13,15 +13,34 @@ class AnswerController extends Controller
 
     public function get_score($id)
     {
-        $score = Answer::where('learning_id', $id)->sum('score'); // Specify the column to sum
-        $over = Answer::where('learning_id', $id)->count();
+        $score = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'pre-exercise'],
+        ])->sum('score'); // Specify the column to sum
+        $over = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'pre-exercise'],
+        ]);
+        
+        $score1 = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'assessment'],
+        ])->sum('score'); // Specify the column to sum
+        $over1 = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'assessment'],
+        ]);
+
+        
         return response()->json([
             'status' => 'success',
             'data' => $score,
-            'over'=>$over
+            'over' => $over->count(),
+            'data1' => $score1,
+            'over1' => $over1->count(),
         ], 200);
     }
-    
+
     public function index()
     {
         $answers = Answer::get();
