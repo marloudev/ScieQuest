@@ -11,23 +11,32 @@ use Illuminate\Support\Facades\Auth;
 class AnswerController extends Controller
 {
 
-    public function get_score($id,$type)
+    public function get_score($id)
     {
         $score = Answer::where([
             ['learning_id', '=', $id],
-            ['type', '=', $type],
-        ])->sum('score');
-         // Specify the column to sum
+            ['type', '=', 'pre-exercise'],
+        ])->sum('score'); // Specify the column to sum
         $over = Answer::where([
             ['learning_id', '=', $id],
-            ['type', '=', $type],
+            ['type', '=', 'pre-exercise'],
         ]);
         
+        $score1 = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'assessment'],
+        ])->sum('score'); // Specify the column to sum
+        $over1 = Answer::where([
+            ['learning_id', '=', $id],
+            ['type', '=', 'assessment'],
+        ]);
         
         return response()->json([
             'status' => 'success',
             'data' => $score,
             'over' => $over->count(),
+            'data1' => $score1,
+            'over1' => $over1->count(),
         ], 200);
     }
 
