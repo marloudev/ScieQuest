@@ -32,7 +32,6 @@ export default function TableSection() {
             <TableCell>Fullname</TableCell>
             <TableCell>Adviser</TableCell>
             <TableCell>Email</TableCell>
-            <TableCell>Action</TableCell>
           </TableRow>
         </TableHead>
         <TableBody>

@@ -1,1 +1,0 @@
-import{i as t}from"./app-BoWywxHS.js";async function a(){try{return await t.get("/api/module")}catch(r){return r}}async function o(r){try{return await t.get(`/api/module/${r}`)}catch(e){return e}}async function c(r){try{return await t.post("/api/module",r)}catch(e){return e}}export{o as a,a as g,c as s};

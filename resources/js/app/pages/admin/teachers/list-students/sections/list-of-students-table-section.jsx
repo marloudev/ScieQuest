@@ -34,7 +34,7 @@ export default function ListOfStudentsTableSection() {
                             <TableCell>Student ID</TableCell>
                             <TableCell>Fullname</TableCell>
                             <TableCell>Email</TableCell>
-                            <TableCell>Action</TableCell>
+                            {/* <TableCell>Action</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -52,7 +52,7 @@ export default function ListOfStudentsTableSection() {
                                     {res.fname} {res.lname}
                                 </TableCell>
                                 <TableCell>{res.email}</TableCell>
-                                <TableCell>
+                                {/* <TableCell>
                                     <div className="flex gap-2">
                                         <Tooltip>
                                             <UpdateSection
@@ -65,7 +65,7 @@ export default function ListOfStudentsTableSection() {
                                             />
                                         </Tooltip>
                                     </div>
-                                </TableCell>
+                                </TableCell> */}
                             </TableRow>
                         ))}
                     </TableBody>

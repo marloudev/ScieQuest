@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 
 class ModuleController extends Controller
 {
-    public function get_module_by_quarter($id){
-        $modules = Module::where('quarter',$id)->with(['lessons'])->get();
+    public function get_module_by_quarter($id)
+    {
+        $modules = Module::where('quarter', $id)->with(['lessons'])->get();
         return response()->json([
             'status' => 'success',
             'data' => $modules,
@@ -31,10 +32,10 @@ class ModuleController extends Controller
         $module = Module::where('id', $id)->with(['lessons'])->first();
         return response()->json([
             'status' => 'success',
-            'data' =>$module,
+            'data' => $module,
         ], 200);
     }
- 
+
 
     public function destroy($id)
     {
@@ -48,7 +49,35 @@ class ModuleController extends Controller
     {
         Module::create($request->all());
         return response()->json([
-            'response' =>'success',
+            'response' => 'success',
         ], 200);
+    }
+
+    public function update(Request $request, $id)
+    {
+        $module = Module::where('id', $id)->first();
+        if (!$module) {
+            return response()->json([
+                'message' => 'Module not found',
+                'error' => 'No module found with id ' . $id,
+            ], 404);
+        }
+
+        $moduleData = $request->validate([
+            'id' => 'nullable|unique:module,id,' . $module->id,
+            'quarter' => 'nullable|string|max:255',
+            'title' => 'nullable|string|max:255',
+            'grade' => 'nullable|string|max:255',
+            'introductory' => 'nullable|string',
+            'wintn' => 'nullable|string',
+        ]);
+
+
+        $module->update(array_filter($moduleData));
+
+        return response()->json([
+            'message' => 'Module updated successfully',
+            'module' => $module,
+        ]);
     }
 }

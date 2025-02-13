@@ -21,7 +21,7 @@ export default function StudentsPage() {
             <div className="flex flex-col gap-4">
                 <div className="flex items-center justify-between">
                     <div className="flex gap-2">
-                        <CreateSection />
+                        {/* <CreateSection /> */}
                         <FilterStudentSection />
                     </div>
                     <div>

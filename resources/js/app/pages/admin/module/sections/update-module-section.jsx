@@ -26,7 +26,7 @@ import { useState } from "react";
 import store from "@/app/pages/store/store";
 import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
-import { get_module_thunk } from "../redux/booklet-thunk";
+import { get_module_thunk, update_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
@@ -54,16 +54,10 @@ export default function UpdateModuleSection({ data }) {
     const handleClose = () => {
         setOpen(false);
     };
-    async function submit_form(params) {
+    async function submitUpdate(params) {
         try {
             setLoading(true);
-            const result = await store.dispatch(
-                // store_module_thunk({
-                //     unique_id: moment().format("MMDDYYYYHHmmss"),
-                //     ...data,
-                //     grade: "Grade 4",
-                // }),
-            );
+            const result = await store.dispatch(update_module_thunk(form));
             if (result.status == 200) {
                 await store.dispatch(get_module_thunk());
                 setLoading(false);
@@ -244,7 +238,7 @@ export default function UpdateModuleSection({ data }) {
                         disabled={loading}
                         variant="contained"
                         autoFocus
-                        onClick={submit_form}
+                        onClick={submitUpdate}
                     >
                         save
                     </Button>
