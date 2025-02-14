@@ -12,6 +12,7 @@ class StudentController extends Controller
     public function index(Request $request)
     {
         $search = $request->input('search'); // Get search input
+        $teacherId = $request->input('teacher_id'); // Get teacher_id from the request
         $query = Student::query()->with(['teacher']);
 
         // Check if there's a search query, and if so, apply search across columns
@@ -23,12 +24,18 @@ class StudentController extends Controller
             });
         }
 
+        // Check if there's a teacher filter, and apply it to the query
+        if (!empty($teacherId)) {
+            $query->where('teacher_id', $teacherId); // Assuming 'teacher_id' is the foreign key in the students table
+        }
+
         $students = $query->paginate(10);
 
         return response()->json([
             'response' => $students,
         ], 200);
     }
+
 
     public function store(Request $request)
     {

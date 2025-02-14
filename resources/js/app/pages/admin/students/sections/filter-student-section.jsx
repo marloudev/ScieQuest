@@ -1,20 +1,23 @@
-import Select from '@/app/pages/components/select'
-import React from 'react'
-import { useState } from 'react';
+import Select from '@/app/pages/components/select';
+import React, { useState } from 'react';
+import { useSelector } from 'react-redux';
 
 export default function FilterStudentSection() {
     const [selectedOption, setSelectedOption] = useState('');
     const [selectError, setSelectError] = useState('');
+    const { teachers } = useSelector((state) => state.teachers);
+
     const handleSelectChange = (e) => {
         setSelectedOption(e.target.value);
         setSelectError('');
     };
 
-    const selectOptions = [
-        { label: 'Teacher 1', value: '1' },
-        { label: 'Teacher 2', value: '2' },
-        { label: 'Teacher 3', value: '3' },
-    ];
+    // Map teachers from Redux state to select options
+    const selectOptions = teachers?.data?.map((teacher) => ({
+        label: `${teacher.fname} ${teacher.lname}`, // Full name as label
+        value: teacher.id, // Teacher ID as value
+    })) || [];
+
     return (
         <div>
             <div className="flex">
@@ -27,11 +30,11 @@ export default function FilterStudentSection() {
                             value={selectedOption}
                             onChange={handleSelectChange}
                             error={selectError}
-                            placeholder="Select your barangay"
+                            placeholder="Select an Adviser"
                         />
                     </div>
                 </div>
             </div>
         </div>
-    )
+    );
 }
