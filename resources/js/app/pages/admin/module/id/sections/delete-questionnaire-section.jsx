@@ -1,6 +1,6 @@
 import store from '@/app/pages/store/store';
-import { Delete } from '@mui/icons-material'
-import { Box, Button, CircularProgress, Modal, Typography } from '@mui/material'
+import { DeleteOutline } from '@mui/icons-material'
+import { Box, Button, CircularProgress, Modal, Tooltip, Typography } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
 import { delete_questionnaires_thunk, get_questionnaires_by_id_thunk, get_questionnaires_thunk } from '../../../literacy_test/_redux/questionaires-thunk';
@@ -30,13 +30,20 @@ export default function DeleteQuestionnaireSection({ data }) {
         setOpen(false)
         setLoading(false)
     }
+
+    async function closed(params) {
+        setOpen(false)
+    }
+
     return (
         <>
-            <Button
-                onClick={() => setOpen(!open)}
-                variant="text" color="error">
-                <Delete />
-            </Button>
+            <Tooltip title="Delete Question">
+                <Button
+                    onClick={() => setOpen(!open)}
+                    variant="text" color="error">
+                    <DeleteOutline />
+                </Button>
+            </Tooltip>
             <Modal
                 open={open}
                 onClose={handleClose}
@@ -45,20 +52,31 @@ export default function DeleteQuestionnaireSection({ data }) {
             >
                 <Box sx={style}>
                     <Typography id="modal-modal-title" variant="h6" component="h2">
-                        Delete Questionnaire
+                        Delete Question
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Are you sure you want to delete?
+                        Are you sure you want to delete this question?
                     </Typography>
-                    <div className='flex w-full pt-5 items-center justify-end'>
-                        <Button
-                            color="error"
-                            onClick={delete_data}
-                            //   disabled={loading}
-                            variant='contained'
-                            className=' w-full'>
-                            {loading ? <CircularProgress size={24} color="inherit" /> : 'Delete'}
-                        </Button>
+                    <div className='flex gap-2.5'>
+                        <div className='flex w-full pt-5 items-center justify-end'>
+                            <Button
+                                color="error"
+                                onClick={delete_data}
+                                //   disabled={loading}
+                                variant='contained'
+                                className=' w-full'>
+                                {loading ? <CircularProgress size={24} color="inherit" /> : 'Delete'}
+                            </Button>
+                        </div>
+                        <div className='flex w-full pt-5 items-center justify-end'>
+                            <Button
+                                color="primary"
+                                onClick={closed}
+                                variant='contained'
+                                className=' w-full'>
+                                {loading ? <CircularProgress size={24} color="inherit" /> : 'Cancel'}
+                            </Button>
+                        </div>
                     </div>
                 </Box>
             </Modal>

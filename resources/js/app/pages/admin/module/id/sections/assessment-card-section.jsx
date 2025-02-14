@@ -121,7 +121,7 @@ export default function AssessmentCardSection() {
                                         );
                                         return (
                                             <>
-                                                <div className="flex text-2xl font-black items-center justify-center mb-6">
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
                                                     <i>{pre_exercise.exam_type}</i>
                                                 </div>
                                                 <div>
@@ -149,14 +149,16 @@ export default function AssessmentCardSection() {
                                                             {pre_exercise.questions.map(
                                                                 (res, i) => {
                                                                     return (
-                                                                        <TrueOrFalseComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <TrueOrFalseComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -168,15 +170,18 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {pre_exercise.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
                                                                     return (
-                                                                        <FillInTheBlankComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <FillInTheBlankComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -188,56 +193,59 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {pre_exercise.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
                                                                     return (
-                                                                        <MultipleChoiceComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MultipleChoiceComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
                                                         </>
                                                     )}
 
-                                                {pre_exercise.exam_type ==
-                                                    "Identification" && (
-                                                        <>
-                                                            {pre_exercise.questions.map(
-                                                                (res, i) => {
-                                                                    return (
-                                                                        <IdentificationComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
-                                                                    );
-                                                                },
-                                                            )}
+                                                {pre_exercise.exam_type === "Identification" && (
+                                                    <>
+                                                        {pre_exercise.questions.map((res, i) => {
+                                                            const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
 
-                                                        </>
-                                                    )}
+                                                            return (
+                                                                <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                    <IdentificationComponent
+                                                                        question={res?.question}
+                                                                        answers={res?.answer_key}
+                                                                    />
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </>
+                                                )}
+
 
                                                 {pre_exercise.exam_type ==
                                                     "Matching" && (
                                                         <>
                                                             {pre_exercise.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
                                                                     return (
-                                                                        <MatchingComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MatchingComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -276,7 +284,7 @@ export default function AssessmentCardSection() {
                                     {res.assessments.map((assessment) => {
                                         return (
                                             <>
-                                                <div className="flex text-2xl font-black items-center justify-center mb-6">
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
                                                     <i>{assessment.exam_type}</i>
                                                 </div>
                                                 <div>
@@ -304,14 +312,16 @@ export default function AssessmentCardSection() {
                                                             {assessment.questions.map(
                                                                 (res, i) => {
                                                                     return (
-                                                                        <TrueOrFalseComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <TrueOrFalseComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -323,15 +333,18 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {assessment.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
                                                                     return (
-                                                                        <FillInTheBlankComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <FillInTheBlankComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -343,15 +356,18 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {assessment.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
                                                                     return (
-                                                                        <MultipleChoiceComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MultipleChoiceComponent
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -363,15 +379,15 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {assessment.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+
                                                                     return (
-                                                                        <IdentificationComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <IdentificationComponent
+                                                                                question={res?.question}
+                                                                                answers={res?.answer_key}
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}
@@ -384,15 +400,15 @@ export default function AssessmentCardSection() {
                                                         <>
                                                             {assessment.questions.map(
                                                                 (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+
                                                                     return (
-                                                                        <MatchingComponent
-                                                                            question={
-                                                                                res?.question
-                                                                            }
-                                                                            answers={
-                                                                                res?.answer_key
-                                                                            }
-                                                                        />
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MatchingComponent
+                                                                                question={res?.question}
+                                                                                answers={res?.answer_key}
+                                                                            />
+                                                                        </div>
                                                                     );
                                                                 },
                                                             )}

@@ -1,13 +1,17 @@
 import React from 'react'
+import DeleteQuestionnaireSection from '../sections/delete-questionnaire-section'
 
 export default function MatchingComponent({ question, answers }) {
   return (
     <div className='mt-7'>
       <div>
         <div>
-          <b>{question}</b>
+          <div className='flex items-center justify-between'>
+            <b>{question}</b>
+            <DeleteQuestionnaireSection />
+          </div>
         </div>
-        <p>Match key: {answers}</p>
+        <p><b>Matching key:</b> {answers}</p>
       </div>
     </div>
   )
