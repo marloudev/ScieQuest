@@ -1,0 +1,1 @@
+import{j as s}from"./app-CiNbkGpy.js";function r({question:e,answers:i}){return s.jsx("div",{className:"mt-7",children:s.jsxs("div",{children:[s.jsx("div",{children:s.jsx("b",{children:e})}),s.jsxs("p",{children:["Match key: ",i]})]})})}export{r as default};
