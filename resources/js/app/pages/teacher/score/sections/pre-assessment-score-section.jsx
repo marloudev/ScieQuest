@@ -8,23 +8,19 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, Tooltip } from '@mui/material';
-import { get_students_by_id_thunk } from '@/app/pages/admin/students/redux/students-thunk';
-import UpdateSection from '@/app/pages/admin/students/sections/update-section';
-import DeleteSection from '@/app/pages/admin/students/sections/delete-section';
-import ViewScoreSection from '@/app/pages/admin/teachers/list-students/sections/view-score-section';
 
-export default function ListOfStudentsTableSection() {
+export default function PreAssessmentScoreSection() {
     const dispatch = useDispatch();
     const { students } = useSelector((state) => state.students);
     const { user } = useSelector((state) => state.app);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
 
-    useEffect(() => {
-        if (teacher_id) {
-            dispatch(get_students_by_id_thunk(teacher_id));
-        }
-    }, [dispatch, teacher_id]);
+    // useEffect(() => {
+    //     if (teacher_id) {
+    //         dispatch(get_students_by_id_thunk(teacher_id));
+    //     }
+    // }, [dispatch, teacher_id]);
 
     useEffect(() => {
         if (students?.data && teacher_id) {
@@ -35,25 +31,25 @@ export default function ListOfStudentsTableSection() {
 
     console.log('usersss', user)
     console.log('studentsss', students)
-
-
     return (
-        <>
+        <div>
+            <h1>Pre-Assessment</h1>
             <TableContainer component={Paper}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
                     <TableHead>
                         <TableRow>
-                            <TableCell>Student ID</TableCell>
-                            <TableCell>Fullname</TableCell>
-                            <TableCell>Email</TableCell>
-                            <TableCell>Action</TableCell>
+                            <TableCell>Quarter</TableCell>
+                            <TableCell>Lesson</TableCell>
+                            <TableCell>Type of Exam</TableCell>
+                            <TableCell>Score</TableCell>
+                            {/* <TableCell>Action</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
                         {filteredStudents?.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={4} align="center">
-                                    No students found.
+                                    No Score found.
                                 </TableCell>
                             </TableRow>
                         ) : (
@@ -90,6 +86,6 @@ export default function ListOfStudentsTableSection() {
                     </TableBody>
                 </Table>
             </TableContainer>
-        </>
-    );
+        </div>
+    )
 }

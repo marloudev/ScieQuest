@@ -7,6 +7,7 @@ import { get_students_by_id_thunk } from '../../admin/students/redux/students-th
 import { useSelector } from 'react-redux';
 import { get_teachers_thunk } from '../../admin/teachers/redux/teachers-thunk';
 import CreateSection from '../../admin/students/sections/create-section';
+import SearchSection from './sections/search-section';
 
 export default function ListStudentsPage() {
     const { user } = useSelector((state) => state.app);
@@ -17,8 +18,9 @@ export default function ListStudentsPage() {
     }, []);
     return (
         <InstructorLayout>
-            <div>
+            <div className='flex items-center justify-between'>
                 <CreateSection />
+                <SearchSection />
             </div>
             <div className='mt-4'>
                 <ListOfStudentsTableSection />

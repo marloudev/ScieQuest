@@ -135,6 +135,10 @@ Route::middleware(
         return Inertia::render('teacher/list-students/page');
     })->name('teacher.list-students');
 
+    Route::get('/score', function () {
+        return Inertia::render('teacher/score/page');
+    })->name('teacher.score');
+
     Route::get('/dashboard', function () {
         return Inertia::render('teacher/dashboard/page');
     })->name('teacher.dashboard');
