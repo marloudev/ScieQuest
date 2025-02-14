@@ -1,0 +1,1 @@
+import"./app-hjgrIFLz.js";import{s as n,a as o}from"./lesson-service-COxa-Rnq.js";function u(t){return async function(s,e){return n(t)}}function i(t){return async function(s,e){return o(t)}}export{i as a,u as s};

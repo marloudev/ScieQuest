@@ -25,7 +25,7 @@ export default function PaginationSection() {
     <div className='flex w-full items-center justify-end'>
       <Pagination
         onChange={page_handler}
-        count={teachers.last_page}
+        count={teachers?.last_page}
         defaultPage={currentPage}
         // count={Number.isFinite(teachers?.total) && teachers?.data?.length
         //   ? Math.ceil(teachers.total / teachers.data.length)

@@ -1,8 +1,19 @@
 import axios from "axios";
 
 export async function get_teachers_service() {
+    const search = window.location.search
     try {
-        const res = await axios.get("/api/teachers");
+        const res = await axios.get("/api/teachers" + search);
+        return res;
+    } catch (error) {
+        return error;
+    }
+}
+
+export function get_ticket_service(data) {
+    const search = window.location.search
+    try {
+        const res = axios.get("/api/ticket" + search + '&site_id=' + data.site_id);
         return res;
     } catch (error) {
         return error;

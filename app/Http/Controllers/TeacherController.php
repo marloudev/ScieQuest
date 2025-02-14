@@ -7,17 +7,32 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\DB;
 
 class TeacherController extends Controller
 {
-    public function index()
+
+    public function index(Request $request)
     {
-        $teachers = Teacher::paginate(10); // Apply pagination directly to the query builder
+        $search = $request->get('searching', ''); // Get the search query
+
+        // Apply search filter to the Teacher model
+        $teachers = Teacher::query()
+            ->when($search, function ($query) use ($search) {
+                return $query->where('employee_id', 'like', "%{$search}%")
+                    ->orWhere('fname', 'like', "%{$search}%")
+                    ->orWhere('lname', 'like', "%{$search}%")
+                    ->orWhere('email', 'like', "%{$search}%")
+                    ->orWhere(DB::raw("CONCAT(fname, ' ', lname)"), 'like', "%{$search}%"); // Full name search
+            })
+            ->paginate(10);
 
         return response()->json([
             'response' => $teachers,
         ], 200);
     }
+
+
 
 
     public function show($id)
