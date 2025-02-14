@@ -67,7 +67,7 @@ export default function PreAssessmentScoreSection() {
                                         {res.fname} {res.lname}
                                     </TableCell>
                                     <TableCell>{res.email}</TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                         <div className="flex gap-2">
                                             <Tooltip title="Delete Student">
                                                 <ViewScoreSection data={res} />
@@ -79,7 +79,7 @@ export default function PreAssessmentScoreSection() {
                                                 <DeleteSection data={res} />
                                             </Tooltip>
                                         </div>
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             ))
                         )}
