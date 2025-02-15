@@ -46,7 +46,7 @@ export default function UpdateModuleSection({ data }) {
             ...data,
             id: data?.id || {}
         });
-    }, [data]);
+    }, [open]);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -87,7 +87,7 @@ export default function UpdateModuleSection({ data }) {
     //     setLoading(false);
     // }
 
-    console.log("adadad", data)
+    console.log("formformform", form)
     return (
         <React.Fragment>
             <Tooltip title="Update Module">

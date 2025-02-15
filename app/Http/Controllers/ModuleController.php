@@ -63,17 +63,17 @@ class ModuleController extends Controller
             ], 404);
         }
 
-        $moduleData = $request->validate([
-            'id' => 'nullable|unique:module,id,' . $module->id,
-            'quarter' => 'nullable|string|max:255',
-            'title' => 'nullable|string|max:255',
-            'grade' => 'nullable|string|max:255',
-            'introductory' => 'nullable|string',
-            'wintn' => 'nullable|string',
-        ]);
+        // $moduleData = $request->validate([
+        //     'id' => 'nullable|unique:module,id,' . $module->id,
+        //     'quarter' => 'nullable|string|max:255',
+        //     'title' => 'nullable|string|max:255',
+        //     'grade' => 'nullable|string|max:255',
+        //     'introductory' => 'nullable|string',
+        //     'wintn' => 'nullable|string',
+        // ]);
 
 
-        $module->update(array_filter($moduleData));
+        $module->update($request->all());
 
         return response()->json([
             'message' => 'Module updated successfully',

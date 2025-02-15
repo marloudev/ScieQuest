@@ -11,7 +11,7 @@ export default function ViewScoreSection({ data }) {
         <div>
             <Tooltip title="View Student Score and Progress">
                 <Button
-                    onClick={() => router.visit('/teacher/score')}
+                    onClick={() => window.open(`/teacher/score/${data.id}`, '_blank')}
                     size="small"
                     variant="contained"
                     color="success">

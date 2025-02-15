@@ -7,10 +7,10 @@ export const studentsSlice = createSlice({
   name: 'students',
   initialState: {
     students: {
-      data:[]
+      data: []
     },
     student: {},
-    answers:[]
+    answers: []
   },
   reducers: {
     setStudents: (state, action) => {
@@ -24,10 +24,10 @@ export const studentsSlice = createSlice({
     },
   },
 })
-export const { 
+export const {
   setStudents,
   setStudent,
   setAnswers
- } = studentsSlice.actions
+} = studentsSlice.actions
 
 export default studentsSlice.reducer

@@ -135,7 +135,7 @@ Route::middleware(
         return Inertia::render('teacher/list-students/page');
     })->name('teacher.list-students');
 
-    Route::get('/score', function () {
+    Route::get('/score/{id}', function () {
         return Inertia::render('teacher/score/page');
     })->name('teacher.score');
 

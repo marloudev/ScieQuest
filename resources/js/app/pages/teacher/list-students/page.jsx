@@ -18,10 +18,6 @@ export default function ListStudentsPage() {
     }, []);
     return (
         <InstructorLayout>
-            <div className='flex items-center justify-between'>
-                <CreateSection />
-                <SearchSection />
-            </div>
             <div className='mt-4'>
                 <ListOfStudentsTableSection />
             </div>
