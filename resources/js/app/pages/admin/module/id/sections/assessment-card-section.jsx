@@ -15,6 +15,7 @@ import FillInTheBlankComponent from "../components/fill-in-the-blank-component";
 import TrueOrFalseComponent from "../components/true-or-false-component";
 import IdentificationComponent from "../components/identification-component";
 import MatchingComponent from "../components/matching-component";
+import DeleteAssessmentSection from "./delete-assessment-section";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -121,7 +122,10 @@ export default function AssessmentCardSection() {
                                         );
                                         return (
                                             <>
-                                                <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
+                                                <div className="flex items-center justify-end mx-3 mt-5">
+                                                    <DeleteAssessmentSection />
+                                                </div>
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6 ">
                                                     <i>{pre_exercise.exam_type}</i>
                                                 </div>
                                                 <div>
