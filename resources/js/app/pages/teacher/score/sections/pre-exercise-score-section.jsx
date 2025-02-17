@@ -11,7 +11,7 @@ import { Button, Tooltip } from '@mui/material';
 
 export default function PreExerciseScoreSection() {
     const dispatch = useDispatch();
-    const { students } = useSelector((state) => state.students);
+    const { student } = useSelector((state) => state.students);
     const { user } = useSelector((state) => state.app);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
@@ -22,15 +22,15 @@ export default function PreExerciseScoreSection() {
     //     }
     // }, [dispatch, teacher_id]);
 
-    useEffect(() => {
-        if (students?.data && teacher_id) {
-            const filtered = students.data.filter(student => student.teacher_id === teacher_id);
-            setFilteredStudents(filtered);
-        }
-    }, [students, teacher_id]);
+    // useEffect(() => {
+    //     if (students?.data && teacher_id) {
+    //         const filtered = students.data.filter(student => student.teacher_id === teacher_id);
+    //         setFilteredStudents(filtered);
+    //     }
+    // }, [students, teacher_id]);
 
     console.log('usersss', user)
-    console.log('studentsss', students)
+    console.log('aaaaaaaaaaaa', student)
     return (
         <div>
             <h1>Pre-Exercise</h1>

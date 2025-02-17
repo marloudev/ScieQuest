@@ -37,6 +37,8 @@ Route::post('/rate-paragraph', [ChatGPTController::class, 'rateParagraph']);
 Route::post('/auth/login', [AccountController::class, 'login']);
 Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
+Route::get('/get_student_score/{id}', [StudentController::class, 'get_student_score']);
+
 Route::resource('teachers', TeacherController::class);
 Route::resource('score_sheets', ScoreSheetController::class);
 Route::resource('dashboard', DashboardController::class);
@@ -44,6 +46,7 @@ Route::resource('answers', AnswerController::class);
 Route::resource('module', ModuleController::class);
 Route::resource('lesson', LessonController::class);
 Route::resource('quest', QuestController::class);
+
 Route::resource('answer', AnswerController::class);
 Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
 Route::get('/get_score/{id}/{type}', [AnswerController::class, 'get_score']);

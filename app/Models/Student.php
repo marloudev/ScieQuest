@@ -22,4 +22,8 @@ class Student extends Model
     {
         return $this->belongsTo(Teacher::class, "teacher_id", "employee_id");
     }
+    public function user(): HasOne
+    {
+        return $this->hasOne(User::class, "user_id", "student_id");
+    }
 }

@@ -16,6 +16,7 @@ import TrueOrFalseComponent from "../components/true-or-false-component";
 import IdentificationComponent from "../components/identification-component";
 import MatchingComponent from "../components/matching-component";
 import DeleteAssessmentSection from "./delete-assessment-section";
+import DeletePreExerciseSection from "./delete-pre-exercise-section";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -116,14 +117,11 @@ export default function AssessmentCardSection() {
                                     </div>
 
                                     {res.pre_exercises.map((pre_exercise) => {
-                                        console.log(
-                                            "pre_exercise",
-                                            pre_exercise,
-                                        );
+
                                         return (
                                             <>
                                                 <div className="flex items-center justify-end mx-3 mt-5">
-                                                    <DeleteAssessmentSection />
+                                                    <DeletePreExerciseSection data={res} />
                                                 </div>
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 ">
                                                     <i>{pre_exercise.exam_type}</i>
@@ -155,6 +153,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <TrueOrFalseComponent
+                                                                                data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -178,6 +177,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <FillInTheBlankComponent
+                                                                                data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -201,6 +201,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <MultipleChoiceComponent
+                                                                                data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -223,6 +224,7 @@ export default function AssessmentCardSection() {
                                                             return (
                                                                 <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                     <IdentificationComponent
+                                                                        data={res}
                                                                         question={res?.question}
                                                                         answers={res?.answer_key}
                                                                     />
@@ -242,6 +244,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <MatchingComponent
+                                                                                data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -288,6 +291,9 @@ export default function AssessmentCardSection() {
                                     {res.assessments.map((assessment) => {
                                         return (
                                             <>
+                                                <div className="flex items-center justify-end mx-3 mt-5">
+                                                    <DeleteAssessmentSection data={res} />
+                                                </div>
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
                                                     <i>{assessment.exam_type}</i>
                                                 </div>
@@ -318,6 +324,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <TrueOrFalseComponent
+                                                                            data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -341,6 +348,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <FillInTheBlankComponent
+                                                                            data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -364,6 +372,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <MultipleChoiceComponent
+                                                                            data={res}
                                                                                 question={
                                                                                     res?.question
                                                                                 }
@@ -388,6 +397,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <IdentificationComponent
+                                                                            data={res}
                                                                                 question={res?.question}
                                                                                 answers={res?.answer_key}
                                                                             />
@@ -409,6 +419,7 @@ export default function AssessmentCardSection() {
                                                                     return (
                                                                         <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
                                                                             <MatchingComponent
+                                                                            data={res}
                                                                                 question={res?.question}
                                                                                 answers={res?.answer_key}
                                                                             />

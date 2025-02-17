@@ -20,7 +20,7 @@ class QuestController extends Controller
             $url = Storage::disk('s3')->url($path);
         }
         if ($request->type == 'pre-exercise') {
-           $learning_id =  PreExercise::create([
+            $learning_id =  PreExercise::create([
                 'lesson_id' => $request->lesson_id,
                 'exam_type' => $request->exam_type,
                 'direction' => $request->direction,
@@ -29,7 +29,7 @@ class QuestController extends Controller
 
             foreach ($questions as $key => $value) {
                 Quest::create([
-                    'learning_id'=>$learning_id->id,
+                    'learning_id' => $learning_id->id,
                     'lesson_id' => $request->lesson_id,
                     'exam_type' => $request->exam_type,
                     'type' => $request->type,
@@ -49,7 +49,7 @@ class QuestController extends Controller
 
             foreach ($questions as $key => $value) {
                 Quest::create([
-                    'learning_id'=>$learning_id->id,
+                    'learning_id' => $learning_id->id,
                     'lesson_id' => $request->lesson_id,
                     'exam_type' => $request->exam_type,
                     'type' => $request->type,
@@ -59,5 +59,15 @@ class QuestController extends Controller
                 ]);
             }
         }
+    }
+    public function destroy($id)
+    {
+        $quest = Quest::where('id', $id)->first();
+        if ($quest) {
+            $quest->delete();
+        }
+        return response()->json([
+            'message' => 'Deleted Successfully',
+        ], 200);
     }
 }

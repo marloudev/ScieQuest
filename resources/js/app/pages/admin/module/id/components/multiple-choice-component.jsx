@@ -1,13 +1,13 @@
 import React from 'react';
 import DeleteQuestionnaireSection from '../sections/delete-questionnaire-section';
 
-export default function MultipleChoiceComponent({ question, answers }) {
+export default function MultipleChoiceComponent({ question, answers,data }) {
   return (
     <div>
       <div>
         <div className='flex items-center justify-between'>
           <p>Question: {question}</p>
-          <DeleteQuestionnaireSection />
+          <DeleteQuestionnaireSection data={data}/>
         </div>
       </div>
       <div>

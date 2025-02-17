@@ -116,7 +116,7 @@ export default function ListOfStudentsTableSection() {
                                     <TableCell>
                                         {res.fname} {res.lname}
                                     </TableCell>
-                                    <TableCell>{res.email}</TableCell>
+                                    <TableCell>{res.user.email}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-2">
                                             <Tooltip title="Delete Student">
