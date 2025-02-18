@@ -25,16 +25,16 @@ const NAVIGATION = [
         title: "Dashboard",
         icon: <DashboardIcon />,
     },
-    {
-        segment: "list-students",
-        title: "List of Students",
-        icon: <RecentActors />,
-    },
     // {
-    //     segment: "module",
-    //     title: "Modules",
-    //     icon: <AutoStories />,
+    //     segment: "list-students",
+    //     title: "List of Students",
+    //     icon: <RecentActors />,
     // },
+    {
+        segment: "module",
+        title: "Modules",
+        icon: <AutoStories />,
+    },
     {
         kind: "divider",
     },

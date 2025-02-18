@@ -1,1 +1,0 @@
-import{u as t,j as a}from"./app-BxdHEegZ.js";function o(){const{student:e}=t(s=>s.students);return console.log("aaaaaaa",e),a.jsx("div",{children:a.jsxs("b",{children:["Name:",e==null?void 0:e.fname]})})}export{o as default};

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
-import { Button, Tooltip } from '@mui/material';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { Button, Tooltip } from "@mui/material";
+import CollapseTableSection from "./collapse-table-section";
 
 export default function PreExerciseScoreSection() {
     const dispatch = useDispatch();
@@ -16,76 +17,47 @@ export default function PreExerciseScoreSection() {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
 
-    // useEffect(() => {
-    //     if (teacher_id) {
-    //         dispatch(get_students_by_id_thunk(teacher_id));
-    //     }
-    // }, [dispatch, teacher_id]);
 
-    // useEffect(() => {
-    //     if (students?.data && teacher_id) {
-    //         const filtered = students.data.filter(student => student.teacher_id === teacher_id);
-    //         setFilteredStudents(filtered);
-    //     }
-    // }, [students, teacher_id]);
-
-    console.log('usersss', user)
-    console.log('aaaaaaaaaaaa', student)
     return (
-        <div>
-            <h1>Pre-Exercise</h1>
-            <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
-                    <TableHead>
-                        <TableRow>
-                            <TableCell>Quarter</TableCell>
-                            <TableCell>Lesson</TableCell>
-                            <TableCell>Type of Exam</TableCell>
-                            <TableCell>Score</TableCell>
-                            {/* <TableCell>Action</TableCell> */}
-                        </TableRow>
-                    </TableHead>
-                    <TableBody>
-                        {filteredStudents?.length === 0 ? (
-                            <TableRow>
-                                <TableCell colSpan={4} align="center">
-                                    No Score found.
-                                </TableCell>
-                            </TableRow>
-                        ) : (
-                            filteredStudents?.map((res, i) => (
-                                <TableRow
-                                    key={i}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell>{res.student_id}</TableCell>
-                                    <TableCell>
-                                        {res.fname} {res.lname}
-                                    </TableCell>
-                                    <TableCell>{res.email}</TableCell>
-                                    {/* <TableCell>
-                                        <div className="flex gap-2">
-                                            <Tooltip title="Delete Student">
-                                                <ViewScoreSection data={res} />
-                                            </Tooltip>
-                                            <Tooltip title="Update Student">
-                                                <UpdateSection data={res} />
-                                            </Tooltip>
-                                            <Tooltip title="Delete Student">
-                                                <DeleteSection data={res} />
-                                            </Tooltip>
-                                        </div>
-                                    </TableCell> */}
-                                </TableRow>
-                            ))
-                        )}
-                    </TableBody>
-                </Table>
-            </TableContainer>
-        </div>
-    )
+        <>
+            {student?.lessons?.map((res, i) => {
+                return (
+                    <div>
+                        <h2>{res.subject_matter}</h2>
+                        <TableContainer component={Paper}>
+                            <Table
+                                sx={{ minWidth: 650 }}
+                                aria-label="simple table"
+                            >
+                                <TableBody>
+                                    {res?.pre_exercises?.length === 0 ? (
+                                        <TableRow>
+                                            <TableCell
+                                                colSpan={4}
+                                                align="center"
+                                            >
+                                                No Score found.
+                                            </TableCell>
+                                        </TableRow>
+                                    ) : (
+                                        res?.pre_exercises?.map((ress, i) => {
+                                          
+
+                                            return (
+                                                <>
+                                                    <CollapseTableSection
+                                                        data={ress}
+                                                    />
+                                                </>
+                                            );
+                                        })
+                                    )}
+                                </TableBody>
+                            </Table>
+                        </TableContainer>
+                    </div>
+                );
+            })}
+        </>
+    );
 }

@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
+use App\Models\Module;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
@@ -144,16 +147,50 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $student = Student::where('teacher_id', $id)->with(['teacher','user'])->paginate();
+        $student = Student::where('teacher_id', $id)->with(['teacher', 'user'])->paginate();
         return response()->json([
             'status' => $student,
         ], 200);
     }
 
-    public function get_student_score($id){
-        $student = Student::where('id', $id)->with(['teacher','user'])->first();
+    public function get_student_score($id)
+    {
+        $auth = Auth::user();
+        $students = Student::where('teacher_id', $auth->user_id)->with(['user'])->get();
+        $module = Module::where('id', $id)->with(['lessons'])->first();
+
+
+        foreach ($module['lessons'] as $lessonKey => $lesson) {
+            foreach ($lesson['pre_exercises'] as $exerciseKey => $pre_exercise) {
+                // Initialize an array to store the scores for each student
+                $studentScores = [];
+
+                foreach ($students as $studentKey => $student) {
+                    if ($student['user']['id']) {
+                        // Get the sum of scores for the student
+                        $scoreSum = Answer::where([
+                            ['student_id', '=', $student['user']['id']],
+                            ['type', '=', 'pre-exercise'],
+                            ['learning_id', '=', $pre_exercise['id']],
+                        ])->get();
+
+                        $studentScores[] = [
+                            'score' => $scoreSum->sum('score'),
+                            'user' => $student['user'],
+                            'answer' => $scoreSum,
+                        ];
+                    }
+                }
+
+                // Store the scores for each exercise in the module
+                $module['lessons'][$lessonKey]['pre_exercises'][$exerciseKey]['scores'] = $studentScores;
+            }
+        }
+
+
         return response()->json([
-            'status' => $student,
-        ], 200); 
+            // 'module' => $module,
+            'status' => $module,
+        ], 200);
     }
 }
