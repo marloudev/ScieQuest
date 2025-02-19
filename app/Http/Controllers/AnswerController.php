@@ -23,15 +23,16 @@ class AnswerController extends Controller
             ['type', '=', $type],
         ]);
 
-        $total = ($score / $over)  * 100;
+        $total = ($score / $over->count())  * 100;
         $status = $total >= 75 ? "Passed" : "Failed";
 
-        if ($type == 'assessment' && $status == 'Failed') {
-            $over->delete();
-        }
+        // if ($type == 'assessment' && $status == 'Failed') {
+        //     $over->delete();
+        // }
 
         return response()->json([
             'status' => 'success',
+            'answer_status' => $status,
             'data' => $score,
             'over' => $over->count(),
         ], 200);
