@@ -17,6 +17,7 @@ import IdentificationComponent from "../components/identification-component";
 import MatchingComponent from "../components/matching-component";
 import DeleteAssessmentSection from "./delete-assessment-section";
 import DeletePreExerciseSection from "./delete-pre-exercise-section";
+import UpdateLessonSection from "./update-lesson-section";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -63,11 +64,18 @@ export default function AssessmentCardSection() {
                                 />
                             </div>
                             <div className="">
-                                <a href="#">
-                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                                        {res?.subject_matter}
-                                    </h5>
-                                </a>
+                                <div className="flex items-center justify-between">
+                                    <a href="#">
+                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                                            {res?.subject_matter}
+                                        </h5>
+                                    </a>
+                                    <div className="mt-6">
+                                        <UpdateLessonSection data={res} />
+                                    </div>
+                                </div>
+
+
                                 <p className="mb-3 font-normal text-gray-700">
                                     Demo Link:{" "}
                                     {res?.link ? (
