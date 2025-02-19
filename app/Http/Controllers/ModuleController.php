@@ -2,19 +2,55 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Answer;
 use App\Models\Module;
+use App\Models\Quest;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class ModuleController extends Controller
 {
-    public function get_module_by_quarter($id)
+    public function get_module_by_quarter(Request $request, $id)
     {
-        $modules = Module::where('quarter', $id)->with(['lessons'])->get();
+        $modules = Module::where('quarter', $id)
+            ->with(['lessons.assessments']) // Eager-load assessments as well
+            ->get();
+
+        foreach ($modules as $module) {
+            foreach ($module->lessons as $lesson) {
+                $lesson->assessment_status = 0;
+                $lesson->total_assessments_score = 0; // Initialize total score
+                $lesson->assessment_count = 0;
+
+                foreach ($lesson->assessments as $assessment) {
+                    $scoreSum = Answer::where([
+                        ['student_id', '=', $request->user_id],
+                        ['type', '=', 'assessment'],
+                        ['learning_id', '=', $assessment->id],
+                    ]);
+
+                    $quest = Quest::where([
+                        ['type', '=', 'assessment'],
+                        ['learning_id', '=', $assessment->id],
+                    ]);
+
+
+                    $lesson->assessment_count += $quest->count();
+                    $assessment->assessment_score = $scoreSum->sum('score');
+                    $lesson->total_assessments_score += $scoreSum->sum('score'); // Correct total score calculation
+                }
+                $lesson->assessment_average = (($lesson->assessment_count > 0
+                    ? $lesson->total_assessments_score / $lesson->assessment_count
+                    : 0) * 100) . '%';
+            }
+        }
+
         return response()->json([
             'status' => 'success',
             'data' => $modules,
         ], 200);
     }
+
 
     public function index()
     {
