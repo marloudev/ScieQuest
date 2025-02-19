@@ -39,7 +39,7 @@ export default function AssessmentScoreSection() {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        res?.assessment?.map((ress, i) => {
+                                        res?.assessments?.map((ress, i) => {
                                             return (
                                                 <>
                                                     <CollapseTableSection
