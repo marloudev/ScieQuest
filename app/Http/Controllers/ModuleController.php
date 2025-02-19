@@ -18,7 +18,7 @@ class ModuleController extends Controller
 
         foreach ($modules as $module) {
             foreach ($module->lessons as $lesson) {
-                $lesson->assessment_status = 0;
+                $lesson->assessment_status = '';
                 $lesson->total_assessments_score = 0; // Initialize total score
                 $lesson->assessment_count = 0;
 
@@ -39,9 +39,14 @@ class ModuleController extends Controller
                     $assessment->assessment_score = $scoreSum->sum('score');
                     $lesson->total_assessments_score += $scoreSum->sum('score'); // Correct total score calculation
                 }
-                $lesson->assessment_average = intval((($lesson->assessment_count > 0
-                    ? $lesson->total_assessments_score / $lesson->assessment_count
-                    : 0) * 100)) . '%';
+
+                $percentage = ($lesson->assessment_count > 0)
+                    ? ($lesson->total_assessments_score / $lesson->assessment_count) * 100
+                    : 0;
+
+                $lesson->assessment_average = intval($percentage) . '%';
+
+                $lesson->assessment_status = intval($percentage) >= 75 ? 'Passed' : 'Failed';
             }
         }
 
