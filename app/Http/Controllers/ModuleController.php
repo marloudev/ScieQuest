@@ -39,9 +39,9 @@ class ModuleController extends Controller
                     $assessment->assessment_score = $scoreSum->sum('score');
                     $lesson->total_assessments_score += $scoreSum->sum('score'); // Correct total score calculation
                 }
-                $lesson->assessment_average = (($lesson->assessment_count > 0
+                $lesson->assessment_average = intval((($lesson->assessment_count > 0
                     ? $lesson->total_assessments_score / $lesson->assessment_count
-                    : 0) * 100) . '%';
+                    : 0) * 100)) . '%';
             }
         }
 
