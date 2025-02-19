@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AnswerController;
+use App\Http\Controllers\AssessmentController;
 use App\Http\Controllers\BookletController;
 use App\Http\Controllers\DashboardController;
 use Illuminate\Http\Request;
@@ -13,6 +14,7 @@ use App\Http\Controllers\ExamTypeController;
 use App\Http\Controllers\LearningCenterController;
 use App\Http\Controllers\LessonController;
 use App\Http\Controllers\ModuleController;
+use App\Http\Controllers\PreExerciseController;
 use App\Http\Controllers\QuestController;
 use App\Http\Controllers\QuestionnaireController;
 use App\Http\Controllers\ScheduleController;
@@ -46,6 +48,10 @@ Route::resource('answers', AnswerController::class);
 Route::resource('module', ModuleController::class);
 Route::resource('lesson', LessonController::class);
 Route::resource('quest', QuestController::class);
+Route::resource('assessment', AssessmentController::class);
+Route::resource('pre_exercise', PreExerciseController::class);
+
+
 
 Route::resource('answer', AnswerController::class);
 Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
