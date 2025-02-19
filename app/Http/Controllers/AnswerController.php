@@ -11,18 +11,25 @@ use Illuminate\Support\Facades\Auth;
 class AnswerController extends Controller
 {
 
-    public function get_score($id,$type)
+    public function get_score($id, $type)
     {
         $score = Answer::where([
             ['learning_id', '=', $id],
             ['type', '=', $type],
         ])->sum('score');
-         // Specify the column to sum
+
         $over = Answer::where([
             ['learning_id', '=', $id],
             ['type', '=', $type],
         ]);
-        
+
+        $total = ($score / $over)  * 100;
+        $status = $total >= 75 ? "Passed" : "Failed";
+
+        if ($type == 'assessment' && $status == 'Failed') {
+            $over->delete();
+        }
+
         return response()->json([
             'status' => 'success',
             'data' => $score,
@@ -63,8 +70,8 @@ class AnswerController extends Controller
                 'type' => $quest->type,
                 'quest_id' => $request->quest_id,
                 'student_id' => $request->student_id,
-                'answer' => $request->answer,
-                'score' => ucfirst($quest->answer_key) == ucfirst($request->answer) ? 1 : 0,
+                'answer' => strtoupper($request->answer),
+                'score' => strtoupper($quest->answer_key) == strtoupper($request->answer) ? 1 : 0,
             ]);
         }
         $isFinish = false;
