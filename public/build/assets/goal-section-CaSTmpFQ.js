@@ -1,0 +1,1 @@
+import{j as a}from"./app-Dvb8ucGu.js";function s(){return a.jsxs("div",{children:[a.jsx("h1",{className:"text-center",children:"Core Values"}),a.jsx("div",{className:"text-center",children:a.jsx("p",{className:"text-xl",children:a.jsx("b",{children:"Maka-Diyos, Makatao, Makakalikasan at Makabansa"})})})]})}export{s as default};

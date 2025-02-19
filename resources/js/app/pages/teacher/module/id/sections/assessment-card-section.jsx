@@ -115,7 +115,7 @@ export default function AssessmentCardSection() {
                                     {res.pre_exercises.map((pre_exercise) => {
                                         return (
                                             <>
-                                                {pre_exercise.exam_type ==
+                                                {pre_exercise?.exam_type ==
                                                     "True Or False" && (
                                                         <>
                                                             <TrueOrFalseComponent
@@ -127,7 +127,7 @@ export default function AssessmentCardSection() {
                                                         </>
                                                     )}
 
-                                                {pre_exercise.exam_type ==
+                                                {pre_exercise?.exam_type ==
                                                     "Fill In The Blank" && (
                                                         <>
                                                             <FillInTheBlankComponent
@@ -139,7 +139,7 @@ export default function AssessmentCardSection() {
                                                         </>
                                                     )}
 
-                                                {pre_exercise.exam_type ==
+                                                {pre_exercise?.exam_type ==
                                                     "Multiple Choice" && (
                                                         <>
                                                             <MultipleChoiceComponent
@@ -151,7 +151,7 @@ export default function AssessmentCardSection() {
                                                         </>
                                                     )}
 
-                                                {pre_exercise.exam_type ==
+                                                {pre_exercise?.exam_type ==
                                                     "Identification" && (
                                                         <>
                                                             <IdentificationComponent
@@ -163,7 +163,7 @@ export default function AssessmentCardSection() {
                                                         </>
                                                     )}
 
-                                                {pre_exercise.exam_type ==
+                                                {pre_exercise?.exam_type ==
                                                     "Matching" && (
                                                         <>
                                                             <MatchingComponent

@@ -165,7 +165,7 @@ export default function UpdateModuleSection({ data }) {
                         className="w-full"
                     />
                 </Toolbar>
-                <Toolbar className="flex-col gap-3 flex w-full mt-2">
+                <Toolbar className="flex-col gap-3 flex w-full mt-2" style={{ display: "none" }}>
                     <FormControl fullWidth error={!!error?.grade}>
                         <InputLabel id="demo-simple-select-label">
                             Grade

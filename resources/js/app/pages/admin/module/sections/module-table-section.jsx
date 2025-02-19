@@ -14,6 +14,7 @@ import { router } from '@inertiajs/react';
 import { Button, Tooltip } from '@mui/material';
 import { EditNote, Visibility } from '@mui/icons-material';
 import UpdateModuleSection from './update-module-section';
+import DeleteModuleSection from './delete-module-section';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
 // import { router } from '@inertiajs/react';
@@ -30,7 +31,7 @@ export default function BookletTableSection() {
                     <TableRow>
                         <TableCell>Quarter</TableCell>
                         <TableCell>Module Name</TableCell>
-                        <TableCell>Grade</TableCell>
+                        {/* <TableCell>Grade</TableCell> */}
                         <TableCell>Created At</TableCell>
                         <TableCell>Action</TableCell>
                     </TableRow>
@@ -46,7 +47,7 @@ export default function BookletTableSection() {
                             >
                                 <TableCell>{res?.quarter}</TableCell>
                                 <TableCell>{res.title}</TableCell>
-                                <TableCell>{res?.grade ?? ''}</TableCell>
+                                {/* <TableCell>{res?.grade ?? ''}</TableCell> */}
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2'>
@@ -62,6 +63,7 @@ export default function BookletTableSection() {
                                         <UpdateModuleSection
                                             data={res}
                                         />
+                                        <DeleteModuleSection data={res} />
                                     </div>
                                 </TableCell>
                             </TableRow>

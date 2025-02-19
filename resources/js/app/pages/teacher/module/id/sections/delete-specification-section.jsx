@@ -31,6 +31,10 @@ export default function DeleteSpecificationSection({ data }) {
         setLoading(false)
         handleClose()
     }
+
+    async function closed(params) {
+        setOpen(false)
+    }
     return (
         <>
             <Button
@@ -60,6 +64,15 @@ export default function DeleteSpecificationSection({ data }) {
                             className=' w-full'>
                             {loading ? <CircularProgress size={24} color="inherit" /> : 'Delete'}
                         </Button>
+                        <div className='flex w-full pt-5 items-center justify-end'>
+                            <Button
+                                color="primary"
+                                onClick={closed}
+                                variant='contained'
+                                className=' w-full'>
+                                Cancel
+                            </Button>
+                        </div>
                     </div>
                 </Box>
             </Modal>

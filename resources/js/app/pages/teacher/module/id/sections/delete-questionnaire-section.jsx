@@ -31,6 +31,11 @@ export default function DeleteQuestionnaireSection({ data }) {
         setOpen(false)
         setLoading(false)
     }
+
+    async function closed(params) {
+        setOpen(false)
+    }
+
     return (
         <>
             <Button
@@ -59,6 +64,15 @@ export default function DeleteQuestionnaireSection({ data }) {
                             variant='contained'
                             className=' w-full'>
                             {loading ? <CircularProgress size={24} color="inherit" /> : 'Delete'}
+                        </Button>
+                    </div>
+                    <div className='flex w-full pt-5 items-center justify-end'>
+                        <Button
+                            color="primary"
+                            onClick={closed}
+                            variant='contained'
+                            className=' w-full'>
+                            Cancel
                         </Button>
                     </div>
                 </Box>

@@ -1,7 +1,7 @@
 import { store_booklet_service, delete_booklet_service, update_booklet_service, get_booklet_by_id_service, get_booklet_service, store_exam_type_service, get_exam_type_by_id_service } from "@/app/services/booklet-service";
 import { bookletSlice } from "./booklet-slice";
 import { get_examinations_by_id_service } from "@/app/services/examinations-service";
-import { get_module_by_id_service, get_module_service, store_module_service, update_module_service } from "@/app/services/module-service";
+import { delete_module_service, get_module_by_id_service, get_module_service, store_module_service, update_module_service } from "@/app/services/module-service";
 
 
 
@@ -59,9 +59,9 @@ export function update_module_thunk(data) {
   };
 }
 
-export function delete_booklet_thunk(id) {
+export function delete_module_thunk(id) {
   return async function (dispatch, getState) {
-    const res = delete_booklet_service(id)
+    const res = delete_module_service(id)
     return res
   };
 }
