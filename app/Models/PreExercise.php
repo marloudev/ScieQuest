@@ -27,7 +27,7 @@ class PreExercise extends Model
     }
     public function answer(): HasMany
     {
-        return $this->hasMany(Answer::class,'learning_id','lesson_id')->where('type','pre-exercise');
+        return $this->hasMany(Answer::class,'learning_id','id')->where('type','pre-exercise');
     }
     
 }
