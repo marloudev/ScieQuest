@@ -54,7 +54,7 @@ export default function DeletePreExerciseSection({ data }) {
     console.log("datadatadatadatasss", data.id);
     return (
         <>
-            <Tooltip title="Delete Test">
+            <Tooltip title="Delete Pre-Exercise">
                 <Button
                     onClick={() => setOpen(!open)}
                     variant="text"
@@ -78,7 +78,7 @@ export default function DeletePreExerciseSection({ data }) {
                         Delete Pre-Exercise
                     </Typography>
                     <Typography id="modal-modal-description" sx={{ mt: 2 }}>
-                        Are you sure you want to delete this test?
+                        Are you sure you want to delete this Pre-Exercise?
                     </Typography>
                     <div className="flex gap-2.5">
                         <div className="flex w-full pt-5 items-center justify-end">
@@ -106,7 +106,7 @@ export default function DeletePreExerciseSection({ data }) {
                                 variant="contained"
                                 className=" w-full"
                             >
-                                 Cancel
+                                Cancel
                             </Button>
                         </div>
                     </div>

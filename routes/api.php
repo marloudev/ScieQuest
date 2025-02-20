@@ -56,6 +56,3 @@ Route::resource('pre_exercise', PreExerciseController::class);
 Route::resource('answer', AnswerController::class);
 Route::get('/booklet/quarter/{id}', [ModuleController::class, 'get_module_by_quarter']);
 Route::get('/get_score/{id}/{type}', [AnswerController::class, 'get_score']);
-
-
-

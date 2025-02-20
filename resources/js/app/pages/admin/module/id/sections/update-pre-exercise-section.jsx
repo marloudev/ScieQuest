@@ -1,29 +1,44 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import { useState, useEffect } from "react";
-import { EditorState } from "draft-js";
-import store from "@/app/pages/store/store";
-import { update_lesson_thunk } from "../../redux/lesson-thunk";
-import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
-import { IconButton, TextField, Toolbar, Tooltip, Typography } from "@mui/material";
-import { Check, Close, CloudUpload, Edit } from "@mui/icons-material";
+import ListItemText from "@mui/material/ListItemText";
+import ListItemButton from "@mui/material/ListItemButton";
+import List from "@mui/material/List";
+import Divider from "@mui/material/Divider";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import CloseIcon from "@mui/icons-material/Close";
 import { styled } from "@mui/material/styles";
+import {
+    Box,
+    FormControl,
+    FormHelperText,
+    InputLabel,
+    MenuItem,
+    Select,
+    TextareaAutosize,
+    TextField,
+    Tooltip,
+} from "@mui/material";
+import { useState } from "react";
+import store from "@/app/pages/store/store";
+// import { get_module_thunk, update_module_thunk } from "../redux/booklet-thunk";
+import { EditorState } from "draft-js";
+import "react-quill/dist/quill.snow.css";
+import { Add, Check, CloudUpload, Edit, EditNote } from "@mui/icons-material";
 import ReactQuill from "react-quill";
+import { useEffect } from "react";
 
-export default function UpdateLessonSection({ data }) {
+
+
+export default function UpdatePreExerciseSection({ data }) {
     const [editorState, setEditorState] = useState(EditorState.createEmpty());
     const [open, setOpen] = useState(false);
-    const [form, setForm] = useState({
-        file: "",
-        id: data?.id || "",  // Ensure id is correctly initialized
-        subject_matter: data?.subject_matter || "",
-        discussion: data?.discussion || "",
-        link: data?.link || ""
-    });
+    const [form, setForm] = useState({});
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
         clipPath: "inset(50%)",
@@ -37,50 +52,27 @@ export default function UpdateLessonSection({ data }) {
     });
 
     useEffect(() => {
-        if (data) {
-            console.log("Form data updated:", data); // Debugging to check the data
-            setForm({
-                ...data,
-                id: data?.id || "",  // Ensure id is not undefined
-            });
-        }
-    }, [open, data]); // Ensure to update form when data or open state changes
+        setForm({
+            ...data,
+            id: data?.id || {}
+        });
+    }, [open]);
 
     const handleClickOpen = () => {
         setOpen(true);
     };
-
     const handleClose = () => {
         setOpen(false);
     };
-
-    const module_id = window.location.pathname.split("/")[3];
-
     async function submitUpdate(params) {
-        console.log("Form data to submit:", form);  // Debugging form data before submitting
-
         try {
             setLoading(true);
-            const formData = new FormData();
-            formData.append("lesson", JSON.stringify(form));
-            formData.append("file", form.file);
-            formData.append("module_id", module_id);
-            formData.append("id", form.id);  // Ensure you're passing form.id
-
-            // Check if form.id is set
-            if (!form.id) {
-                console.error("Form ID is missing!");
-                setLoading(false);
-                setError({ message: "ID is missing!" });
-                return;
-            }
-
-            const result = await store.dispatch(update_lesson_thunk(formData));
-            if (result.status === 200) {
-                await store.dispatch(get_module_by_id_thunk(module_id));
+            const result = await store.dispatch(update_module_thunk(form));
+            if (result.status == 200) {
+                await store.dispatch(get_module_thunk());
                 setLoading(false);
                 setOpen(false);
-                setForm({}); // Reset form after success
+                setForm({});
             } else {
                 setLoading(false);
                 setOpen(false);
@@ -88,22 +80,42 @@ export default function UpdateLessonSection({ data }) {
             }
         } catch (error) {
             setLoading(false);
-            console.error("Error during submission:", error);
-            setError({ message: "An error occurred" });
         }
     }
 
+    // async function grade_function(e) {
+    //     setLoading(true);
+    //     if ("Elementary Level" == e.target.value) {
+    //         await store.dispatch(get_examinations_thunk("Elementary"));
+    //     } else if ("Junior High Level" == e.target.value) {
+    //         await store.dispatch(get_examinations_thunk("Junior High School"));
+    //     }
+    //     setForm({
+    //         ...data,
+    //         [e.target.name]: e.target.value,
+    //     });
+    //     setLoading(false);
+    // }
+
+    console.log("formformform", form)
     return (
         <React.Fragment>
-            <Tooltip title="Update Lesson">
-                <Button onClick={handleClickOpen} size="small" color="primary">
+            <Tooltip title="Update Pre-Exercise">
+                <Button
+                    onClick={handleClickOpen}
+                    size='small'
+                    color='success'>
                     <Edit />
                 </Button>
             </Tooltip>
             <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
-                    <Typography sx={{ flex: 1 }} variant="h6" component="div">
-                        Update Lesson
+                    <Typography
+                        sx={{ flex: 1 }}
+                        variant="h6"
+                        component="div"
+                    >
+                        Update Pre-Exercise
                     </Typography>
                     <IconButton
                         edge="start"
@@ -111,7 +123,7 @@ export default function UpdateLessonSection({ data }) {
                         onClick={handleClose}
                         aria-label="close"
                     >
-                        <Close />
+                        <CloseIcon />
                     </IconButton>
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full">
@@ -119,10 +131,12 @@ export default function UpdateLessonSection({ data }) {
                         onChange={(e) =>
                             setForm({
                                 ...form,
-                                subject_matter: e.target.value,
+                                title: e.target.value,
                             })
                         }
-                        value={form.subject_matter || ""}
+                        value={form.title || ''}
+                        // error={error?.title ? true : false}
+                        // helperText={error?.title ?? ""}
                         name="subject_matter"
                         type="text"
                         id="outlined-basic"
@@ -137,7 +151,7 @@ export default function UpdateLessonSection({ data }) {
                         role={undefined}
                         variant="contained"
                         startIcon={
-                            form?.file ? (
+                            data?.file ? (
                                 <>
                                     <Check />
                                     UPLOADED
@@ -147,16 +161,17 @@ export default function UpdateLessonSection({ data }) {
                             )
                         }
                     >
-                        {form?.file ? form?.file?.name : "Upload files"}
+                        {/* {data?.file ? data?.file?.name : "Upload files"} */}
                         <VisuallyHiddenInput
                             name="file"
                             type="file"
-                            onChange={(e) =>
-                                setForm({
-                                    ...form,
-                                    file: e.target.files[0],
-                                })
-                            }
+                            // onChange={(event) => console.log(event.target.files)}
+                            // onChange={(e) =>
+                            //     setData({
+                            //         ...data,
+                            //         [e.target.name]: e.target.files[0],
+                            //     })
+                            // }
                             accept="image/*"
                         />
                     </Button>
@@ -164,18 +179,19 @@ export default function UpdateLessonSection({ data }) {
 
                 <div>
                     <div className="mx-6 font-black text-lg">Discussion</div>
-                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16">
+                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16   ">
                         <ReactQuill
                             theme="snow"
                             className="text-black w-full h-60 sm:h-48 md:h-60"
                             onChange={(value) =>
                                 setForm({
                                     ...form,
-                                    discussion: value,
+                                    introductory: value,  // Here, use the content directly
                                 })
                             }
-                            value={form?.discussion || ""}
+                            value={form?.introductory || ''}
                         />
+
                     </Toolbar>
                 </div>
                 <Toolbar className="flex-col gap-3 flex w-full">
@@ -183,10 +199,12 @@ export default function UpdateLessonSection({ data }) {
                         onChange={(e) =>
                             setForm({
                                 ...form,
-                                link: e.target.value,
+                                title: e.target.value,
                             })
                         }
-                        value={form.link || ""}
+                        value={form.title || ''}
+                        // error={error?.title ? true : false}
+                        // helperText={error?.title ?? ""}
                         name="subject_matter"
                         type="text"
                         id="outlined-basic"

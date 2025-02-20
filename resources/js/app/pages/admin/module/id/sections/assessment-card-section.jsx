@@ -18,6 +18,9 @@ import MatchingComponent from "../components/matching-component";
 import DeleteAssessmentSection from "./delete-assessment-section";
 import DeletePreExerciseSection from "./delete-pre-exercise-section";
 import UpdateLessonSection from "./update-lesson-section";
+import UpdatePreExerciseSection from "./update-pre-exercise-section";
+import UpdateAssessmentSection from "./update-assessment-section";
+import DeleteLessonSection from "./delete-lesson-section";
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -72,6 +75,7 @@ export default function AssessmentCardSection() {
                                     </a>
                                     <div className="mt-6">
                                         <UpdateLessonSection data={res} />
+                                        <DeleteLessonSection data={res} />
                                     </div>
                                 </div>
 
@@ -129,6 +133,7 @@ export default function AssessmentCardSection() {
                                         return (
                                             <>
                                                 <div className="flex items-center justify-end mx-3 mt-5">
+                                                    <UpdatePreExerciseSection data={pre_exercise} />
                                                     <DeletePreExerciseSection data={pre_exercise} />
                                                 </div>
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 ">
@@ -301,6 +306,7 @@ export default function AssessmentCardSection() {
                                         return (
                                             <>
                                                 <div className="flex items-center justify-end mx-3 mt-5">
+                                                    <UpdateAssessmentSection data={assessment} />
                                                     <DeleteAssessmentSection data={assessment} />
                                                 </div>
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
