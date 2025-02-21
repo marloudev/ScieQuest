@@ -1,1 +1,0 @@
-import"./app-Dvb8ucGu.js";import{s as n,a as o}from"./lesson-service-DXgtpZqD.js";function u(t){return async function(s,e){return n(t)}}function i(t){return async function(s,e){return o(t)}}export{i as a,u as s};

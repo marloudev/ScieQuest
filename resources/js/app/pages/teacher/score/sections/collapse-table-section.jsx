@@ -57,7 +57,7 @@ export default function CollapseTableSection({ data }) {
     console.log("dadakjldjawlkdwja", data.scores);
     const rows = data?.scores ?? [];
     const HtmlRenderer = ({ htmlContent }) => (
-        <div dangerouslySetInnerHTML={{ __html: htmlContent }} />
+        <div className="bg-orange-500 p-3 rounded-md text-white" dangerouslySetInnerHTML={{ __html: htmlContent }} />
     )
     return (
         <TableContainer component={Paper}>

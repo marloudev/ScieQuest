@@ -195,7 +195,7 @@ class StudentController extends Controller
                         // Get the sum of scores for the student
                         $scoreSum = Answer::where([
                             ['student_id', '=', $student['user']['id']],
-                            ['type', '=', 'pre-exercise'],
+                            ['type', '=', 'assessment'],
                             ['learning_id', '=', $assessment['id']],
                         ])->get();
 
