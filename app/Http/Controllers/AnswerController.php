@@ -79,8 +79,10 @@ class AnswerController extends Controller
         $isFinish = false;
         $count_answer = Answer::where([
             ['learning_id', '=', $quest->learning_id],
-            ['type', '=', $quest->type]
+            ['type', '=', $quest->type],
+            ['student_id', '=', $quest->student_id],
         ])->count();
+        
         $count_quest = Quest::where([
             ['learning_id', '=', $quest->learning_id],
             ['type', '=', $quest->type]
