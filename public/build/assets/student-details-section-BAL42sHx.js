@@ -1,0 +1,1 @@
+import{u as n,j as s}from"./app-seVuQ_a-.js";function a(){var o;const{student:e}=n(t=>t.students);return console.log("badododo",e),s.jsx("div",{children:s.jsxs("b",{children:["Name:",(o=e==null?void 0:e.user)==null?void 0:o.fname]})})}export{a as default};

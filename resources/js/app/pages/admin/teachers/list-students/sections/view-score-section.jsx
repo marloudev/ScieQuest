@@ -1,5 +1,5 @@
 import { router } from '@inertiajs/react';
-import { Preview, ViewCozyTwoTone } from '@mui/icons-material'
+import { Analytics } from '@mui/icons-material'
 import { Button, Tooltip } from '@mui/material'
 import React from 'react'
 import { useState } from 'react';
@@ -15,7 +15,7 @@ export default function ViewScoreSection({ data }) {
                     size="small"
                     variant="contained"
                     color="success">
-                    <Preview />
+                    <Analytics />
                 </Button>
             </Tooltip>
         </div>

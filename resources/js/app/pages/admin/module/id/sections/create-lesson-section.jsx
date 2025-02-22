@@ -5,7 +5,7 @@ import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import { TextField } from "@mui/material";
-import { Check, CloudUpload } from "@mui/icons-material";
+import { Add, Check, CloudUpload } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -85,9 +85,17 @@ export default function CreateLessonSection() {
 
     return (
         <div>
-            <Button variant="contained" onClick={handleOpen}>
+            {/* <Button variant="contained" onClick={handleOpen}>
                 CREATE LESSON
-            </Button>
+            </Button> */}
+            <button
+                type="button"
+                onClick={handleOpen}
+                className="flex items-center justify-center text-lg p-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white font-sans"
+            >
+                <Add />
+                <b>Create Lesson</b>
+            </button>
             <Modal
                 open={open}
                 onClose={handleClose}

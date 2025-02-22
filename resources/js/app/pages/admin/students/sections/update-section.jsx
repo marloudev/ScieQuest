@@ -54,7 +54,7 @@ export default function UpdateSection({ data }) {
 
     return (
         <div>
-            <Tooltip title="Update Student">
+            <Tooltip title="Update Pupil">
                 <Button onClick={() => setOpen(true)} size="small" variant="contained" color="primary">
                     <EditNote />
                 </Button>
@@ -74,7 +74,7 @@ export default function UpdateSection({ data }) {
                     <div className='pt-20 px-3 w-full flex flex-col items-center justify-between pb-5'>
                         <div className='flex flex-col gap-3 w-full'>
                             <div className='text-2xl font-black'>
-                                Update Student
+                                Update Pupil
                             </div>
                             <TextField
                                 onChange={(e) => setForm({
@@ -86,7 +86,7 @@ export default function UpdateSection({ data }) {
                                 helperText={error?.student_id ?? ''}
                                 name="student_id"
                                 type='text'
-                                label="Student ID"
+                                label="Pupil ID"
                                 variant="outlined"
                                 disabled
                             />

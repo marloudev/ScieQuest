@@ -90,7 +90,7 @@ export default function BookletCreateSection() {
             <button
                 type="button"
                 onClick={handleClickOpen}
-                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans">
+                className=" flex  items-center justify-center text-lg p-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white font-sans">
                 <Add />
                 <b>Create Module</b>
             </button>

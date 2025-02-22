@@ -67,16 +67,16 @@ export default function CreateSection() {
             <button
                 type="button"
                 onClick={toggleDrawer(true)}
-                className="flex items-center justify-center text-lg p-2 rounded-lg bg-green-500 hover:bg-green-600 text-white font-sans"
+                className="flex items-center justify-center text-lg p-2 rounded-lg bg-teal-500 hover:bg-teal-600 text-white font-sans"
             >
                 <Add />
-                <b>Create Student</b>
+                <b>Create Pupil</b>
             </button>
             <Drawer anchor="right" open={open} onClose={toggleDrawer(false)}>
                 <Box className="w-[500px] h-full flex bg-white z-50" role="presentation">
                     <div className="pt-20 px-3 w-full flex flex-col items-center justify-between pb-5">
                         <div className="flex flex-col gap-3 w-full">
-                            <div className="text-2xl font-black">Create Student</div>
+                            <div className="text-2xl font-black">Create Pupil</div>
                             <FormControl variant="outlined" error={!!error.teacher} fullWidth>
                                 <InputLabel id="teacher-id-label">Teacher/Adviser</InputLabel>
                                 <Select
@@ -105,7 +105,7 @@ export default function CreateSection() {
                             </FormControl>
                             <TextField
                                 name="student_id"
-                                label="Student ID"
+                                label="Pupil ID"
                                 variant="outlined"
                                 value={data.student_id}
                                 onChange={(e) => setData({ ...data, [e.target.name]: e.target.value })}

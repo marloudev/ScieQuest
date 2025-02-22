@@ -33,7 +33,7 @@ const NAVIGATION = [
     },
     {
         segment: "students",
-        title: "Students",
+        title: "Pupils",
         icon: <Groups />,
     },
     {
@@ -72,10 +72,12 @@ const demoTheme = createTheme({
         MuiCssBaseline: {
             styleOverrides: {
                 body: {
-                    backgroundImage: 'url("/images/background.webp")',
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
+                    backgroundImage: 'url("/images/sof_logo.png")',
+                    backgroundColor: 'rgba(210,210,210,0.9)',
+                    backgroundSize: '42%',
+                    backgroundPosition: 'calc(62% + 20px) center',
                     backgroundRepeat: 'no-repeat',
+                    backgroundBlendMode: 'overlay',
                     minHeight: '100vh',
                 },
             },
@@ -83,7 +85,7 @@ const demoTheme = createTheme({
         MuiAppBar: {
             styleOverrides: {
                 root: {
-                    // backgroundColor: 'transparent',  // Make AppBar transparent
+                    backgroundColor: 'rgba(4, 227, 187, 0.2)',  // Make AppBar transparent
                     boxShadow: 'none',  // Remove any shadow
                 },
             },
@@ -91,7 +93,7 @@ const demoTheme = createTheme({
         MuiDrawer: {
             styleOverrides: {
                 paper: {
-                    backgroundColor: 'rgba(0, 0, 0, 0.1)',   // Make Drawer transparent
+                    backgroundColor: 'white',   // Make Drawer transparent
                     boxShadow: 'none',  // Remove any shadow
                 },
             },
@@ -141,16 +143,16 @@ function AdminLayout({ children }, props) {
             theme={demoTheme}
             window={demoWindow}
             branding={{
-                logo: <img src="/images/logo2.png" />,
+                logo: <img src="/images/sof_logo.png" />,
                 title: "Science Quest",
             }}
         >
             <DashboardLayout>
-                <div className="username-section mt-4 mb-1 px-5 text-2xl text-green-500 items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
+                <div className="username-section mt-4 mb-1 px-5 text-2xl text-black items-center justify-end flex" style={{ textShadow: '2px 2px 4px rgba(255, 255, 255, 1)' }}>
                     <span><b>Welcome, {username}</b></span>
                 </div>
                 <LogoutSection open={open} setOpen={setOpen} />
-                <div className="p-4">{children}</div>   
+                <div className="p-4">{children}</div>
             </DashboardLayout>
         </AppProvider>
         // preview-end

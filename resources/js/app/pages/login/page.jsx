@@ -17,7 +17,7 @@ export default function LoginPage() {
     };
     return (
         <>
-            <div className="absolute inset-0 -z-10 items-center px-5 py-24 bg-[url('/images/background.webp')] bg-cover bg-center "></div>
+            <div className="absolute inset-0 -z-10 items-center px-5 py-24 bg-[url('/images/sof_building.jpg')] bg-cover bg-center "></div>
             <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8 ">
 
                 <div className="mt-20 sm:mx-auto sm:w-full sm:max-w-sm bg-white  shadow-2xl p-5 rounded-md">
@@ -76,8 +76,8 @@ export default function LoginPage() {
                             <Button
                                 type="submit"
                                 disabled={processing}
-                                variant="contained" color="warning" className="w-full ">
-                                {processing ? <CircularProgress  size={24} color="inherit" /> : ' Sign in'}
+                                variant="contained" style={{ backgroundColor: '#00acc1', fontWeight: 'bold', color: 'black' }} className="w-full ">
+                                {processing ? <CircularProgress size={24} color="inherit" /> : 'Sign in'}
                             </Button>
                         </div>
                     </form>

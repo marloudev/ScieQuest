@@ -44,7 +44,7 @@ export default function DeleteSection({ data }) {
 
   return (
     <div>
-      <Tooltip title="Remove Student">
+      <Tooltip title="Remove Pupil">
         <Button
           onClick={() => setOpen(true)}
           size="small"
@@ -83,7 +83,7 @@ export default function DeleteSection({ data }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="remove-student-description">
-            Are you sure you want to remove the student <strong>{data?.fname} {data?.lname}</strong>?
+            Are you sure you want to remove the pupil named <strong>{data?.fname} {data?.lname}</strong>?
           </DialogContentText>
         </DialogContent>
         <DialogActions>

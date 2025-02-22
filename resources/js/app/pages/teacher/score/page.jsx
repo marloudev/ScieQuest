@@ -14,9 +14,9 @@ export default function ScorePage() {
     }, []);
     return (
         <InstructorLayout>
-            <h1 className="bg-orange-500 p-3 rounded-xl text-white">Pre Exercise</h1>
+            <h1 className="bg-teal-500 p-3 rounded-xl text-white">Pre Exercise</h1>
             <PreExerciseScoreSection />
-            <h1 className="bg-orange-500 p-3 rounded-xl text-white">Assessment</h1>
+            <h1 className="bg-teal-500 p-3 rounded-xl text-white">Assessment</h1>
             <AssessmentScoreSection />
         </InstructorLayout>
     )
