@@ -11,31 +11,28 @@ use Illuminate\Support\Facades\Auth;
 class AnswerController extends Controller
 {
 
-    public function get_score($id, $type)
+    public function get_score(Request $request,$id, $type)
     {
         // 1/pre-exercise
         $score = Answer::where([
             ['learning_id', '=', $id],
             ['type', '=', $type],
-        ])->sum('score');
-
-        $over = Answer::where([
-            ['learning_id', '=', $id],
-            ['type', '=', $type],
+            ['user_id','=',$request->user_id]
         ]);
 
-        $total = ($score / $over->count())  * 100;
+
+        $total = ($score->sum('score') / $score->count())  * 100;
         $status = $total >= 75 ? "Passed" : "Failed";
 
         if ($type == 'assessment' && $status == 'Failed') {
-            $over->delete();
+            $score->delete();
         }
 
         return response()->json([
             'status' => 'success',
             'answer_status' => $status,
-            'data' => $score,
-            'over' => $over->count(),
+            'data' => $score->sum('score'),
+            'over' => $score->count(),
         ], 200);
     }
 
