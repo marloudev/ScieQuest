@@ -13,6 +13,7 @@ class AnswerController extends Controller
 
     public function get_score($id, $type)
     {
+        // 1/pre-exercise
         $score = Answer::where([
             ['learning_id', '=', $id],
             ['type', '=', $type],

@@ -13,7 +13,7 @@ class ModuleController extends Controller
     public function get_module_by_quarter(Request $request, $id)
     {
         $modules = Module::where('quarter', $id)
-            ->with(['lessons.assessments']) // Eager-load assessments as well
+            ->with(['lessons.assessments','lessons.pre_exercises']) // Eager-load assessments as well
             ->get();
 
         foreach ($modules as $module) {
@@ -48,6 +48,40 @@ class ModuleController extends Controller
                 $lesson->assessment_average = intval($percentage) . '%';
 
                 $lesson->assessment_status = intval($percentage) >= 75 ? 'Passed' : 'Failed';
+            }
+
+
+            foreach ($module->lessons as $lesson) {
+                $lesson->pre_exercise_status = '';
+                $lesson->total_pre_exercises_score = 0; // Initialize total score
+                $lesson->pre_exercise_count = 0;
+
+                foreach ($lesson->pre_exercises as $pre_exercise) {
+                    $scoreSum = Answer::where([
+                        ['student_id', '=', $request->user_id],
+                        ['type', '=', 'pre_exercise'],
+                        ['learning_id', '=', $pre_exercise->id],
+                    ]);
+
+                    $quest = Quest::where([
+                        ['type', '=', 'pre_exercise'],
+                        ['learning_id', '=', $pre_exercise->id],
+                    ]);
+
+
+                    $lesson->pre_exercise_count += $quest->count();
+                    $pre_exercise->pre_exercise_score = $scoreSum->sum('score');
+                    $lesson->total_pre_exercises_score += $scoreSum->sum('score'); // Correct total score calculation
+                    $pre_exercise->answers = $scoreSum->get();
+                }
+
+                $percentage = ($lesson->pre_exercise_count > 0)
+                    ? ($lesson->total_pre_exercises_score / $lesson->pre_exercise_count) * 100
+                    : 0;
+
+                $lesson->pre_exercise_average = intval($percentage) . '%';
+
+                $lesson->pre_exercise_status = intval($percentage) >= 75 ? 'Passed' : 'Failed';
             }
         }
 
