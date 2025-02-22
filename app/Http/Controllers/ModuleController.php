@@ -71,6 +71,7 @@ class ModuleController extends Controller
 
                     $lesson->pre_exercise_count += $quest->count();
                     $pre_exercise->pre_exercise_score = $scoreSum->sum('score');
+                    $pre_exercise->answer_count = $scoreSum->count();
                     $lesson->total_pre_exercises_score += $scoreSum->sum('score'); // Correct total score calculation
                     $pre_exercise->answers = $scoreSum->get();
                 }
