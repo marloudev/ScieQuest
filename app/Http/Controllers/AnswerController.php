@@ -63,7 +63,10 @@ class AnswerController extends Controller
 
 
         $quest = Quest::where('id', $request->quest_id)->first();
-        $answer = Answer::where('quest_id', '=', $request->quest_id)->first();
+        $answer = Answer::where([
+            ['quest_id', '=', $request->quest_id],
+            ['student_id' => $request->student_id]
+        ])->first();
 
 
 
@@ -80,7 +83,8 @@ class AnswerController extends Controller
         $isFinish = false;
         $count_answer = Answer::where([
             ['learning_id', '=', $quest->learning_id],
-            ['type', '=', $quest->type]
+            ['type', '=', $quest->type],
+            ['student_id' => $request->student_id]
         ])->count();
         $count_quest = Quest::where([
             ['learning_id', '=', $quest->learning_id],
