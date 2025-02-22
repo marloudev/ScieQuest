@@ -59,12 +59,12 @@ class ModuleController extends Controller
                 foreach ($lesson->pre_exercises as $pre_exercise) {
                     $scoreSum = Answer::where([
                         ['student_id', '=', $request->user_id],
-                        ['type', '=', 'pre_exercise'],
+                        ['type', '=', 'pre-exercise'],
                         ['learning_id', '=', $pre_exercise->id],
                     ]);
 
                     $quest = Quest::where([
-                        ['type', '=', 'pre_exercise'],
+                        ['type', '=', 'pre-exercise'],
                         ['learning_id', '=', $pre_exercise->id],
                     ]);
 
