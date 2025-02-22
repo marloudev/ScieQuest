@@ -13,7 +13,7 @@ class ModuleController extends Controller
     public function get_module_by_quarter(Request $request, $id)
     {
         $modules = Module::where('quarter', $id)
-            ->with(['lessons.assessments','lessons.pre_exercises']) // Eager-load assessments as well
+            ->with(['lessons.assessments', 'lessons.pre_exercises']) // Eager-load assessments as well
             ->get();
 
         foreach ($modules as $module) {
@@ -71,7 +71,7 @@ class ModuleController extends Controller
 
                     $lesson->pre_exercise_count += $quest->count();
                     $pre_exercise->pre_exercise_score = $scoreSum->sum('score');
-                    $pre_exercise->answer_count = $scoreSum->count();
+                    $lesson->answer_count += $scoreSum->count();
                     $lesson->total_pre_exercises_score += $scoreSum->sum('score'); // Correct total score calculation
                     $pre_exercise->answers = $scoreSum->get();
                 }
