@@ -38,6 +38,7 @@ class ModuleController extends Controller
                     $lesson->assessment_count += $quest->count();
                     $assessment->assessment_score = $scoreSum->sum('score');
                     $lesson->total_assessments_score += $scoreSum->sum('score'); // Correct total score calculation
+                    $assessment->answers = $scoreSum->get();
                 }
 
                 $percentage = ($lesson->assessment_count > 0)
