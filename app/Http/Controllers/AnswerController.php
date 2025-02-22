@@ -20,19 +20,23 @@ class AnswerController extends Controller
             ['user_id','=',$request->user_id]
         ]);
 
+        $over = Quest::where([
+            ['learning_id', '=', $id],
+            ['type', '=', $type],
+        ]);
 
-        $total = ($score->sum('score') / $score->count())  * 100;
+        $total = ($score / $over->count())  * 100;
         $status = $total >= 75 ? "Passed" : "Failed";
 
         if ($type == 'assessment' && $status == 'Failed') {
-            $score->delete();
+            $over->delete();
         }
 
         return response()->json([
             'status' => 'success',
             'answer_status' => $status,
-            'data' => $score->sum('score'),
-            'over' => $score->count(),
+            'data' => $score,
+            'over' => $over->count(),
         ], 200);
     }
 
