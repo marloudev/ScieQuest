@@ -1,1 +1,0 @@
-import"./app-seVuQ_a-.js";import{s as r,a as o,u,d as a}from"./lesson-service-h1gde4Ov.js";function _(e){return async function(t,s){return r(e)}}function d(e){return async function(t,s){return o(e)}}function f(e){return async function(t,s){return u(e)}}function p(e){return async function(t,s){return a(e)}}export{d as a,p as d,_ as s,f as u};
