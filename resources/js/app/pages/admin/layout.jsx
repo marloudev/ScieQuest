@@ -31,11 +31,11 @@ const NAVIGATION = [
         title: "Teachers",
         icon: <Diversity1 />,
     },
-    {
-        segment: "students",
-        title: "Pupils",
-        icon: <Groups />,
-    },
+    // {
+    //     segment: "students",
+    //     title: "Pupils",
+    //     icon: <Groups />,
+    // },
     {
         segment: "modules",
         title: "Modules",

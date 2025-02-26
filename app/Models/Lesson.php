@@ -18,10 +18,10 @@ class Lesson extends Model
     ];
     public function pre_exercises(): HasMany
     {
-        return $this->hasMany(PreExercise::class, 'lesson_id', 'id')->with(['questions','answer']);
+        return $this->hasMany(PreExercise::class, 'lesson_id', 'id')->with(['questions', 'answer']);
     }
     public function assessments(): HasMany
     {
-        return $this->hasMany(Assessment::class, 'lesson_id', 'id')->with(['questions','answer']);
+        return $this->hasMany(Assessment::class, 'lesson_id', 'id')->with(['questions', 'answer']);
     }
 }

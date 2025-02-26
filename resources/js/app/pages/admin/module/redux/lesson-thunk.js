@@ -54,10 +54,16 @@ export function get_lesson_by_id_thunk(id) {
 
 export function update_lesson_thunk(data) {
   return async function (dispatch, getState) {
-    const res = update_lesson_service(data)
-    return res
+    try {
+      const response = await update_lesson_service(data);
+      dispatch({ type: 'UPDATE_LESSON', payload: response.data });
+      return response.data;
+    } catch (error) {
+      throw new Error("Failed to update lesson");
+    }
   };
 }
+
 
 export function delete_lesson_thunk(id) {
   return async function (dispatch, getState) {

@@ -2,27 +2,24 @@ import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
 import { useState, useEffect } from "react";
-import { EditorState } from "draft-js";
-import store from "@/app/pages/store/store";
-import { update_lesson_thunk } from "../../redux/lesson-thunk";
-import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
 import { IconButton, TextField, Toolbar, Tooltip, Typography } from "@mui/material";
 import { Check, Close, CloudUpload, Edit } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import ReactQuill from "react-quill";
+import store from "@/app/pages/store/store";
+import { update_lesson_thunk } from "../../redux/lesson-thunk";
 
 export default function UpdateLessonSection({ data }) {
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
-    const [open, setOpen] = useState(false);
     const [form, setForm] = useState({
         file: "",
-        id: data?.id || "",  // Ensure id is correctly initialized
+        id: data?.id || "",
         subject_matter: data?.subject_matter || "",
         discussion: data?.discussion || "",
         link: data?.link || ""
     });
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
+    const [open, setOpen] = useState(false);
 
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
@@ -38,60 +35,39 @@ export default function UpdateLessonSection({ data }) {
 
     useEffect(() => {
         if (data) {
-            console.log("Form data updated:", data); // Debugging to check the data
             setForm({
                 ...data,
-                id: data?.id || "",  // Ensure id is not undefined
+                id: data?.id || "",
             });
         }
-    }, [open, data]); // Ensure to update form when data or open state changes
+    }, [data]);
 
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
+    const handleClickOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
 
-    const handleClose = () => {
-        setOpen(false);
-    };
-
-    const module_id = window.location.pathname.split("/")[3];
-
-    async function submitUpdate(params) {
-        console.log("Form data to submit:", form);  // Debugging form data before submitting
+    const submitUpdate = async () => {
+        if (!data?.id) {
+            setError({ message: "Lesson ID is missing" });
+            return;
+        }
 
         try {
             setLoading(true);
             const formData = new FormData();
             formData.append("lesson", JSON.stringify(form));
             formData.append("file", form.file);
-            formData.append("module_id", module_id);
-            formData.append("id", form.id);  // Ensure you're passing form.id
+            formData.append("id", data.id);
 
-            // Check if form.id is set
-            if (!form.id) {
-                console.error("Form ID is missing!");
-                setLoading(false);
-                setError({ message: "ID is missing!" });
-                return;
-            }
-
-            const result = await store.dispatch(update_lesson_thunk(formData));
-            if (result.status === 200) {
-                await store.dispatch(get_module_by_id_thunk(module_id));
-                setLoading(false);
-                setOpen(false);
-                setForm({}); // Reset form after success
-            } else {
-                setLoading(false);
-                setOpen(false);
-                setError(result.response.data.errors);
-            }
+            await store.dispatch(update_lesson_thunk(formData, data.id));
+            setLoading(false);
+            setOpen(false);
+            setForm({}); // Reset form
         } catch (error) {
             setLoading(false);
-            console.error("Error during submission:", error);
             setError({ message: "An error occurred" });
         }
-    }
+    };
+    console.log('qqqqqqq', data.id)
 
     return (
         <React.Fragment>
@@ -105,105 +81,63 @@ export default function UpdateLessonSection({ data }) {
                     <Typography sx={{ flex: 1 }} variant="h6" component="div">
                         Update Lesson
                     </Typography>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
+                    <IconButton edge="start" color="inherit" onClick={handleClose} aria-label="close">
                         <Close />
                     </IconButton>
                 </Toolbar>
                 <Toolbar className="flex-col gap-3 flex w-full">
                     <TextField
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                subject_matter: e.target.value,
-                            })
-                        }
+                        onChange={(e) => setForm({ ...form, subject_matter: e.target.value })}
                         value={form.subject_matter || ""}
-                        name="subject_matter"
-                        type="text"
-                        id="outlined-basic"
                         label="Subject Matter"
                         variant="outlined"
-                        className="w-full"
+                        fullWidth
                     />
                 </Toolbar>
+
                 <div className="w-full flex flex-col gap-3 mt-2 mb-4 px-6">
                     <Button
                         component="label"
-                        role={undefined}
                         variant="contained"
-                        startIcon={
-                            form?.file ? (
-                                <>
-                                    <Check />
-                                    UPLOADED
-                                </>
-                            ) : (
-                                <CloudUpload />
-                            )
-                        }
+                        startIcon={form?.file ? <Check /> : <CloudUpload />}
                     >
-                        {form?.file ? form?.file?.name : "Upload files"}
+                        {form?.file ? form?.file?.name : "Upload file"}
                         <VisuallyHiddenInput
-                            name="file"
                             type="file"
-                            onChange={(e) =>
-                                setForm({
-                                    ...form,
-                                    file: e.target.files[0],
-                                })
-                            }
+                            onChange={(e) => setForm({ ...form, file: e.target.files[0] })}
                             accept="image/*"
                         />
                     </Button>
                 </div>
 
-                <div>
-                    <div className="mx-6 font-black text-lg">Discussion</div>
-                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16">
-                        <ReactQuill
-                            theme="snow"
-                            className="text-black w-full h-60 sm:h-48 md:h-60"
-                            onChange={(value) =>
-                                setForm({
-                                    ...form,
-                                    discussion: value,
-                                })
-                            }
-                            value={form?.discussion || ""}
-                        />
-                    </Toolbar>
-                </div>
-                <Toolbar className="flex-col gap-3 flex w-full">
-                    <TextField
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                link: e.target.value,
-                            })
-                        }
-                        value={form.link || ""}
-                        name="subject_matter"
-                        type="text"
-                        id="outlined-basic"
-                        label="Demo Link"
-                        variant="outlined"
-                        className="w-full"
+                <div className="mx-6 font-black text-lg">Discussion</div>
+                <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16">
+                    <ReactQuill
+                        theme="snow"
+                        className="text-black w-full h-60 sm:h-48 md:h-60"
+                        onChange={(value) => setForm({ ...form, discussion: value })}
+                        value={form?.discussion || ""}
                     />
                 </Toolbar>
-                <Toolbar className="">
+
+                <Toolbar className="flex-col gap-3 flex w-full">
+                    <TextField
+                        onChange={(e) => setForm({ ...form, link: e.target.value })}
+                        value={form.link || ""}
+                        label="Demo Link"
+                        variant="outlined"
+                        fullWidth
+                    />
+                </Toolbar>
+
+                <Toolbar>
                     <Button
                         className="w-full"
                         disabled={loading}
                         variant="contained"
-                        autoFocus
                         onClick={submitUpdate}
                     >
-                        save
+                        Save
                     </Button>
                 </Toolbar>
             </Dialog>

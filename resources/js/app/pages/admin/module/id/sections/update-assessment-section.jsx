@@ -1,49 +1,67 @@
 import * as React from "react";
+import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Dialog from "@mui/material/Dialog";
-import ListItemText from "@mui/material/ListItemText";
-import ListItemButton from "@mui/material/ListItemButton";
-import List from "@mui/material/List";
-import Divider from "@mui/material/Divider";
-import AppBar from "@mui/material/AppBar";
-import Toolbar from "@mui/material/Toolbar";
-import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
-import CloseIcon from "@mui/icons-material/Close";
-import { styled } from "@mui/material/styles";
+import Modal from "@mui/material/Modal";
+import { useState } from "react";
 import {
-    Box,
     FormControl,
+    FormControlLabel,
     FormHelperText,
-    InputLabel,
+    FormLabel,
     MenuItem,
+    Radio,
+    RadioGroup,
     Select,
-    TextareaAutosize,
     TextField,
     Tooltip,
 } from "@mui/material";
-import { useState } from "react";
-import store from "@/app/pages/store/store";
-// import { get_module_thunk, update_module_thunk } from "../redux/booklet-thunk";
-import { EditorState } from "draft-js";
-import "react-quill/dist/quill.snow.css";
-import { Add, Check, CloudUpload, Edit, EditNote } from "@mui/icons-material";
+import { Check, CloudUpload, Edit } from "@mui/icons-material";
+import { styled } from "@mui/material/styles";
 import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
+import store from "@/app/pages/store/store";
+import {
+    store_lesson_thunk,
+    store_quest_thunk,
+} from "../../redux/lesson-thunk";
 import { useEffect } from "react";
+import InputLabel from "@/Components/InputLabel";
+import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
 
+const style = {
+    position: "absolute",
+    top: "50%",
+    left: "50%",
+    transform: "translate(-50%, -50%)",
+    width: 1000,
+    bgcolor: "background.paper",
+    boxShadow: 24,
+    p: 4,
+};
 
-
-export default function UpdateAssessmentSection
-    ({ data }) {
-    const [editorState, setEditorState] = useState(EditorState.createEmpty());
+export default function UpdateAssessmentSection({ datas }) {
     const [open, setOpen] = useState(false);
-    const [form, setForm] = useState({});
+
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
+    const [data, setData] = useState({
+        exam_type: "",
+        direction: "",
+        file: "",
+        questions: [
+            {
+                question: "",
+                answer_key: "",
+            },
+        ],
+    });
+    const module_id = window.location.pathname.split("/")[3];
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
         clipPath: "inset(50%)",
-        height: 1,
         overflow: "hidden",
         position: "absolute",
         bottom: 0,
@@ -52,180 +70,478 @@ export default function UpdateAssessmentSection
         width: 1,
     });
 
-    useEffect(() => {
-        setForm({
-            ...data,
-            id: data?.id || {}
-        });
-    }, [open]);
-
-    const handleClickOpen = () => {
-        setOpen(true);
-    };
-    const handleClose = () => {
-        setOpen(false);
-    };
-    async function submitUpdate(params) {
+    async function submit_form(params) {
         try {
             setLoading(true);
-            const result = await store.dispatch(update_module_thunk(form));
+
+            const formData = new FormData();
+            formData.append("lesson_id", datas.id);
+            formData.append("module_id", module_id);
+            formData.append("questions", JSON.stringify(data.questions));
+            formData.append("file", data.file);
+            formData.append("direction", data.direction);
+            formData.append("exam_type", data.exam_type);
+            formData.append("type", "pre-exercise");
+
+            const result = await store.dispatch(store_quest_thunk(formData));
             if (result.status == 200) {
-                await store.dispatch(get_module_thunk());
+                store.dispatch(get_module_by_id_thunk(module_id));
                 setLoading(false);
                 setOpen(false);
-                setForm({});
+                setData({
+                    exam_type: "",
+                    direction: "",
+                    file: "",
+                    questions: [
+                        {
+                            question: "",
+                            answer_key: "",
+                            file: "",
+                        },
+                    ],
+                });
             } else {
                 setLoading(false);
-                setOpen(false);
                 setError(result.response.data.errors);
             }
+            console.log("datass", data);
         } catch (error) {
             setLoading(false);
         }
     }
-
-    // async function grade_function(e) {
-    //     setLoading(true);
-    //     if ("Elementary Level" == e.target.value) {
-    //         await store.dispatch(get_examinations_thunk("Elementary"));
-    //     } else if ("Junior High Level" == e.target.value) {
-    //         await store.dispatch(get_examinations_thunk("Junior High School"));
-    //     }
-    //     setForm({
-    //         ...data,
-    //         [e.target.name]: e.target.value,
-    //     });
-    //     setLoading(false);
-    // }
-
-    console.log("formformform", form)
+    const updateQuestion = (index, field, value) => {
+        const updatedQuestions = [...data.questions];
+        updatedQuestions[index][field] = value;
+        setData({
+            ...data,
+            questions: updatedQuestions,
+        });
+    };
+    console.log("da", data);
     return (
-        <React.Fragment>
-            <Tooltip title="Update Pre-Exercise">
+        <div>
+            <Tooltip title="Update Assessment">
                 <Button
-                    onClick={handleClickOpen}
+                    onClick={handleOpen}
                     size='small'
                     color='success'>
                     <Edit />
                 </Button>
             </Tooltip>
-            <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
-                <Toolbar className="flex items-center justify-end">
-                    <Typography
-                        sx={{ flex: 1 }}
-                        variant="h6"
-                        component="div"
-                    >
-                        Update Assessment
-                    </Typography>
-                    <IconButton
-                        edge="start"
-                        color="inherit"
-                        onClick={handleClose}
-                        aria-label="close"
-                    >
-                        <CloseIcon />
-                    </IconButton>
-                </Toolbar>
-                <Toolbar className="flex-col gap-3 flex w-full">
-                    <TextField
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                title: e.target.value,
-                            })
-                        }
-                        value={form.title || ''}
-                        // error={error?.title ? true : false}
-                        // helperText={error?.title ?? ""}
-                        name="subject_matter"
-                        type="text"
-                        id="outlined-basic"
-                        label="Subject Matter"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                </Toolbar>
-                <div className="w-full flex flex-col gap-3 mt-2 mb-4 px-6">
-                    <Button
-                        component="label"
-                        role={undefined}
-                        variant="contained"
-                        startIcon={
-                            data?.file ? (
-                                <>
-                                    <Check />
-                                    UPLOADED
-                                </>
-                            ) : (
-                                <CloudUpload />
-                            )
-                        }
-                    >
-                        {/* {data?.file ? data?.file?.name : "Upload files"} */}
-                        <VisuallyHiddenInput
-                            name="file"
-                            type="file"
-                            // onChange={(event) => console.log(event.target.files)}
-                            // onChange={(e) =>
-                            //     setData({
-                            //         ...data,
-                            //         [e.target.name]: e.target.files[0],
-                            //     })
-                            // }
-                            accept="image/*"
-                        />
-                    </Button>
-                </div>
+            <Modal
+                open={open}
+                onClose={handleClose}
+                aria-labelledby="modal-modal-title"
+                aria-describedby="modal-modal-description"
+            >
+                <Box sx={style}>
+                    <div className="h-[88vh] overflow-auto">
+                        <div className="flex items-center justify-center text-3xl font-black">
+                            UPDATE ASSESSMENT
+                        </div>
+                        <div className="overflow  w-full flex gap-4 flex-col">
+                            <FormControl fullWidth error={!!error?.exam_type}>
+                                <InputLabel id="exam-type-select-label">
+                                    Exam Type
+                                </InputLabel>
+                                <Select
+                                    labelId="exam-type-select-label"
+                                    id="exam-type-select"
+                                    name="exam_type"
+                                    label="Exam Type"
+                                    value={data.exam_type ?? ""}
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            [e.target.name]: e.target.value,
+                                        })
+                                    }
+                                >
+                                    <MenuItem value="" disabled>
+                                        Select Exam Type
+                                    </MenuItem>
+                                    <MenuItem value="Fill In The Blank">
+                                        Fill In The Blank
+                                    </MenuItem>
+                                    <MenuItem value="Multiple Choice">
+                                        Multiple Choice
+                                    </MenuItem>
+                                    <MenuItem value="Matching">
+                                        Matching
+                                    </MenuItem>
+                                    <MenuItem value="Identification">
+                                        Identification
+                                    </MenuItem>
+                                    <MenuItem value="True Or False">
+                                        True Or False
+                                    </MenuItem>
+                                </Select>
+                                {error?.type && (
+                                    <FormHelperText>
+                                        {error.type}
+                                    </FormHelperText>
+                                )}
+                            </FormControl>
+                            <Button
+                                component="label"
+                                role={undefined}
+                                variant="contained"
+                                startIcon={
+                                    data?.file ? (
+                                        <>
+                                            <Check />
+                                            UPLOADED
+                                        </>
+                                    ) : (
+                                        <CloudUpload />
+                                    )
+                                }
+                            >
+                                {data?.file ? data?.file?.name : "Upload files"}
+                                <VisuallyHiddenInput
+                                    name="file"
+                                    type="file"
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            [e.target.name]: e.target.files[0],
+                                        })
+                                    }
+                                    accept="image/*"
+                                />
+                            </Button>
+                            <div className="bg-white ">
+                                {error?.direction && (
+                                    <div className="text-red-600">
+                                        {error?.direction}
+                                    </div>
+                                )}
+                                <div className="text-black p-3 font-black">
+                                    Direction
+                                </div>
+                                <ReactQuill
+                                    theme="snow"
+                                    //   value={value}
+                                    className="text-black  h-52"
+                                    onChange={(e) =>
+                                        setData({
+                                            ...data,
+                                            direction: e,
+                                        })
+                                    }
+                                />
+                            </div>
+                            <div className="mt-10"></div>
+                            <div className="flex w-full items-center justify-end">
+                                {data.exam_type && (
+                                    <Button
+                                        className="w-36"
+                                        variant="contained"
+                                        autoFocus
+                                        onClick={() =>
+                                            setData({
+                                                ...data,
+                                                questions: [
+                                                    ...data.questions,
+                                                    {
+                                                        question: "",
+                                                        answer: "",
+                                                        answer_key: "",
+                                                    },
+                                                ],
+                                            })
+                                        }
+                                    >
+                                        add fields
+                                    </Button>
+                                )}
+                            </div>
+                            {data.questions.map((res, i) => {
+                                return (
+                                    <>
+                                        <div className="flex gap-2 justify-end mt-2">
+                                            {i != 0 && (
+                                                <Button
+                                                    variant="outlined"
+                                                    color="error"
+                                                    onClick={() => {
+                                                        const updatedQuestions =
+                                                            [...data.questions];
+                                                        updatedQuestions.splice(
+                                                            i,
+                                                            1,
+                                                        );
+                                                        setData({
+                                                            ...data,
+                                                            questions:
+                                                                updatedQuestions,
+                                                        });
+                                                    }}
+                                                >
+                                                    Delete
+                                                </Button>
+                                            )}
+                                        </div>
+                                        {data.exam_type === "True Or False" && (
+                                            <div
+                                                key={i}
+                                                className="flex flex-col gap-4 w-full border-b pb-4"
+                                            >
+                                                <div className="flex gap-3 w-full">
+                                                    <TextField
+                                                        multiline
+                                                        rows={3}
+                                                        onChange={(e) => {
+                                                            const updatedQuestions =
+                                                                [
+                                                                    ...data.questions,
+                                                                ];
+                                                            updatedQuestions[
+                                                                i
+                                                            ].question =
+                                                                e.target.value;
+                                                            setData({
+                                                                ...data,
+                                                                questions:
+                                                                    updatedQuestions,
+                                                            });
+                                                        }}
+                                                        error={
+                                                            !!error?.question
+                                                        }
+                                                        helperText={
+                                                            error?.question ??
+                                                            ""
+                                                        }
+                                                        value={res.question}
+                                                        name={`question-${i}`}
+                                                        type="text"
+                                                        label={`Question ${i + 1}`}
+                                                        variant="outlined"
+                                                        className="w-full"
+                                                    />
+                                                    <FormControl>
+                                                        <FormLabel
+                                                            id={`answer-key-label-${i}`}
+                                                        >
+                                                            Answer Key
+                                                        </FormLabel>
+                                                        <RadioGroup
+                                                            row
+                                                            value={
+                                                                res.answer_key
+                                                            }
+                                                            onChange={(e) => {
+                                                                const updatedQuestions =
+                                                                    [
+                                                                        ...data.questions,
+                                                                    ];
+                                                                updatedQuestions[
+                                                                    i
+                                                                ].answer_key =
+                                                                    e.target.value;
+                                                                setData({
+                                                                    ...data,
+                                                                    questions:
+                                                                        updatedQuestions,
+                                                                });
+                                                            }}
+                                                            aria-labelledby={`answer-key-label-${i}`}
+                                                            name={`answer_key-${i}`}
+                                                        >
+                                                            <FormControlLabel
+                                                                value="true"
+                                                                control={
+                                                                    <Radio />
+                                                                }
+                                                                label="True"
+                                                            />
+                                                            <FormControlLabel
+                                                                value="false"
+                                                                control={
+                                                                    <Radio />
+                                                                }
+                                                                label="False"
+                                                            />
+                                                        </RadioGroup>
+                                                    </FormControl>
+                                                </div>
+                                            </div>
+                                        )}
 
-                <div>
-                    <div className="mx-6 font-black text-lg">Discussion</div>
-                    <Toolbar className="flex-col gap-3 flex w-full mt-2 mb-16   ">
-                        <ReactQuill
-                            theme="snow"
-                            className="text-black w-full h-60 sm:h-48 md:h-60"
-                            onChange={(value) =>
-                                setForm({
-                                    ...form,
-                                    introductory: value,  // Here, use the content directly
-                                })
-                            }
-                            value={form?.introductory || ''}
-                        />
+                                        {(data.exam_type ==
+                                            "Fill In The Blank" ||
+                                            data.exam_type == "Matching" ||
+                                            data.exam_type ==
+                                            "Identification") && (
+                                                <div className="flex flex-col gap-4 w-full border-b pb-4">
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-row gap-4 w-full border-b "
+                                                    >
+                                                        <TextField
+                                                            multiline
+                                                            rows={2}
+                                                            onChange={(e) =>
+                                                                updateQuestion(
+                                                                    i,
+                                                                    "question",
+                                                                    e.target.value,
+                                                                )
+                                                            }
+                                                            value={res.question}
+                                                            label={`Question ${i + 1}`}
+                                                            variant="outlined"
+                                                            className="w-full"
+                                                        />
+                                                        <TextField
+                                                            multiline
+                                                            rows={2}
+                                                            onChange={(e) =>
+                                                                updateQuestion(
+                                                                    i,
+                                                                    "answer_key",
+                                                                    e.target.value,
+                                                                )
+                                                            }
+                                                            value={res.answer_key}
+                                                            label={`Answer Key ${i + 1}`}
+                                                            variant="outlined"
+                                                            className="w-full"
+                                                        />
+                                                    </div>
+                                                </div>
+                                            )}
 
-                    </Toolbar>
-                </div>
-                <Toolbar className="flex-col gap-3 flex w-full">
-                    <TextField
-                        onChange={(e) =>
-                            setForm({
-                                ...form,
-                                title: e.target.value,
-                            })
-                        }
-                        value={form.title || ''}
-                        // error={error?.title ? true : false}
-                        // helperText={error?.title ?? ""}
-                        name="subject_matter"
-                        type="text"
-                        id="outlined-basic"
-                        label="Demo Link"
-                        variant="outlined"
-                        className="w-full"
-                    />
-                </Toolbar>
-                <Toolbar className="">
-                    <Button
-                        className="w-full"
-                        disabled={loading}
-                        variant="contained"
-                        autoFocus
-                        onClick={submitUpdate}
-                    >
-                        save
-                    </Button>
-                </Toolbar>
-            </Dialog>
-        </React.Fragment>
+                                        {data.exam_type ==
+                                            "Multiple Choice" && (
+                                                <div
+                                                    key={i}
+                                                    className="flex flex-col gap-4 w-full border-b pb-4"
+                                                >
+                                                    {/* Answer Key Selection */}
+                                                    <div className="flex items-center justify-between w-full">
+                                                        <FormControl
+                                                            error={
+                                                                !!error?.[
+                                                                `answer_key-${i}`
+                                                                ]
+                                                            }
+                                                        >
+                                                            <FormLabel
+                                                                id={`answer-key-${i}`}
+                                                            >
+                                                                Answer Key {i + 1}
+                                                            </FormLabel>
+                                                            <RadioGroup
+                                                                row
+                                                                aria-labelledby={`answer-key-${i}`}
+                                                                name={`answer_key-${i}`}
+                                                                value={
+                                                                    res.answer_key
+                                                                }
+                                                                onChange={(e) =>
+                                                                    updateQuestion(
+                                                                        i,
+                                                                        "answer_key",
+                                                                        e.target
+                                                                            .value,
+                                                                    )
+                                                                }
+                                                            >
+                                                                <FormControlLabel
+                                                                    value="A"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="A"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="B"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="B"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="C"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="C"
+                                                                />
+                                                                <FormControlLabel
+                                                                    value="D"
+                                                                    control={
+                                                                        <Radio />
+                                                                    }
+                                                                    label="D"
+                                                                />
+                                                            </RadioGroup>
+                                                            {error?.[
+                                                                `answer_key-${i}`
+                                                            ] && (
+                                                                    <FormHelperText>
+                                                                        {
+                                                                            error[
+                                                                            `answer_key-${i}`
+                                                                            ]
+                                                                        }
+                                                                    </FormHelperText>
+                                                                )}
+                                                        </FormControl>
+
+                                                        {/* Delete Button */}
+                                                    </div>
+
+                                                    {/* Question Text */}
+                                                    <TextField
+                                                        multiline
+                                                        rows={3}
+                                                        value={res.question}
+                                                        name={`question-${i}`}
+                                                        type="text"
+                                                        label={`Question ${i + 1}`}
+                                                        variant="outlined"
+                                                        className="w-full"
+                                                        error={
+                                                            !!error?.[
+                                                            `question-${i}`
+                                                            ]
+                                                        }
+                                                        helperText={
+                                                            error?.[
+                                                            `question-${i}`
+                                                            ] ?? ""
+                                                        }
+                                                        onChange={(e) =>
+                                                            updateQuestion(
+                                                                i,
+                                                                "question",
+                                                                e.target.value,
+                                                            )
+                                                        }
+                                                    />
+                                                </div>
+                                            )}
+                                    </>
+                                );
+                            })}
+                        </div>
+                        <div className="mt-5">
+                            <Button
+                                className="w-full  "
+                                disabled={loading}
+                                variant="contained"
+                                autoFocus
+                                onClick={submit_form}
+                            >
+                                SUBMIT
+                            </Button>
+                        </div>
+                    </div>
+                </Box>
+            </Modal>
+        </div>
     );
 }
