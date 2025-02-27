@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/module-service-TcXkIe9j.js
-import{i as t}from"./app-DqZs1W6p.js";async function a(){try{return await t.get("/api/module")}catch(r){return r}}async function o(r){try{return await t.get(`/api/module/${r}`)}catch(e){return e}}async function c(r){try{return await t.post("/api/module",r)}catch(e){return e}}async function n(r){try{return await t.put(`/api/module/${r.id}`,r)}catch(e){return e}}async function u(r){try{return await t.delete(`/api/module/${r}`)}catch(e){return e}}export{o as a,u as d,a as g,c as s,n as u};
-========
-import{i as t}from"./app-DB9L2DZR.js";async function a(){try{return await t.get("/api/module")}catch(r){return r}}async function o(r){try{return await t.get(`/api/module/${r}`)}catch(e){return e}}async function c(r){try{return await t.post("/api/module",r)}catch(e){return e}}async function n(r){try{return await t.put(`/api/module/${r.id}`,r)}catch(e){return e}}async function u(r){try{return await t.delete(`/api/module/${r}`)}catch(e){return e}}export{o as a,u as d,a as g,c as s,n as u};
->>>>>>>> 604b5f42932ce02431dc5739abf8ae7f2eadb41e:public/build/assets/module-service-B9i0MNah.js

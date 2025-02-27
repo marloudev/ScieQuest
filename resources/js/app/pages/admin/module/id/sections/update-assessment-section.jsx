@@ -1,7 +1,6 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Button from "@mui/material/Button";
-import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { useState } from "react";
 import {
@@ -28,6 +27,9 @@ import {
 import { useEffect } from "react";
 import InputLabel from "@/Components/InputLabel";
 import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
+import UpdateTrueOrFalse from "../components/update-true-or-false";
+import UpdateMultipleChoice from "../components/update-multiple-choice";
+import UpdateIdentificationMatchingFillForm from "../components/update-identification-matching-fill-form";
 
 const style = {
     position: "absolute",
@@ -45,17 +47,6 @@ export default function UpdateAssessmentSection({ datas }) {
 
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState({
-        exam_type: "",
-        direction: "",
-        file: "",
-        questions: [
-            {
-                question: "",
-                answer_key: "",
-            },
-        ],
-    });
     const module_id = window.location.pathname.split("/")[3];
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -78,9 +69,9 @@ export default function UpdateAssessmentSection({ datas }) {
             formData.append("lesson_id", datas.id);
             formData.append("module_id", module_id);
             formData.append("questions", JSON.stringify(data.questions));
-            formData.append("file", data.file);
-            formData.append("direction", data.direction);
-            formData.append("exam_type", data.exam_type);
+            formData.append("file", datas.file);
+            formData.append("direction", datas.direction);
+            formData.append("exam_type", datas.exam_type);
             formData.append("type", "pre-exercise");
 
             const result = await store.dispatch(store_quest_thunk(formData));
@@ -117,7 +108,7 @@ export default function UpdateAssessmentSection({ datas }) {
             questions: updatedQuestions,
         });
     };
-    console.log("da", data);
+    console.log("da", datas);
     return (
         <div>
             <Tooltip title="Update Assessment">
@@ -141,15 +132,12 @@ export default function UpdateAssessmentSection({ datas }) {
                         </div>
                         <div className="overflow  w-full flex gap-4 flex-col">
                             <FormControl fullWidth error={!!error?.exam_type}>
-                                <InputLabel id="exam-type-select-label">
-                                    Exam Type
-                                </InputLabel>
-                                <Select
+                                <TextField
                                     labelId="exam-type-select-label"
                                     id="exam-type-select"
                                     name="exam_type"
                                     label="Exam Type"
-                                    value={data.exam_type ?? ""}
+                                    value={datas.exam_type ?? ""}
                                     onChange={(e) =>
                                         setData({
                                             ...data,
@@ -157,25 +145,7 @@ export default function UpdateAssessmentSection({ datas }) {
                                         })
                                     }
                                 >
-                                    <MenuItem value="" disabled>
-                                        Select Exam Type
-                                    </MenuItem>
-                                    <MenuItem value="Fill In The Blank">
-                                        Fill In The Blank
-                                    </MenuItem>
-                                    <MenuItem value="Multiple Choice">
-                                        Multiple Choice
-                                    </MenuItem>
-                                    <MenuItem value="Matching">
-                                        Matching
-                                    </MenuItem>
-                                    <MenuItem value="Identification">
-                                        Identification
-                                    </MenuItem>
-                                    <MenuItem value="True Or False">
-                                        True Or False
-                                    </MenuItem>
-                                </Select>
+                                </TextField>
                                 {error?.type && (
                                     <FormHelperText>
                                         {error.type}
@@ -187,7 +157,7 @@ export default function UpdateAssessmentSection({ datas }) {
                                 role={undefined}
                                 variant="contained"
                                 startIcon={
-                                    data?.file ? (
+                                    datas?.file ? (
                                         <>
                                             <Check />
                                             UPLOADED
@@ -197,7 +167,7 @@ export default function UpdateAssessmentSection({ datas }) {
                                     )
                                 }
                             >
-                                {data?.file ? data?.file?.name : "Upload files"}
+                                {datas?.file ? datas?.file?.name : "Upload files"}
                                 <VisuallyHiddenInput
                                     name="file"
                                     type="file"
@@ -221,307 +191,79 @@ export default function UpdateAssessmentSection({ datas }) {
                                 </div>
                                 <ReactQuill
                                     theme="snow"
-                                    //   value={value}
+                                    value={datas?.direction}
                                     className="text-black  h-52"
-                                    onChange={(e) =>
-                                        setData({
-                                            ...data,
-                                            direction: e,
-                                        })
-                                    }
+                                // onChange={(e) =>
+                                //   setData({
+                                //     ...data,
+                                //     direction: e,
+                                //   })
+                                // }
                                 />
                             </div>
                             <div className="mt-10"></div>
                             <div className="flex w-full items-center justify-end">
-                                {data.exam_type && (
+                                {datas.exam_type && (
                                     <Button
                                         className="w-36"
                                         variant="contained"
                                         autoFocus
-                                        onClick={() =>
-                                            setData({
-                                                ...data,
-                                                questions: [
-                                                    ...data.questions,
-                                                    {
-                                                        question: "",
-                                                        answer: "",
-                                                        answer_key: "",
-                                                    },
-                                                ],
-                                            })
-                                        }
+                                    // onClick={() =>
+                                    //   setData({
+                                    //     ...data,
+                                    //     questions: [
+                                    //       ...data.questions,
+                                    //       {
+                                    //         question: "",
+                                    //         answer: "",
+                                    //         answer_key: "",
+                                    //       },
+                                    //     ],
+                                    //   })
+                                    // }
                                     >
                                         add fields
                                     </Button>
                                 )}
                             </div>
-                            {data.questions.map((res, i) => {
+                            {datas.questions.map((res, i) => {
                                 return (
                                     <>
-                                        <div className="flex gap-2 justify-end mt-2">
-                                            {i != 0 && (
-                                                <Button
-                                                    variant="outlined"
-                                                    color="error"
-                                                    onClick={() => {
-                                                        const updatedQuestions =
-                                                            [...data.questions];
-                                                        updatedQuestions.splice(
-                                                            i,
-                                                            1,
-                                                        );
-                                                        setData({
-                                                            ...data,
-                                                            questions:
-                                                                updatedQuestions,
-                                                        });
-                                                    }}
+                                        {res.exam_type == "True Or False" && (
+                                            <div className="flex flex-col gap-4 w-full border-b pb-4">
+                                                <div
+                                                    key={i}
+                                                    className="flex flex-col gap-4 w-full border-b pb-4"
                                                 >
-                                                    Delete
-                                                </Button>
-                                            )}
-                                        </div>
-                                        {data.exam_type === "True Or False" && (
-                                            <div
-                                                key={i}
-                                                className="flex flex-col gap-4 w-full border-b pb-4"
-                                            >
-                                                <div className="flex gap-3 w-full">
-                                                    <TextField
-                                                        multiline
-                                                        rows={3}
-                                                        onChange={(e) => {
-                                                            const updatedQuestions =
-                                                                [
-                                                                    ...data.questions,
-                                                                ];
-                                                            updatedQuestions[
-                                                                i
-                                                            ].question =
-                                                                e.target.value;
-                                                            setData({
-                                                                ...data,
-                                                                questions:
-                                                                    updatedQuestions,
-                                                            });
-                                                        }}
-                                                        error={
-                                                            !!error?.question
-                                                        }
-                                                        helperText={
-                                                            error?.question ??
-                                                            ""
-                                                        }
-                                                        value={res.question}
-                                                        name={`question-${i}`}
-                                                        type="text"
-                                                        label={`Question ${i + 1}`}
-                                                        variant="outlined"
-                                                        className="w-full"
-                                                    />
-                                                    <FormControl>
-                                                        <FormLabel
-                                                            id={`answer-key-label-${i}`}
-                                                        >
-                                                            Answer Key
-                                                        </FormLabel>
-                                                        <RadioGroup
-                                                            row
-                                                            value={
-                                                                res.answer_key
-                                                            }
-                                                            onChange={(e) => {
-                                                                const updatedQuestions =
-                                                                    [
-                                                                        ...data.questions,
-                                                                    ];
-                                                                updatedQuestions[
-                                                                    i
-                                                                ].answer_key =
-                                                                    e.target.value;
-                                                                setData({
-                                                                    ...data,
-                                                                    questions:
-                                                                        updatedQuestions,
-                                                                });
-                                                            }}
-                                                            aria-labelledby={`answer-key-label-${i}`}
-                                                            name={`answer_key-${i}`}
-                                                        >
-                                                            <FormControlLabel
-                                                                value="true"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="True"
-                                                            />
-                                                            <FormControlLabel
-                                                                value="false"
-                                                                control={
-                                                                    <Radio />
-                                                                }
-                                                                label="False"
-                                                            />
-                                                        </RadioGroup>
-                                                    </FormControl>
+                                                    <UpdateTrueOrFalse datas={res} />
                                                 </div>
                                             </div>
                                         )}
 
-                                        {(data.exam_type ==
+                                        {(res.exam_type ==
                                             "Fill In The Blank" ||
-                                            data.exam_type == "Matching" ||
-                                            data.exam_type ==
+                                            res.exam_type == "Matching" ||
+                                            res.exam_type ==
                                             "Identification") && (
                                                 <div className="flex flex-col gap-4 w-full border-b pb-4">
                                                     <div
                                                         key={i}
                                                         className="flex flex-row gap-4 w-full border-b "
                                                     >
-                                                        <TextField
-                                                            multiline
-                                                            rows={2}
-                                                            onChange={(e) =>
-                                                                updateQuestion(
-                                                                    i,
-                                                                    "question",
-                                                                    e.target.value,
-                                                                )
-                                                            }
-                                                            value={res.question}
-                                                            label={`Question ${i + 1}`}
-                                                            variant="outlined"
-                                                            className="w-full"
-                                                        />
-                                                        <TextField
-                                                            multiline
-                                                            rows={2}
-                                                            onChange={(e) =>
-                                                                updateQuestion(
-                                                                    i,
-                                                                    "answer_key",
-                                                                    e.target.value,
-                                                                )
-                                                            }
-                                                            value={res.answer_key}
-                                                            label={`Answer Key ${i + 1}`}
-                                                            variant="outlined"
-                                                            className="w-full"
-                                                        />
+                                                        <UpdateIdentificationMatchingFillForm datas={res} />
                                                     </div>
                                                 </div>
                                             )}
 
-                                        {data.exam_type ==
+                                        {res.exam_type ==
                                             "Multiple Choice" && (
-                                                <div
-                                                    key={i}
-                                                    className="flex flex-col gap-4 w-full border-b pb-4"
-                                                >
-                                                    {/* Answer Key Selection */}
-                                                    <div className="flex items-center justify-between w-full">
-                                                        <FormControl
-                                                            error={
-                                                                !!error?.[
-                                                                `answer_key-${i}`
-                                                                ]
-                                                            }
-                                                        >
-                                                            <FormLabel
-                                                                id={`answer-key-${i}`}
-                                                            >
-                                                                Answer Key {i + 1}
-                                                            </FormLabel>
-                                                            <RadioGroup
-                                                                row
-                                                                aria-labelledby={`answer-key-${i}`}
-                                                                name={`answer_key-${i}`}
-                                                                value={
-                                                                    res.answer_key
-                                                                }
-                                                                onChange={(e) =>
-                                                                    updateQuestion(
-                                                                        i,
-                                                                        "answer_key",
-                                                                        e.target
-                                                                            .value,
-                                                                    )
-                                                                }
-                                                            >
-                                                                <FormControlLabel
-                                                                    value="A"
-                                                                    control={
-                                                                        <Radio />
-                                                                    }
-                                                                    label="A"
-                                                                />
-                                                                <FormControlLabel
-                                                                    value="B"
-                                                                    control={
-                                                                        <Radio />
-                                                                    }
-                                                                    label="B"
-                                                                />
-                                                                <FormControlLabel
-                                                                    value="C"
-                                                                    control={
-                                                                        <Radio />
-                                                                    }
-                                                                    label="C"
-                                                                />
-                                                                <FormControlLabel
-                                                                    value="D"
-                                                                    control={
-                                                                        <Radio />
-                                                                    }
-                                                                    label="D"
-                                                                />
-                                                            </RadioGroup>
-                                                            {error?.[
-                                                                `answer_key-${i}`
-                                                            ] && (
-                                                                    <FormHelperText>
-                                                                        {
-                                                                            error[
-                                                                            `answer_key-${i}`
-                                                                            ]
-                                                                        }
-                                                                    </FormHelperText>
-                                                                )}
-                                                        </FormControl>
-
-                                                        {/* Delete Button */}
+                                                <div className="flex flex-col gap-4 w-full border-b pb-4">
+                                                    <div
+                                                        key={i}
+                                                        className="flex flex-col gap-4 w-full border-b pb-4"
+                                                    >
+                                                        <UpdateMultipleChoice datas={res} />
                                                     </div>
-
-                                                    {/* Question Text */}
-                                                    <TextField
-                                                        multiline
-                                                        rows={3}
-                                                        value={res.question}
-                                                        name={`question-${i}`}
-                                                        type="text"
-                                                        label={`Question ${i + 1}`}
-                                                        variant="outlined"
-                                                        className="w-full"
-                                                        error={
-                                                            !!error?.[
-                                                            `question-${i}`
-                                                            ]
-                                                        }
-                                                        helperText={
-                                                            error?.[
-                                                            `question-${i}`
-                                                            ] ?? ""
-                                                        }
-                                                        onChange={(e) =>
-                                                            updateQuestion(
-                                                                i,
-                                                                "question",
-                                                                e.target.value,
-                                                            )
-                                                        }
-                                                    />
                                                 </div>
                                             )}
                                     </>

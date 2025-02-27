@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/EditNote-CCQONB7_.js
-import{j as t}from"./app-DqZs1W6p.js";import{c as o}from"./createSvgIcon-RM_HShJH.js";const s=o(t.jsx("path",{d:"M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"}),"EditNote");export{s as E};
-========
-import{j as t}from"./app-DB9L2DZR.js";import{c as o}from"./createSvgIcon-DirsEER0.js";const s=o(t.jsx("path",{d:"M3 10h11v2H3zm0-2h11V6H3zm0 8h7v-2H3zm15.01-3.13.71-.71c.39-.39 1.02-.39 1.41 0l.71.71c.39.39.39 1.02 0 1.41l-.71.71zm-.71.71-5.3 5.3V21h2.12l5.3-5.3z"}),"EditNote");export{s as E};
->>>>>>>> 604b5f42932ce02431dc5739abf8ae7f2eadb41e:public/build/assets/EditNote-BBR7ZpfR.js

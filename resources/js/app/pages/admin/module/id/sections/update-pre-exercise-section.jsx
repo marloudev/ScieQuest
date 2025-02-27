@@ -66,12 +66,12 @@ export default function UpdatePreExerciseSection({ datas }) {
             setLoading(true);
 
             const formData = new FormData();
-            formData.append("lesson_id", data.id);
+            formData.append("lesson_id", datas.id);
             formData.append("module_id", module_id);
-            formData.append("questions", JSON.stringify(data.questions));
-            formData.append("file", data.file);
-            formData.append("direction", data.direction);
-            formData.append("exam_type", data.exam_type);
+            formData.append("questions", JSON.stringify(datas.questions));
+            formData.append("file", datas.file);
+            formData.append("direction", datas.direction);
+            formData.append("exam_type", datas.exam_type);
             formData.append("type", "pre-exercise");
 
             const result = await store.dispatch(store_quest_thunk(formData));

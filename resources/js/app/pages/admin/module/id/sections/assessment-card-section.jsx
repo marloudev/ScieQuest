@@ -307,7 +307,7 @@ export default function AssessmentCardSection() {
                                         return (
                                             <>
                                                 <div className="flex items-center justify-end mx-3 mt-5">
-                                                    <UpdateAssessmentSection data={assessment} />
+                                                    <UpdateAssessmentSection datas={assessment} />
                                                     <DeleteAssessmentSection data={assessment} />
                                                 </div>
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">

@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/goal-section-B-05RpCJ.js
-import{j as a}from"./app-DqZs1W6p.js";function s(){return a.jsxs("div",{className:"bg-[rgba(255,255,255,0.7)] rounded-3xl shadow-2xl p-6 w-96 h-auto mb-64",children:[a.jsx("h1",{className:"text-center",children:a.jsx("b",{children:"Core Values"})}),a.jsx("div",{className:"text-center",children:a.jsx("p",{className:"text-xl",children:a.jsx("b",{children:"Maka-Diyos, Makatao, Makakalikasan at Makabansa"})})})]})}export{s as default};
-========
-import{j as a}from"./app-DB9L2DZR.js";function s(){return a.jsxs("div",{className:"bg-[rgba(255,255,255,0.7)] rounded-3xl shadow-2xl p-6 w-96 h-auto mb-64",children:[a.jsx("h1",{className:"text-center",children:a.jsx("b",{children:"Core Values"})}),a.jsx("div",{className:"text-center",children:a.jsx("p",{className:"text-xl",children:a.jsx("b",{children:"Maka-Diyos, Makatao, Makakalikasan at Makabansa"})})})]})}export{s as default};
->>>>>>>> 604b5f42932ce02431dc5739abf8ae7f2eadb41e:public/build/assets/goal-section-ClQcEtNX.js

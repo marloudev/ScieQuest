@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/true-or-false-component-DjiDzph3.js
-import{j as s}from"./app-DqZs1W6p.js";function d({question:r,answers:i,direction:n,image:e}){return s.jsxs("div",{children:[s.jsx("div",{children:s.jsxs("h3",{children:["Direction: ",n]})}),s.jsxs("div",{children:[s.jsxs("p",{children:["__________ ",r]}),e&&s.jsx("div",{className:"flex flex-1 gap-3",children:s.jsx("img",{className:"w-24",src:e,alt:"Question related"})})]}),s.jsx("div",{children:s.jsxs("p",{children:["Answer key: ",i]})})]})}export{d as default};
-========
-import{j as s}from"./app-DB9L2DZR.js";function d({question:r,answers:i,direction:n,image:e}){return s.jsxs("div",{children:[s.jsx("div",{children:s.jsxs("h3",{children:["Direction: ",n]})}),s.jsxs("div",{children:[s.jsxs("p",{children:["__________ ",r]}),e&&s.jsx("div",{className:"flex flex-1 gap-3",children:s.jsx("img",{className:"w-24",src:e,alt:"Question related"})})]}),s.jsx("div",{children:s.jsxs("p",{children:["Answer key: ",i]})})]})}export{d as default};
->>>>>>>> 604b5f42932ce02431dc5739abf8ae7f2eadb41e:public/build/assets/true-or-false-component-9TKJWmUD.js

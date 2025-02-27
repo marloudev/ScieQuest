@@ -1,5 +1,0 @@
-<<<<<<<< HEAD:public/build/assets/extendSxProp-B_oDpqOY.js
-import{p as c,q as l}from"./DefaultPropsProvider-BS_X4ay_.js";const a=t=>{var s;const e={systemProps:{},otherProps:{}},o=((s=t==null?void 0:t.theme)==null?void 0:s.unstable_sxConfig)??c;return Object.keys(t).forEach(n=>{o[n]?e.systemProps[n]=t[n]:e.otherProps[n]=t[n]}),e};function x(t){const{sx:e,...o}=t,{systemProps:s,otherProps:n}=a(o);let r;return Array.isArray(e)?r=[s,...e]:typeof e=="function"?r=(...f)=>{const i=e(...f);return l(i)?{...s,...i}:s}:r={...s,...e},{...n,sx:r}}export{x as e};
-========
-import{p as c,q as l}from"./DefaultPropsProvider-C-8yNNHk.js";const a=t=>{var s;const e={systemProps:{},otherProps:{}},o=((s=t==null?void 0:t.theme)==null?void 0:s.unstable_sxConfig)??c;return Object.keys(t).forEach(n=>{o[n]?e.systemProps[n]=t[n]:e.otherProps[n]=t[n]}),e};function x(t){const{sx:e,...o}=t,{systemProps:s,otherProps:n}=a(o);let r;return Array.isArray(e)?r=[s,...e]:typeof e=="function"?r=(...f)=>{const i=e(...f);return l(i)?{...s,...i}:s}:r={...s,...e},{...n,sx:r}}export{x as e};
->>>>>>>> 604b5f42932ce02431dc5739abf8ae7f2eadb41e:public/build/assets/extendSxProp-nm6JRQHb.js

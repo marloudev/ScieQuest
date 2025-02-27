@@ -1,1 +1,0 @@
-import"./app-DB9L2DZR.js";import{s as r,a as o,u,d as a}from"./lesson-service-DUX_jPQh.js";function _(e){return async function(t,s){return r(e)}}function d(e){return async function(t,s){return o(e)}}function f(e){return async function(t,s){return u(e)}}function p(e){return async function(t,s){return a(e)}}export{d as a,p as d,_ as s,f as u};
