@@ -6,11 +6,12 @@ import PreExerciseScoreSection from './sections/pre-exercise-score-section'
 import AssessmentScoreSection from './sections/assessment-score-section'
 import { useEffect } from 'react'
 import store from '../../store/store'
-import { get_student_score_thunk, get_students_by_id_thunk } from '../../admin/students/redux/students-thunk'
+import { get_student_score_by_pupil_id_thunk } from '../../admin/students/redux/students-thunk'
 
 export default function ScorePage() {
+    const pupil_id = window.location.pathname.split('/')[3]
     useEffect(() => {
-        store.dispatch(get_student_score_thunk())
+        store.dispatch(get_student_score_by_pupil_id_thunk(pupil_id))
     }, []);
     return (
         <InstructorLayout>

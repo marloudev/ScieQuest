@@ -9,11 +9,11 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Button, TextField, Tooltip, InputAdornment } from '@mui/material';
 import { get_students_by_id_thunk } from '@/app/pages/admin/students/redux/students-thunk';
-import UpdateSection from '@/app/pages/admin/students/sections/update-section';
 import DeleteSection from '@/app/pages/admin/students/sections/delete-section';
-import ViewScoreSection from '@/app/pages/admin/teachers/list-students/sections/view-score-section';
 import { Search } from '@mui/icons-material';
-import CreateSection from '@/app/pages/admin/students/sections/create-section';
+import CreateSection from './create-section';
+import UpdateSection from './update-section';
+import ViewScoreSection from './view-score-section';
 
 export default function ListOfStudentsTableSection() {
     const dispatch = useDispatch();

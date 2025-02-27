@@ -9,9 +9,9 @@ export default function ViewScoreSection({ data }) {
 
     return (
         <div>
-            <Tooltip title="View Student Score and Progress">
+            <Tooltip title="View Pupil Score and Progress">
                 <Button
-                    onClick={() => window.open(`/teacher/score/${data.id}`, '_blank')}
+                    onClick={() => window.open(`/teacher/scores/${data.id}`, '_blank')}
                     size="small"
                     variant="contained"
                     color="success">

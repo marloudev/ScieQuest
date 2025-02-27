@@ -8,6 +8,16 @@ export async function get_student_score_service() {
         return error;
     }
 }
+
+export async function get_student_score_by_pupil_id_service() {
+    try {
+        const res = await axios.get(`/api/get_student_score_by_pupil_id/` + window.location.pathname.split('/')[3]);
+        return res;
+    } catch (error) {
+        return error;
+    }
+}
+
 export async function get_students_service(user_type) {
     try {
         const res = await axios.get(`/api/students` + window.location.search);
