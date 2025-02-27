@@ -12,11 +12,11 @@ export function get_student_score_thunk() {
   };
 }
 
-export function get_student_score_by_pupil_id_thunk() {
+export function get_student_score_by_pupil_id_thunk(student_id) {
   return async function (dispatch, getState) {
-    const res = await get_student_score_by_pupil_id_service()
-    dispatch(studentsSlice.actions.setStudent(res.data.status));
-    return res
+    const res = await get_student_score_by_pupil_id_service(student_id);
+    dispatch(studentsSlice.actions.setStudent(res.data));
+    return res;
   };
 }
 

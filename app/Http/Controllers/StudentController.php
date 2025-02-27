@@ -213,7 +213,7 @@ class StudentController extends Controller
                 $module['lessons'][$lessonKey]['assessments'][$exerciseKey]['scores'] = $studentScores;
             }
         }
-        
+
 
 
         return response()->json([
@@ -223,69 +223,71 @@ class StudentController extends Controller
     }
 
 
-    public function get_student_score_by_pupil_id($id)
+    public function get_student_score_by_pupil_id($id, $student_id)
     {
         $auth = Auth::user();
-        $students = Student::where('teacher_id', $auth->user_id)->with(['user'])->get();
-        $module = Module::where('id', $id)->with(['lessons'])->first();
+        // Retrieve the specific student based on teacher ID and pupil ID
+        $student = Student::where('teacher_id', $auth->user_id)
+            ->where('id', $student_id)
+            ->with(['user'])
+            ->first();
 
+        if (!$student) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Student not found.',
+            ], 404);
+        }
+
+        // Retrieve the module by ID
+        $module = Module::where('id', $id)
+            ->with(['lessons'])
+            ->first();
+
+        if (!$module) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Module not found.',
+            ], 404);
+        }
 
         foreach ($module['lessons'] as $lessonKey => $lesson) {
+            // Process pre-exercises
             foreach ($lesson['pre_exercises'] as $exerciseKey => $pre_exercise) {
-                // Initialize an array to store the scores for each student
-                $studentScores = [];
+                // Get the sum of scores for the specific student
+                $scoreSum = Answer::where([
+                    ['student_id', '=', $student['user']['id']],
+                    ['type', '=', 'pre-exercise'],
+                    ['learning_id', '=', $pre_exercise['id']],
+                ])->get();
 
-                foreach ($students as $studentKey => $student) {
-                    if ($student['user']['id']) {
-                        // Get the sum of scores for the student
-                        $scoreSum = Answer::where([
-                            ['student_id', '=', $student['user']['id']],
-                            ['type', '=', 'pre-exercise'],
-                            ['learning_id', '=', $pre_exercise['id']],
-                        ])->get();
-
-                        $studentScores[] = [
-                            'score' => $scoreSum->sum('score'),
-                            'user' => $student['user'],
-                            'answer' => $scoreSum,
-                        ];
-                    }
-                }
-
-                // Store the scores for each exercise in the module
-                $module['lessons'][$lessonKey]['pre_exercises'][$exerciseKey]['scores'] = $studentScores;
+                // Store the score for the specific student in the pre-exercise
+                $module['lessons'][$lessonKey]['pre_exercises'][$exerciseKey]['scores'] = [
+                    'score' => $scoreSum->sum('score'),
+                    'user' => $student['user'],
+                    'answer' => $scoreSum,
+                ];
             }
 
+            // Process assessments
             foreach ($lesson['assessments'] as $exerciseKey => $assessment) {
-                // Initialize an array to store the scores for each student
-                $studentScores = [];
+                // Get the sum of scores for the specific student
+                $scoreSum = Answer::where([
+                    ['student_id', '=', $student['user']['id']],
+                    ['type', '=', 'assessment'],
+                    ['learning_id', '=', $assessment['id']],
+                ])->get();
 
-                foreach ($students as $studentKey => $student) {
-                    if ($student['user']['id']) {
-                        // Get the sum of scores for the student
-                        $scoreSum = Answer::where([
-                            ['student_id', '=', $student['user']['id']],
-                            ['type', '=', 'assessment'],
-                            ['learning_id', '=', $assessment['id']],
-                        ])->get();
-
-                        $studentScores[] = [
-                            'score' => $scoreSum->sum('score'),
-                            'user' => $student['user'],
-                            'answer' => $scoreSum,
-                        ];
-                    }
-                }
-
-                // Store the scores for each exercise in the module
-                $module['lessons'][$lessonKey]['assessments'][$exerciseKey]['scores'] = $studentScores;
+                // Store the score for the specific student in the assessment
+                $module['lessons'][$lessonKey]['assessments'][$exerciseKey]['scores'] = [
+                    'score' => $scoreSum->sum('score'),
+                    'user' => $student['user'],
+                    'answer' => $scoreSum,
+                ];
             }
         }
-        
-
 
         return response()->json([
-            // 'module' => $module,
             'status' => $module,
         ], 200);
     }

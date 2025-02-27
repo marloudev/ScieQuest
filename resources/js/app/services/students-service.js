@@ -9,14 +9,15 @@ export async function get_student_score_service() {
     }
 }
 
-export async function get_student_score_by_pupil_id_service() {
+export async function get_student_score_by_pupil_id_service(student_id) {
     try {
-        const res = await axios.get(`/api/get_student_score_by_pupil_id/` + window.location.pathname.split('/')[3]);
+        const res = await axios.get(`/api/get_student_score_by_pupil_id/` + window.location.pathname.split('/')[3] + '/' + student_id);
         return res;
     } catch (error) {
         return error;
     }
 }
+
 
 export async function get_students_service(user_type) {
     try {

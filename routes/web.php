@@ -152,7 +152,7 @@ Route::middleware(
     })->name('teacher.module');
 
     Route::get('/module/{id}', function () {
-        return Inertia::render('teacher/score/page');
+        return Inertia::render('teacher/scores/page');
     });
 
 

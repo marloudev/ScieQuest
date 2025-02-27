@@ -40,7 +40,8 @@ Route::post('/auth/login', [AccountController::class, 'login']);
 Route::resource('account', AccountController::class);
 Route::resource('students', StudentController::class);
 Route::get('/get_student_score/{id}', [StudentController::class, 'get_student_score']);
-Route::get('/get_student_score_by_pupil_id/{id}', [StudentController::class, 'get_student_score_by_pupil_id']);
+Route::get('/get_student_score_by_pupil_id/{id}/{student_id}', [StudentController::class, 'get_student_score_by_pupil_id']);
+
 
 Route::resource('teachers', TeacherController::class);
 Route::resource('score_sheets', ScoreSheetController::class);
