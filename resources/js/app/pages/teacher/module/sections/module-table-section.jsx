@@ -12,7 +12,7 @@ import { useSelector } from 'react-redux';
 import moment from 'moment';
 import { router } from '@inertiajs/react';
 import { Button, Tooltip } from '@mui/material';
-import { EditNote, Visibility } from '@mui/icons-material';
+import { EditNote, Quiz, Visibility } from '@mui/icons-material';
 // import { Visibility } from '@mui/icons-material';
 // import { Button } from '@mui/material';
 // import { router } from '@inertiajs/react';
@@ -49,13 +49,22 @@ export default function BookletTableSection() {
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>
                                     <div className='flex gap-2'>
-                                        <Tooltip title="View Exercise(s)">
+                                        <Tooltip title="View Pupil Progress and Scores">
                                             <Button
                                                 onClick={() => router.visit(`/teacher/module/${res.id}`)}
                                                 size='small'
                                                 variant='contained'
                                                 color='success'>
                                                 <Visibility />
+                                            </Button>
+                                        </Tooltip>
+                                        <Tooltip title="Module Details">
+                                            <Button
+                                                onClick={() => router.visit(`/teacher/module/${res.id}/lessons`)}
+                                                size='small'
+                                                variant='contained'
+                                                color='warning'>
+                                                <Quiz />
                                             </Button>
                                         </Tooltip>
                                     </div>

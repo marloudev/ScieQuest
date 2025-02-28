@@ -151,6 +151,10 @@ Route::middleware(
         return Inertia::render('teacher/module/page');
     })->name('teacher.module');
 
+    Route::get('/module/{id}/lessons', function () {
+        return Inertia::render('admin/module/id/page');
+    });
+
     Route::get('/module/{id}', function () {
         return Inertia::render('teacher/scores/page');
     });
