@@ -56,7 +56,7 @@ export async function get_exam_type_by_id_service(id) {
 
 export async function update_lesson_service(data) {
     try {
-        const res = await axios.put(`/api/lesson/${data.id}`, data);
+        const res = await axios.post(`/api/update_lesson`, data);
         return res;
     } catch (error) {
         return error;

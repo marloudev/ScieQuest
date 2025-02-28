@@ -29,12 +29,10 @@ class LessonController extends Controller
     }
     public function show($id) {}
 
-    public function update(Request $request)
+    public function update_lesson(Request $request)
     {
-        $id = $request->input('id');
-
+        $id = $request->id;
         $lesson = Lesson::where('id', $id)->first();  
-
         if (!$lesson) {
             return response()->json([
                 'message' => 'Lesson not found',
@@ -51,10 +49,9 @@ class LessonController extends Controller
 
         // Update lesson fields
         $lesson->update([
-            'module_id' => $request->input('module_id'),
-            'link' => $request->input('link'),
-            'subject_matter' => $request->input('subject_matter'),
-            'discussion' => $request->input('discussion'),
+            'link' => $request->link,
+            'subject_matter' => $request->subject_matter,
+            'discussion' => $request->discussion,
             'file' => $url, // Update file URL
         ]);
 
