@@ -41,6 +41,7 @@ const htmlToText = (html) => {
 export default function AssessmentCardSection() {
     const { booklet } = useSelector((store) => store.booklets);
     const { lesson } = useSelector((store) => store.lessons);
+    const { user } = useSelector((state) => state.app);
     const [expandedIndex, setExpandedIndex] = React.useState(null); // Track expanded card
     const module_id = window.location.pathname.split("/")[3];
 
@@ -74,10 +75,12 @@ export default function AssessmentCardSection() {
                                             {res?.subject_matter}
                                         </h5>
                                     </a>
-                                    <div className="mt-6">
-                                        <UpdateLessonSection data={res} />
-                                        <DeleteLessonSection data={res} />
-                                    </div>
+                                    {user?.user_type == 1 && (
+                                        <div className="mt-6">
+                                            <UpdateLessonSection data={res} />
+                                            <DeleteLessonSection data={res} />
+                                        </div>
+                                    )}
                                 </div>
 
 
@@ -111,10 +114,12 @@ export default function AssessmentCardSection() {
                                         <ArrowDownwardOutlined />
                                     )}
                                 </div>
-                                <div className="flex gap-4">
-                                    <CreatePreExerciseSection datas={res} />
-                                    <CreateAssessmentSection datas={res} />
-                                </div>
+                                {user?.user_type == 1 && (
+                                    <div className="flex gap-4">
+                                        <CreatePreExerciseSection datas={res} />
+                                        <CreateAssessmentSection datas={res} />
+                                    </div>
+                                )}
                             </div>
 
                             {/* Expanded Content */}
@@ -133,10 +138,12 @@ export default function AssessmentCardSection() {
 
                                         return (
                                             <>
-                                                <div className="flex items-center justify-end mx-3 mt-5">
-                                                    <UpdatePreExerciseSection datas={pre_exercise} />
-                                                    <DeletePreExerciseSection data={pre_exercise} />
-                                                </div>
+                                                {user?.user_type == 1 && (
+                                                    <div className="flex items-center justify-end mx-3 mt-5">
+                                                        <UpdatePreExerciseSection datas={pre_exercise} />
+                                                        <DeletePreExerciseSection data={pre_exercise} />
+                                                    </div>
+                                                )}
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 ">
                                                     <i>{pre_exercise.exam_type}</i>
                                                 </div>
