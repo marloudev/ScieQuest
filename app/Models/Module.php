@@ -17,6 +17,7 @@ class Module extends Model
         'introductory',
         'wintn',
     ];
+
     public function lessons(): HasMany
     {
         return $this->hasMany(Lesson::class, 'module_id', 'id')->with(['pre_exercises', 'assessments']);

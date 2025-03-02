@@ -46,7 +46,7 @@ export default function BookletTableSection() {
                                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
                             >
                                 <TableCell>{res?.quarter}</TableCell>
-                                <TableCell>{res.title}</TableCell>
+                                <TableCell>{res?.title}</TableCell>
                                 {/* <TableCell>{res?.grade ?? ''}</TableCell> */}
                                 <TableCell>{moment(res.created_at).format('LLLL')}</TableCell>
                                 <TableCell>

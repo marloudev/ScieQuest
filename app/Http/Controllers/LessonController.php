@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Assessment;
 use App\Models\Lesson;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -32,7 +33,7 @@ class LessonController extends Controller
     public function update_lesson(Request $request)
     {
         $id = $request->id;
-        $lesson = Lesson::where('id', $id)->first();  
+        $lesson = Lesson::where('id', $id)->first();
         if (!$lesson) {
             return response()->json([
                 'message' => 'Lesson not found',
@@ -61,6 +62,14 @@ class LessonController extends Controller
         ]);
     }
 
+    public function index()
+    {
+        $lessons = Lesson::with(['pre-exercise', 'assessment'])->get();
+        return response()->json([
+            'status' => 'success',
+            'data' => $lessons,
+        ], 200);
+    }
 
 
     public function destroy($id)
