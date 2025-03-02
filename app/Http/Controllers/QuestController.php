@@ -60,6 +60,26 @@ class QuestController extends Controller
             }
         }
     }
+
+    public function update(Request $request, $id)
+    {
+        $question = Quest::where('id', $id)->first();
+        if (!$question) {
+            return response()->json([
+                'message' => 'Question not found',
+                'error' => 'No question found with id ' . $id,
+            ], 404);
+        }
+
+
+        $question->update($request->all());
+
+        return response()->json([
+            'message' => 'Question updated successfully',
+            'question' => $question,
+        ]);
+    }
+
     public function destroy($id)
     {
         $quest = Quest::where('id', $id)->first();

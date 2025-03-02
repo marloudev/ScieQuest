@@ -54,6 +54,7 @@ Route::post('/update_lesson', [LessonController::class, 'update_lesson']);
 Route::resource('quest', QuestController::class);
 Route::resource('assessment', AssessmentController::class);
 Route::resource('pre_exercise', PreExerciseController::class);
+Route::post('/update_pre_exercise', [PreExerciseController::class, 'update_pre_exercise']);
 
 
 

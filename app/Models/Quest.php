@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Quest extends Model
 {
@@ -20,8 +21,8 @@ class Quest extends Model
         'file',
     ];
 
-    public function quest(): HasMany
+    public function pre_exercise(): HasOne
     {
-        return $this->hasMany(Quest::class, 'lesson_id', 'id');
+        return $this->hasOne(PreExercise::class, 'lesson_id', 'lesson_id');
     }
 }

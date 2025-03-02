@@ -9,7 +9,7 @@ import {
     Tooltip,
     Typography,
 } from "@mui/material";
-import { Check, Close, CloudUpload, Edit } from "@mui/icons-material";
+import { BorderColor, Check, Close, CloudUpload, Edit } from "@mui/icons-material";
 import { styled } from "@mui/material/styles";
 import ReactQuill from "react-quill";
 import store from "@/app/pages/store/store";
@@ -48,11 +48,13 @@ export default function UpdateLessonSection({ data }) {
                 id: data?.id || "",
             });
         }
-    }, [data]);
+    }, [data]);     
 
     const handleClickOpen = () => setOpen(true);
-    const handleClose = () => setOpen(false);
-    console.log("dadawdwad", form);
+    const handleClose = () => {
+        setOpen(false);
+    };
+
     const submitUpdate = async () => {
         if (!data?.id) {
             setError({ message: "Lesson ID is missing" });
@@ -73,13 +75,11 @@ export default function UpdateLessonSection({ data }) {
             await store.dispatch(get_module_by_id_thunk(module_id));
             setLoading(false);
             setOpen(false);
-            setForm({}); // Reset form
         } catch (error) {
             setLoading(false);
             setError({ message: "An error occurred" });
         }
     };
-    console.log("qqqqqqq", data.id);
 
     return (
         <React.Fragment>
@@ -91,7 +91,7 @@ export default function UpdateLessonSection({ data }) {
             <Dialog fullWidth maxWidth="md" open={open} onClose={handleClose}>
                 <Toolbar className="flex items-center justify-end">
                     <Typography sx={{ flex: 1 }} variant="h6" component="div">
-                        Update Lesson
+                        Update Lesson 
                     </Typography>
                     <IconButton
                         edge="start"
@@ -107,7 +107,7 @@ export default function UpdateLessonSection({ data }) {
                         onChange={(e) =>
                             setForm({ ...form, subject_matter: e.target.value })
                         }
-                        value={form.subject_matter || ""}
+                        value={form.subject_matter} // Corrected to bind the state
                         label="Subject Matter"
                         variant="outlined"
                         fullWidth
@@ -118,7 +118,7 @@ export default function UpdateLessonSection({ data }) {
                     <Button
                         component="label"
                         variant="contained"
-                        startIcon={form?.file ? <Check /> : <CloudUpload />}
+                        startIcon={form?.file ? <><BorderColor />&nbsp;UPDATE UPLOADED IMAGE</> : <CloudUpload />}
                     >
                         {form?.file ? form?.file?.name : "Upload file"}
                         <VisuallyHiddenInput
@@ -137,9 +137,9 @@ export default function UpdateLessonSection({ data }) {
                         theme="snow"
                         className="text-black w-full h-60 sm:h-48 md:h-60"
                         onChange={(value) =>
-                            setForm({ ...form, discussion: value })
+                            setForm({ ...form, discussion: value }) // Correctly bind the 'discussion' value
                         }
-                        value={form?.discussion || ""}
+                        value={form.discussion} // Corrected to bind the state
                     />
                 </Toolbar>
 
@@ -148,7 +148,7 @@ export default function UpdateLessonSection({ data }) {
                         onChange={(e) =>
                             setForm({ ...form, link: e.target.value })
                         }
-                        value={form.link || ""}
+                        value={form.link} // Corrected to bind the state
                         label="Demo Link"
                         variant="outlined"
                         fullWidth

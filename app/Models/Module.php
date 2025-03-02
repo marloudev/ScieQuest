@@ -19,6 +19,6 @@ class Module extends Model
     ];
     public function lessons(): HasMany
     {
-        return $this->hasMany(Lesson::class,'module_id','id')->with(['pre_exercises','assessments']);
+        return $this->hasMany(Lesson::class, 'module_id', 'id')->with(['pre_exercises', 'assessments']);
     }
 }

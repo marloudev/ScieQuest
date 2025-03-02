@@ -1,0 +1,1 @@
+import{i as t}from"./app-DpJ0MKYy.js";async function a(r){try{return await t.delete(`/api/pre_exercise/${r}`)}catch(e){return e}}async function c(r){try{return await t.post("/api/update_pre_exercise",r)}catch(e){return e}}export{a as d,c as u};

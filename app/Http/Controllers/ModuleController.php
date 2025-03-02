@@ -95,7 +95,7 @@ class ModuleController extends Controller
 
     public function index()
     {
-        $modules = Module::get();
+        $modules = Module::with(['lesson'])->get();
         return response()->json([
             'status' => 'success',
             'message' => 'User is logged in successfully.',

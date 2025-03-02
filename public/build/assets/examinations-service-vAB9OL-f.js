@@ -1,1 +1,0 @@
-import{i as t}from"./app-D3Ahk-Zf.js";async function n(e){try{return await t.get("/api/examinations?als_level="+e)}catch(r){return r}}async function s(e){try{return await t.get(`/api/examinations/${e}`)}catch(r){return r}}async function i(e){try{return await t.post("/api/examinations",e)}catch(r){return r}}export{s as a,n as g,i as s};

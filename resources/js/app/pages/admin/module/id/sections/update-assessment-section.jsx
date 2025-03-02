@@ -202,7 +202,7 @@ export default function UpdateAssessmentSection({ datas }) {
                                 />
                             </div>
                             <div className="mt-10"></div>
-                            <div className="flex w-full items-center justify-end">
+                            {/* <div className="flex w-full items-center justify-end">
                                 {datas.exam_type && (
                                     <Button
                                         className="w-36"
@@ -225,7 +225,7 @@ export default function UpdateAssessmentSection({ datas }) {
                                         add fields
                                     </Button>
                                 )}
-                            </div>
+                            </div> */}
                             {datas.questions.map((res, i) => {
                                 return (
                                     <>
