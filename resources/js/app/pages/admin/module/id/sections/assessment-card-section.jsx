@@ -313,10 +313,12 @@ export default function AssessmentCardSection() {
                                     {res.assessments.map((assessment) => {
                                         return (
                                             <>
-                                                <div className="flex items-center justify-end mx-3 mt-5">
-                                                    <UpdateAssessmentSection datas={assessment} />
-                                                    <DeleteAssessmentSection data={assessment} />
-                                                </div>
+                                                {user?.user_type == 1 && (
+                                                    <div className="flex items-center justify-end mx-3 mt-5">
+                                                        <UpdateAssessmentSection datas={assessment} />
+                                                        <DeleteAssessmentSection data={assessment} />
+                                                    </div>
+                                                )}
                                                 <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
                                                     <i>{assessment.exam_type}</i>
                                                 </div>
