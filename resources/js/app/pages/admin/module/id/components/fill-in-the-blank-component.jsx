@@ -1,6 +1,7 @@
 import React from "react";
 import DeleteQuestionnaireSection from "../sections/delete-questionnaire-section";
 import { useSelector } from "react-redux";
+import UpdateQuestionSection from "../sections/update-question-section";
 
 export default function FillInTheBlankComponent({
     question,
@@ -13,7 +14,10 @@ export default function FillInTheBlankComponent({
             <div className='flex items-center justify-between'>
                 <p>{question}</p>
                 {user?.user_type == 1 && (
-                    <DeleteQuestionnaireSection data={data} />
+                    <div>
+                        <UpdateQuestionSection data={data} />
+                        <DeleteQuestionnaireSection data={data} />
+                    </div>
                 )}
             </div>
             <div>

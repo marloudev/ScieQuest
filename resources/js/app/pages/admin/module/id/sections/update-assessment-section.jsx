@@ -1,35 +1,15 @@
-import * as React from "react";
-import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
-import Modal from "@mui/material/Modal";
-import { useState } from "react";
-import {
-    FormControl,
-    FormControlLabel,
-    FormHelperText,
-    FormLabel,
-    MenuItem,
-    Radio,
-    RadioGroup,
-    Select,
-    TextField,
-    Tooltip,
-} from "@mui/material";
 import { Check, CloudUpload, Edit } from "@mui/icons-material";
-import { styled } from "@mui/material/styles";
+import { Box, Button, FormControl, FormHelperText, Modal, TextField, Tooltip } from "@mui/material";
+import { useEffect, useState } from "react";
 import ReactQuill from "react-quill";
-import "react-quill/dist/quill.snow.css";
-import store from "@/app/pages/store/store";
-import {
-    store_lesson_thunk,
-    store_quest_thunk,
-} from "../../redux/lesson-thunk";
-import { useEffect } from "react";
-import InputLabel from "@/Components/InputLabel";
-import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
 import UpdateTrueOrFalse from "../components/update-true-or-false";
-import UpdateMultipleChoice from "../components/update-multiple-choice";
 import UpdateIdentificationMatchingFillForm from "../components/update-identification-matching-fill-form";
+import UpdateMultipleChoice from "../components/update-multiple-choice";
+import { styled } from "@mui/material/styles";
+import store from "@/app/pages/store/store";
+import { update_pre_exercise_thunk } from "../../redux/pre-exercise-thunk";
+import { get_module_by_id_thunk } from "../../redux/booklet-thunk";
+import { update_assessment_thunk } from "../../redux/assessment-thunk";
 
 const style = {
     position: "absolute",
@@ -44,12 +24,29 @@ const style = {
 
 export default function UpdateAssessmentSection({ datas }) {
     const [open, setOpen] = useState(false);
-
+    const [form, setForm] = useState({
+        question: datas?.questions,
+        file: "",
+        id: datas?.id || "",
+        exam_type: datas?.exam_type || "",
+        direction: datas?.direction || "",
+    });
     const [error, setError] = useState({});
     const [loading, setLoading] = useState(false);
     const module_id = window.location.pathname.split("/")[3];
+
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
+
+    useEffect(() => {
+        if (datas) {
+            setForm({
+                ...datas,
+                question: datas?.questions,
+            });
+        }
+    }, [datas]);
+
     const VisuallyHiddenInput = styled("input")({
         clip: "rect(0 0 0 0)",
         clipPath: "inset(50%)",
@@ -61,225 +58,106 @@ export default function UpdateAssessmentSection({ datas }) {
         width: 1,
     });
 
-    async function submit_form(params) {
+    const submitForm = async () => {
+        if (!datas.id) {
+            setError({ message: "Pre-exercise ID is missing" });
+            return;
+        }
+
         try {
             setLoading(true);
-
             const formData = new FormData();
-            formData.append("lesson_id", datas.id);
+            formData.append("id", form.id);
+            formData.append("lesson_id", form.id);
             formData.append("module_id", module_id);
-            formData.append("questions", JSON.stringify(data.questions));
-            formData.append("file", datas.file);
-            formData.append("direction", datas.direction);
-            formData.append("exam_type", datas.exam_type);
-            formData.append("type", "pre-exercise");
+            formData.append("file", form.file);
+            formData.append("direction", form.direction);
+            formData.append("exam_type", form.exam_type);
+            formData.append("type", "assessment");
 
-            const result = await store.dispatch(store_quest_thunk(formData));
-            if (result.status == 200) {
-                store.dispatch(get_module_by_id_thunk(module_id));
-                setLoading(false);
-                setOpen(false);
-                setData({
-                    exam_type: "",
-                    direction: "",
-                    file: "",
-                    questions: [
-                        {
-                            question: "",
-                            answer_key: "",
-                            file: "",
-                        },
-                    ],
-                });
-            } else {
-                setLoading(false);
-                setError(result.response.data.errors);
-            }
-            console.log("datass", data);
+            await store.dispatch(update_assessment_thunk(formData, datas.id));
+            await store.dispatch(get_module_by_id_thunk(module_id));
+            setLoading(false);
+            setOpen(false);
         } catch (error) {
             setLoading(false);
+            setError({ message: "An error occurred" });
         }
-    }
-    const updateQuestion = (index, field, value) => {
-        const updatedQuestions = [...data.questions];
-        updatedQuestions[index][field] = value;
-        setData({
-            ...data,
-            questions: updatedQuestions,
-        });
     };
-    console.log("da", datas);
+
+
     return (
         <div>
             <Tooltip title="Update Assessment">
-                <Button
-                    onClick={handleOpen}
-                    size='small'
-                    color='success'>
+                <Button onClick={handleOpen} size="small" color="success">
                     <Edit />
                 </Button>
             </Tooltip>
-            <Modal
-                open={open}
-                onClose={handleClose}
-                aria-labelledby="modal-modal-title"
-                aria-describedby="modal-modal-description"
-            >
+
+            <Modal open={open} onClose={handleClose}>
                 <Box sx={style}>
                     <div className="h-[88vh] overflow-auto">
                         <div className="flex items-center justify-center text-3xl font-black">
                             UPDATE ASSESSMENT
                         </div>
-                        <div className="overflow  w-full flex gap-4 flex-col">
+
+                        <div className="overflow w-full flex gap-4 flex-col">
                             <FormControl fullWidth error={!!error?.exam_type}>
                                 <TextField
-                                    labelId="exam-type-select-label"
-                                    id="exam-type-select"
-                                    name="exam_type"
                                     label="Exam Type"
-                                    value={datas.exam_type ?? ""}
-                                    onChange={(e) =>
-                                        setData({
-                                            ...data,
-                                            [e.target.name]: e.target.value,
-                                        })
-                                    }
-                                >
-                                </TextField>
-                                {error?.type && (
-                                    <FormHelperText>
-                                        {error.type}
-                                    </FormHelperText>
-                                )}
+                                    name="exam_type"
+                                    value={form.exam_type || ""}
+                                    onChange={(e) => setForm({ ...form, [e.target.name]: e.target.value })}
+                                    InputProps={{
+                                        readOnly: true,
+                                    }}
+                                />
+                                {error?.exam_type && <FormHelperText>{error.exam_type}</FormHelperText>}
                             </FormControl>
+
                             <Button
                                 component="label"
-                                role={undefined}
                                 variant="contained"
-                                startIcon={
-                                    datas?.file ? (
-                                        <>
-                                            <Check />
-                                            UPLOADED
-                                        </>
-                                    ) : (
-                                        <CloudUpload />
-                                    )
-                                }
+                                startIcon={form?.file ? <Check /> : <CloudUpload />}
                             >
-                                {datas?.file ? datas?.file?.name : "Upload files"}
+                                {form?.file ? form?.file?.name : "Upload files"}
                                 <VisuallyHiddenInput
                                     name="file"
                                     type="file"
-                                    onChange={(e) =>
-                                        setData({
-                                            ...data,
-                                            [e.target.name]: e.target.files[0],
-                                        })
-                                    }
+                                    onChange={(e) => setForm({ ...form, file: e.target.files[0] })}
                                     accept="image/*"
                                 />
                             </Button>
-                            <div className="bg-white ">
-                                {error?.direction && (
-                                    <div className="text-red-600">
-                                        {error?.direction}
-                                    </div>
-                                )}
-                                <div className="text-black p-3 font-black">
-                                    Direction
-                                </div>
+
+                            <div className="bg-white">
+                                <div className="text-black p-3 font-black">Direction</div>
                                 <ReactQuill
                                     theme="snow"
-                                    value={datas?.direction}
-                                    className="text-black  h-52"
-                                // onChange={(e) =>
-                                //   setData({
-                                //     ...data,
-                                //     direction: e,
-                                //   })
-                                // }
+                                    value={form?.direction || ""}
+                                    onChange={(value) => setForm({ ...form, direction: value })}
+                                    className="text-black h-52"
                                 />
                             </div>
-                            <div className="mt-10"></div>
-                            {/* <div className="flex w-full items-center justify-end">
-                                {datas.exam_type && (
-                                    <Button
-                                        className="w-36"
-                                        variant="contained"
-                                        autoFocus
-                                    // onClick={() =>
-                                    //   setData({
-                                    //     ...data,
-                                    //     questions: [
-                                    //       ...data.questions,
-                                    //       {
-                                    //         question: "",
-                                    //         answer: "",
-                                    //         answer_key: "",
-                                    //       },
-                                    //     ],
-                                    //   })
-                                    // }
-                                    >
-                                        add fields
-                                    </Button>
-                                )}
-                            </div> */}
-                            {datas.questions.map((res, i) => {
-                                return (
-                                    <>
-                                        {res.exam_type == "True Or False" && (
-                                            <div className="flex flex-col gap-4 w-full border-b pb-4">
-                                                <div
-                                                    key={i}
-                                                    className="flex flex-col gap-4 w-full border-b pb-4"
-                                                >
-                                                    <UpdateTrueOrFalse datas={res} />
-                                                </div>
-                                            </div>
+
+                            {form.question.map((question, index) => (
+                                <div key={index} className="flex flex-col gap-4 w-full border-b pb-4 mt-12">
+                                    {question.exam_type === "True Or False" && <UpdateTrueOrFalse datas={question} />}
+                                    {(question.exam_type === "Fill In The Blank" ||
+                                        question.exam_type === "Matching" ||
+                                        question.exam_type === "Identification") && (
+                                            <UpdateIdentificationMatchingFillForm
+                                                datas={question} Pass handleQuestionUpdate directly
+                                            />
                                         )}
+                                    {question.exam_type === "Multiple Choice" && <UpdateMultipleChoice datas={question} />}
+                                </div>
+                            ))}
 
-                                        {(res.exam_type ==
-                                            "Fill In The Blank" ||
-                                            res.exam_type == "Matching" ||
-                                            res.exam_type ==
-                                            "Identification") && (
-                                                <div className="flex flex-col gap-4 w-full border-b pb-4">
-                                                    <div
-                                                        key={i}
-                                                        className="flex flex-row gap-4 w-full border-b "
-                                                    >
-                                                        <UpdateIdentificationMatchingFillForm datas={res} />
-                                                    </div>
-                                                </div>
-                                            )}
-
-                                        {res.exam_type ==
-                                            "Multiple Choice" && (
-                                                <div className="flex flex-col gap-4 w-full border-b pb-4">
-                                                    <div
-                                                        key={i}
-                                                        className="flex flex-col gap-4 w-full border-b pb-4"
-                                                    >
-                                                        <UpdateMultipleChoice datas={res} />
-                                                    </div>
-                                                </div>
-                                            )}
-                                    </>
-                                );
-                            })}
-                        </div>
-                        <div className="mt-5">
-                            <Button
-                                className="w-full  "
-                                disabled={loading}
-                                variant="contained"
-                                autoFocus
-                                onClick={submit_form}
-                            >
-                                SUBMIT
-                            </Button>
+                            <div className="mt-5">
+                                <Button className="w-full" disabled={loading} variant="contained" onClick={submitForm}>
+                                    SUBMIT
+                                </Button>
+                            </div>
                         </div>
                     </div>
                 </Box>
