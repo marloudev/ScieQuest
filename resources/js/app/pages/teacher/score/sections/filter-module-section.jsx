@@ -7,6 +7,8 @@ export default function FilterModuleSection() {
     const [selectedModule, setSelectedModule] = useState('');
     const [selectError, setSelectError] = useState('');
     const { teachers } = useSelector((state) => state.teachers);
+    const { booklets } = useSelector((state) => state.booklets)
+
 
     // Handle Quarter Selection
     const handleQuarterChange = (e) => {
@@ -29,11 +31,12 @@ export default function FilterModuleSection() {
     ];
 
     // Map teachers from Redux state to select options
-    const moduleOptions = teachers?.data?.map((teacher) => ({
-        label: `${teacher.fname} ${teacher.lname}`, // Full name as label
-        value: teacher.id, // Teacher ID as value
+    const moduleOptions = booklets?.map((booklets) => ({
+        label: `${booklets.title}`,
+        value: booklets.id,
     })) || [];
 
+    console.log('bookleets', booklets)
     return (
         <div>
             <div className="flex">

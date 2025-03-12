@@ -5,6 +5,7 @@ import AssessmentScoreSection from './sections/assessment-score-section';
 import { useDispatch } from 'react-redux';
 import { get_student_score_by_pupil_id_thunk } from '../../admin/students/redux/students-thunk';
 import FilterModuleSection from './sections/filter-module-section';
+import { get_module_thunk } from '../module/redux/booklet-thunk';
 
 export default function ScorePage() {
     const student_id = window.location.pathname.split('/')[3];
@@ -12,6 +13,7 @@ export default function ScorePage() {
 
     useEffect(() => {
         dispatch(get_student_score_by_pupil_id_thunk(student_id));
+        dispatch(get_module_thunk());
     }, [dispatch, student_id]);
 
     return (
