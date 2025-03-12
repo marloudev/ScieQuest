@@ -25,7 +25,7 @@ import { useState } from "react";
 import store from "@/app/pages/store/store";
 // import { get_examinations_thunk } from "../../literacy_test/_redux/literacy-test-thunk";
 import moment from "moment";
-import {  get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
+import { get_module_thunk, store_module_thunk } from "../redux/booklet-thunk";
 import { Editor } from "react-draft-wysiwyg";
 import { EditorState } from "draft-js";
 import "react-quill/dist/quill.snow.css";
