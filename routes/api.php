@@ -50,7 +50,6 @@ Route::resource('answers', AnswerController::class);
 Route::resource('module', ModuleController::class);
 Route::resource('lesson', LessonController::class);
 Route::post('/update_lesson', [LessonController::class, 'update_lesson']);
-
 Route::resource('quest', QuestController::class);
 Route::resource('assessment', AssessmentController::class);
 Route::post('/update_assessment', [AssessmentController::class, 'update_assessment']);

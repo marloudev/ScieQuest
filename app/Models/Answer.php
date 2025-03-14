@@ -18,8 +18,8 @@ class Answer extends Model
         'score',
     ];
 
-    public function questionnaire(): HasOne
+    public function quest(): HasOne
     {
-        return $this->hasOne(Questionnaire::class,'id','questionnaire_id');
+        return $this->hasOne(Quest::class,'id','quest_id');
     }
 }

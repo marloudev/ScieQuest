@@ -19,7 +19,7 @@ export default function AssessmentScoreSection() {
 
     return (
         <>
-            {student?.lessons?.map((res, i) => {
+            {(student?.status?.lessons ?? [])?.map((res, i) => {
                 return (
                     <div>
                         <h2>{res.subject_matter}</h2>
@@ -39,11 +39,12 @@ export default function AssessmentScoreSection() {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        res?.assessments?.map((ress, i) => {
+                                        res?.assessment?.map((result, i) => {
+                                          
                                             return (
                                                 <>
                                                     <CollapseTableSection
-                                                        data={ress}
+                                                        data={result}
                                                     />
                                                 </>
                                             );

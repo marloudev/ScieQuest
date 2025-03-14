@@ -17,10 +17,9 @@ export default function PreExerciseScoreSection() {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
 
-
     return (
         <>
-            {student?.lessons?.map((res, i) => {
+            {(student?.status?.lessons ?? [])?.map((res, i) => {
                 return (
                     <div>
                         <h2>{res.subject_matter}</h2>
@@ -40,13 +39,12 @@ export default function PreExerciseScoreSection() {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        res?.pre_exercises?.map((ress, i) => {
+                                        res?.pre_exercises?.map((result, i) => {
                                           
-
                                             return (
                                                 <>
                                                     <CollapseTableSection
-                                                        data={ress}
+                                                        data={result}
                                                     />
                                                 </>
                                             );

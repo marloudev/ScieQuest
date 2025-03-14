@@ -259,13 +259,13 @@ class StudentController extends Controller
                     ['student_id', '=', $student['user']['id']],
                     ['type', '=', 'pre-exercise'],
                     ['learning_id', '=', $pre_exercise['id']],
-                ])->get();
+                ])->with(['quest'])->get();
 
                 // Store the score for the specific student in the pre-exercise
                 $module['lessons'][$lessonKey]['pre_exercises'][$exerciseKey]['scores'] = [
                     'score' => $scoreSum->sum('score'),
                     'user' => $student['user'],
-                    'answer' => $scoreSum,
+                    'answers' => $scoreSum,
                 ];
             }
 
@@ -276,13 +276,13 @@ class StudentController extends Controller
                     ['student_id', '=', $student['user']['id']],
                     ['type', '=', 'assessment'],
                     ['learning_id', '=', $assessment['id']],
-                ])->get();
+                ])->with(['quest'])->get();
 
                 // Store the score for the specific student in the assessment
                 $module['lessons'][$lessonKey]['assessments'][$exerciseKey]['scores'] = [
                     'score' => $scoreSum->sum('score'),
                     'user' => $student['user'],
-                    'answer' => $scoreSum,
+                    'answers' => $scoreSum,
                 ];
             }
         }

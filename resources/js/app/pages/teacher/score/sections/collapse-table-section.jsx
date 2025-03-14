@@ -54,11 +54,14 @@ Row.propTypes = {
 };
 
 export default function CollapseTableSection({ data }) {
-    console.log("dadakjldjawlkdwja", data.scores);
     const rows = data?.scores ?? [];
+    console.log("dadakjldjawlkdwja", rows);
     const HtmlRenderer = ({ htmlContent }) => (
-        <div className="bg-teal-500 p-3 rounded-md text-white" dangerouslySetInnerHTML={{ __html: htmlContent }} />
-    )
+        <div
+            className="bg-teal-500 p-3 rounded-md text-white"
+            dangerouslySetInnerHTML={{ __html: htmlContent }}
+        />
+    );
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -76,33 +79,40 @@ export default function CollapseTableSection({ data }) {
                 </TableHead>
                 <TableHead>
                     <TableRow>
-                        <TableCell>Fullname</TableCell>
+                        <TableCell>Question</TableCell>
+                        <TableCell>Answer Key</TableCell>
+                        <TableCell>Answer</TableCell>
                         <TableCell>Score</TableCell>
-                        <TableCell>Percent</TableCell>
-                        <TableCell>Status</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {rows.map((row, i) => {
+                    {rows?.answers?.map((row, i) => {
                         const totalAnswers = row.answer?.length ?? 1; // Avoid division by zero
                         const score = parseInt(row.score ?? 0, 10);
                         const percentage = (score / totalAnswers) * 100 || 0; // Ensures it defaults to 0 if NaN
                         const status = percentage >= 75 ? "Passed" : "Failed"; // Status based on 75% threshold
 
                         return (
-                            <TableRow key={i}>
-                                <TableCell>
-                                    {row.user.fname} {row.user.lname}
-                                </TableCell>
-                                <TableCell>{score}</TableCell>
-                                <TableCell>{percentage}%</TableCell>
-                                <TableCell>
-                                    <div>
-                                        {status}
-                                    </div>
-                                  </TableCell>{" "}
-                                {/* New Status Column */}
-                            </TableRow>
+                            <>
+                                <TableRow key={i}>
+                                    <TableCell>
+                                        <div className="flex w-full items-center justify-start">
+                                            {row.quest.question}
+                                            <img
+                                                src={row.quest.file}
+                                                width="250"
+                                            />
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>
+                                        <div className="uppercase">
+                                            {row.quest.answer_key}
+                                        </div>
+                                    </TableCell>
+                                    <TableCell>{row.answer}</TableCell>
+                                    <TableCell>{row.score}</TableCell>
+                                </TableRow>
+                            </>
                         );
                     })}
                 </TableBody>
