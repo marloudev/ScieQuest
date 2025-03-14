@@ -223,7 +223,7 @@ class StudentController extends Controller
     }
 
 
-    public function get_student_score_by_pupil_id($id, $student_id)
+    public function get_student_score_by_pupil_id(Request $request, $id, $student_id)
     {
         $auth = Auth::user();
         // Retrieve the specific student based on teacher ID and pupil ID
@@ -240,7 +240,10 @@ class StudentController extends Controller
         }
 
         // Retrieve the module by ID
-        $module = Module::where('id', $id)
+        $module = Module::where([
+            ['quarter','=', $request->quarter],
+            ['title','=', $request->module],
+        ])
             ->with(['lessons'])
             ->first();
 

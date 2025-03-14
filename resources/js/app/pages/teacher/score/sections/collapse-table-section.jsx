@@ -24,7 +24,7 @@ function Row(props) {
                 <TableBody>
                     <TableRow>
                         <TableCell component="th" scope="row">
-                            {row.user.fname} {row.user.lname}
+                            {row?.user.fname} {row?.user.lname}
                         </TableCell>
                         <TableCell align="right">aaa</TableCell>
                         <TableCell align="right">dadwa</TableCell>
@@ -97,20 +97,22 @@ export default function CollapseTableSection({ data }) {
                                 <TableRow key={i}>
                                     <TableCell>
                                         <div className="flex w-full items-center justify-start">
-                                            {row.quest.question}
-                                            <img
-                                                src={row.quest.file}
-                                                width="250"
-                                            />
+                                            {row?.quest?.question}
+                                            {row?.quest?.file && (
+                                                <img
+                                                    src={row?.quest?.file}
+                                                    width="250"
+                                                />
+                                            )}
                                         </div>
                                     </TableCell>
                                     <TableCell>
                                         <div className="uppercase">
-                                            {row.quest.answer_key}
+                                            {row?.quest?.answer_key}
                                         </div>
                                     </TableCell>
-                                    <TableCell>{row.answer}</TableCell>
-                                    <TableCell>{row.score}</TableCell>
+                                    <TableCell>{row?.answer}</TableCell>
+                                    <TableCell>{row?.score}</TableCell>
                                 </TableRow>
                             </>
                         );

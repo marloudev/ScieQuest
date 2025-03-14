@@ -16,20 +16,20 @@ export default function AssessmentScoreSection() {
     const { user } = useSelector((state) => state.app);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
-
     return (
         <>
             {(student?.status?.lessons ?? [])?.map((res, i) => {
+           
                 return (
                     <div>
-                        <h2>{res.subject_matter}</h2>
+                        {/* <h2>{res.subject_matter}</h2> */}
                         <TableContainer component={Paper}>
                             <Table
                                 sx={{ minWidth: 650 }}
                                 aria-label="simple table"
                             >
                                 <TableBody>
-                                    {res?.assessment?.length === 0 ? (
+                                    {res?.assessments?.length === 0 ? (
                                         <TableRow>
                                             <TableCell
                                                 colSpan={4}
@@ -39,8 +39,9 @@ export default function AssessmentScoreSection() {
                                             </TableCell>
                                         </TableRow>
                                     ) : (
-                                        res?.assessment?.map((result, i) => {
+                                        res?.assessments?.map((result, i) => {
                                           
+console.log('resultresultresult',result)
                                             return (
                                                 <>
                                                     <CollapseTableSection

@@ -11,7 +11,7 @@ export async function get_student_score_service() {
 
 export async function get_student_score_by_pupil_id_service(student_id) {
     try {
-        const res = await axios.get(`/api/get_student_score_by_pupil_id/` + window.location.pathname.split('/')[3] + '/' + student_id);
+        const res = await axios.get(`/api/get_student_score_by_pupil_id/` + window.location.pathname.split('/')[3] + '/' + student_id+window.location.search);
         return res;
     } catch (error) {
         return error;
