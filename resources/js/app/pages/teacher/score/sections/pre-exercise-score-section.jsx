@@ -17,6 +17,14 @@ export default function PreExerciseScoreSection() {
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
 
+    if (!student?.status?.lessons?.length) {
+        return <p className="text-center bg-white h-16 rounded-md flex items-center justify-center">
+            No Data Available.
+        </p>;
+    }
+
+    console.log('student', student)
+
     return (
         <>
             {(student?.status?.lessons ?? [])?.map((res, i) => {
@@ -40,7 +48,7 @@ export default function PreExerciseScoreSection() {
                                         </TableRow>
                                     ) : (
                                         res?.pre_exercises?.map((result, i) => {
-                                          
+
                                             return (
                                                 <>
                                                     <CollapseTableSection
