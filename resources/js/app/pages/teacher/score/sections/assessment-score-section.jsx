@@ -16,10 +16,17 @@ export default function AssessmentScoreSection() {
     const { user } = useSelector((state) => state.app);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
+
+    if (!student?.status?.lessons?.length) {
+        return <p className="text-center bg-white h-16 rounded-md flex items-center justify-center">
+            No Data Available.
+        </p>;
+    }
+
     return (
         <>
             {(student?.status?.lessons ?? [])?.map((res, i) => {
-           
+
                 return (
                     <div>
                         {/* <h2>{res.subject_matter}</h2> */}
@@ -40,8 +47,8 @@ export default function AssessmentScoreSection() {
                                         </TableRow>
                                     ) : (
                                         res?.assessments?.map((result, i) => {
-                                          
-console.log('resultresultresult',result)
+
+                                            console.log('resultresultresult', result)
                                             return (
                                                 <>
                                                     <CollapseTableSection
