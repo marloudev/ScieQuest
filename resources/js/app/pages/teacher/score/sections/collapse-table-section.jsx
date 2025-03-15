@@ -66,7 +66,7 @@ export default function CollapseTableSection({ data }) {
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
                 <div className="p-5">
-                    Name of Pupil:<b>{rows?.user?.fname} {rows?.user?.lname}</b>
+                    Name:<b>{rows?.user?.fname} {rows?.user?.lname}</b>
                 </div>
                 <TableHead>
                     <TableRow>
