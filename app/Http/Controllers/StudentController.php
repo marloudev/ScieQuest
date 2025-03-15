@@ -228,7 +228,7 @@ class StudentController extends Controller
         $auth = Auth::user();
         // Retrieve the specific student based on teacher ID and pupil ID
         $student = Student::where('teacher_id', $auth->user_id)
-            ->where('id', $student_id)
+            ->where('student_id', $student_id)
             ->with(['user'])
             ->first();
 
