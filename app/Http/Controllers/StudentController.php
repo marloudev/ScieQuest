@@ -147,7 +147,7 @@ class StudentController extends Controller
 
     public function show($id)
     {
-        $student = Student::where('student_id', $id)->with(['teacher', 'user'])->paginate();
+        $student = Student::where('teacher_id', $id)->with(['teacher', 'user'])->paginate();
         return response()->json([
             'status' => $student,
         ], 200);
@@ -241,8 +241,8 @@ class StudentController extends Controller
 
         // Retrieve the module by ID
         $module = Module::where([
-            ['quarter', '=', $request->quarter],
-            ['title', '=', $request->module],
+            ['quarter','=', $request->quarter],
+            ['title','=', $request->module],
         ])
             ->with(['lessons'])
             ->first();

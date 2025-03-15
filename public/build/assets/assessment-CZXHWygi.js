@@ -1,1 +1,0 @@
-import{i as r}from"./app-BmtG4zcN.js";async function a(s){try{return await r.delete(`/api/assessment/${s}`)}catch(e){return e}}async function n(s){try{return await r.post("/api/update_assessment",s)}catch(e){return e}}export{a as d,n as u};
