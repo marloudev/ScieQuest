@@ -2,7 +2,7 @@ import React from 'react'
 
 export default function MissionSection() {
     return (
-        <div className='bg-[rgba(255,255,255,0.7)] rounded-3xl shadow-2xl p-6 w-96 h-auto'>
+        <div className='bg-[rgba(255,255,255,0.7)] rounded-3xl shadow-2xl p-6 w-96 pb-16'>
             <h1 className='text-center'><b>Mission</b></h1>
             <p className='text-sm'><b>To protect and promote the right of every Filipino to quality, equitable. culture-based, and complete basic education where:</b></p>
             <p className='text-sm'><b>• Students learn in a child-friendly, gender-sencitive, safe, and motivating environment</b></p>
