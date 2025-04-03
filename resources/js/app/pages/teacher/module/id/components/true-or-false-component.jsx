@@ -1,21 +1,21 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
-export default function TrueOrFalseComponent({ question, answers, direction, image }) {
+export default function TrueOrFalseComponent({ question, answers, data }) {
+  const { user } = useSelector((state) => state.app);
   return (
     <div>
-      <div>
-        <h3>Direction: {direction}</h3>
-      </div>
-      <div>
-        <p>__________ {question}</p>
-        {image && (
-          <div className='flex flex-1 gap-3'>
-            <img className='w-24' src={image} alt="Question related" />
+      <div className='flex items-center justify-between'>
+        <p>{question}</p>
+        {/* {user?.user_type == 1 && (
+          <div>
+            <UpdateQuestionSection data={data} />
+            <DeleteQuestionnaireSection data={data} />
           </div>
-        )}
+        )} */}
       </div>
       <div>
-        <p>Answer key: {answers}</p>
+        <p><b>Answer key:</b> {answers}</p>
       </div>
     </div>
   )

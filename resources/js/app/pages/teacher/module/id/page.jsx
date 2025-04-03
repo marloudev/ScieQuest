@@ -15,7 +15,7 @@ export default function LiteracyTestIDPage() {
     return (
         <AdminLayout>
             <div className="my-3">
-                <CreateLessonSection />
+                {/* <CreateLessonSection /> */}
             </div>
             <div>
                 <AssessmentCardSection />

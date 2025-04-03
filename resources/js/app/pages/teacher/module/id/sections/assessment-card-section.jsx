@@ -34,6 +34,8 @@ const htmlToText = (html) => {
 
 export default function AssessmentCardSection() {
     const { booklet } = useSelector((store) => store.booklets);
+    const { lesson } = useSelector((store) => store.lessons);
+    const { user } = useSelector((state) => state.app);
     const [expandedIndex, setExpandedIndex] = React.useState(null); // Track expanded card
     const module_id = window.location.pathname.split("/")[3];
 
@@ -41,7 +43,7 @@ export default function AssessmentCardSection() {
         setExpandedIndex((prevIndex) => (prevIndex === index ? null : index)); // Toggle expand/collapse
     };
 
-    console.log("lessonssss", booklet);
+    console.log("leaaassonssss", booklet);
 
     return (
         <div className="w-full flex flex-col gap-5">
@@ -61,11 +63,21 @@ export default function AssessmentCardSection() {
                                 />
                             </div>
                             <div className="">
-                                <a href="#">
-                                    <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
-                                        {res?.subject_matter}
-                                    </h5>
-                                </a>
+                                <div className="flex items-center justify-between">
+                                    <a href="#">
+                                        <h5 className="mb-2 text-2xl font-bold tracking-tight text-gray-900">
+                                            {res?.subject_matter}
+                                        </h5>
+                                    </a>
+                                    {/* {user?.user_type == 1 && (
+                                        <div className="mt-6">
+                                            <UpdateLessonSection data={res} />
+                                            <DeleteLessonSection data={res} />
+                                        </div>
+                                    )} */}
+                                </div>
+
+
                                 <p className="mb-3 font-normal text-gray-700">
                                     Demo Link:{" "}
                                     {res?.link ? (
@@ -96,10 +108,12 @@ export default function AssessmentCardSection() {
                                         <ArrowDownwardOutlined />
                                     )}
                                 </div>
-                                <div className="flex gap-4">
-                                    <CreatePreExerciseSection datas={res} />
-                                    <CreateAssessmentSection datas={res} />
-                                </div>
+                                {user?.user_type == 1 && (
+                                    <div className="flex gap-4">
+                                        <CreatePreExerciseSection datas={res} />
+                                        <CreateAssessmentSection datas={res} />
+                                    </div>
+                                )}
                             </div>
 
                             {/* Expanded Content */}
@@ -109,70 +123,156 @@ export default function AssessmentCardSection() {
                                         <p>{htmlToText(res?.discussions)}</p>
                                     </div> */}
                                     <div className="flex items-center justify-center mt-4">
-                                        <h1><u>PRE-EXERCISE</u></h1>
+                                        <h1>
+                                            <u>PRE-EXERCISE</u>
+                                        </h1>
                                     </div>
-                                    <div className="flex items-center justify-center mb-6">Exam Type</div>
+
                                     {res.pre_exercises.map((pre_exercise) => {
+
                                         return (
                                             <>
-                                                {pre_exercise?.exam_type ==
+                                                {/* {user?.user_type == 1 && (
+                                                    <div className="flex items-center justify-end mx-3 mt-5">
+                                                        <UpdatePreExerciseSection datas={pre_exercise} />
+                                                        <DeletePreExerciseSection data={pre_exercise} />
+                                                    </div>
+                                                )} */}
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6 ">
+                                                    <i>{pre_exercise.exam_type}</i>
+                                                </div>
+                                                <div>
+                                                    <h3>
+                                                        Direction:
+                                                        {htmlToText(
+                                                            pre_exercise.direction,
+                                                        )}
+                                                    </h3>
+                                                    {pre_exercise?.file && (
+                                                        <div className="flex items-center justify-center flex-1 gap-3 w-full">
+                                                            <img
+                                                                className="w-1/2"
+                                                                src={
+                                                                    pre_exercise.file
+                                                                }
+                                                                alt="Question related"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
+                                                {pre_exercise.exam_type ==
                                                     "True Or False" && (
                                                         <>
-                                                            <TrueOrFalseComponent
-                                                                direction="Put True if the sentence is true and put False if the sentence is false"
-                                                                question="The Dog is an animal."
-                                                                image="/images/background.jpg"
-                                                                answers="True"
-                                                            />
+                                                            {pre_exercise.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <TrueOrFalseComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
-                                                {pre_exercise?.exam_type ==
+                                                {pre_exercise.exam_type ==
                                                     "Fill In The Blank" && (
                                                         <>
-                                                            <FillInTheBlankComponent
-                                                                direction="Fill out the blank the corresponds the answer"
-                                                                question="The Dog is an ________ that plays."
-                                                                image="/images/background.jpg"
-                                                                answers="animal"
-                                                            />
+                                                            {pre_exercise.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <FillInTheBlankComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
-                                                {pre_exercise?.exam_type ==
+                                                {pre_exercise.exam_type ==
                                                     "Multiple Choice" && (
                                                         <>
-                                                            <MultipleChoiceComponent
-                                                                direction="Chose the letter of the correct answer"
-                                                                question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
+                                                            {pre_exercise.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MultipleChoiceComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
-                                                {pre_exercise?.exam_type ==
-                                                    "Identification" && (
-                                                        <>
-                                                            <IdentificationComponent
-                                                                direction="Sample Directionsssssssss"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
-                                                        </>
-                                                    )}
+                                                {pre_exercise.exam_type === "Identification" && (
+                                                    <>
+                                                        {pre_exercise.questions.map((res, i) => {
+                                                            const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
 
-                                                {pre_exercise?.exam_type ==
+                                                            return (
+                                                                <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                    <IdentificationComponent
+                                                                        data={res}
+                                                                        question={res?.question}
+                                                                        answers={res?.answer_key}
+                                                                    />
+                                                                </div>
+                                                            );
+                                                        })}
+                                                    </>
+                                                )}
+
+
+                                                {pre_exercise.exam_type ==
                                                     "Matching" && (
                                                         <>
-                                                            <MatchingComponent
-                                                                direction="Match the items in Column A to the Column B"
-                                                                question="A. Basketball"
-                                                                match="A. Sports"
-                                                                // image="/images/background.jpg"
-                                                                answers="A - B"
-                                                            />
+                                                            {pre_exercise.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MatchingComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
+
                                                         </>
                                                     )}
                                             </>
@@ -200,76 +300,159 @@ export default function AssessmentCardSection() {
                                         <hr />
                                     </div>
                                     <div className="flex items-center justify-center mt-4">
-                                        <h1><u>ASSESSMENT</u></h1>
+                                        <h1>
+                                            <u>ASSESSMENT</u>
+                                        </h1>
                                     </div>
-                                    <div className="flex items-center justify-center mb-6">Exam Type</div>
                                     {res.assessments.map((assessment) => {
                                         return (
                                             <>
+                                                {/* {user?.user_type == 1 && (
+                                                    <div className="flex items-center justify-end mx-3 mt-5">
+                                                        <UpdateAssessmentSection datas={assessment} />
+                                                        <DeleteAssessmentSection data={assessment} />
+                                                    </div>
+                                                )} */}
+                                                <div className="flex text-2xl font-black items-center justify-center mb-6 mt-5">
+                                                    <i>{assessment.exam_type}</i>
+                                                </div>
+                                                <div>
+                                                    <h3>
+                                                        Direction:
+                                                        {htmlToText(
+                                                            assessment.direction,
+                                                        )}
+                                                    </h3>
+                                                    {assessment?.file && (
+                                                        <div className="flex items-center justify-center flex-1 gap-3 w-full">
+                                                            <img
+                                                                className="w-1/2"
+                                                                src={
+                                                                    assessment.file
+                                                                }
+                                                                alt="Question related"
+                                                            />
+                                                        </div>
+                                                    )}
+                                                </div>
                                                 {assessment.exam_type ==
                                                     "True Or False" && (
                                                         <>
-                                                            <TrueOrFalseComponent
-                                                                direction="Put True if the sentence is true and put False if the sentence is false"
-                                                                question="The Dog is an animal."
-                                                                image="/images/background.jpg"
-                                                                answers="True"
-                                                            />
+                                                            {assessment.questions.map(
+                                                                (res, i) => {
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <TrueOrFalseComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
                                                 {assessment.exam_type ==
                                                     "Fill In The Blank" && (
                                                         <>
-                                                            <FillInTheBlankComponent
-                                                                direction="Fill in the blanks provided"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/background.jpg"
-                                                                answers="Sample Answer"
-                                                            />
+                                                            {assessment.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <FillInTheBlankComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
                                                 {assessment.exam_type ==
                                                     "Multiple Choice" && (
                                                         <>
-                                                            <MultipleChoiceComponent
-                                                                direction="Chose the letter of the correct answer"
-                                                                question="What is asked? A.aaaaaaaa B.assssssssssss C.ddddddddd D.rrrrrrrrr"
-                                                                image="/images/logo2.png"
-                                                                answers="A"
-                                                            />
+                                                            {assessment.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MultipleChoiceComponent
+                                                                                data={res}
+                                                                                question={
+                                                                                    res?.question
+                                                                                }
+                                                                                answers={
+                                                                                    res?.answer_key
+                                                                                }
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
                                                         </>
                                                     )}
 
                                                 {assessment.exam_type ==
                                                     "Identification" && (
                                                         <>
-                                                            <IdentificationComponent
-                                                                direction="Identify the answer of the questions"
-                                                                question="What is asked in the blank?"
-                                                                image="/images/background.jpg"
-                                                                answers="Sample Answer"
-                                                            />
+                                                            {assessment.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <IdentificationComponent
+                                                                                data={res}
+                                                                                question={res?.question}
+                                                                                answers={res?.answer_key}
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
+
                                                         </>
                                                     )}
 
                                                 {assessment.exam_type ==
                                                     "Matching" && (
                                                         <>
-                                                            <MatchingComponent
-                                                                direction="Match the items in Column A to the Column B"
-                                                                question="A. Basketball"
-                                                                match="A. Sports"
-                                                                image="/images/background.jpg"
-                                                                answers="A - B"
-                                                            />
+                                                            {assessment.questions.map(
+                                                                (res, i) => {
+                                                                    const backgroundClass = i % 2 === 0 ? 'bg-gray-100' : 'bg-gray-200';
+
+                                                                    return (
+                                                                        <div key={i} className={`${backgroundClass} p-1 px-3 rounded-sm`}>
+                                                                            <MatchingComponent
+                                                                                data={res}
+                                                                                question={res?.question}
+                                                                                answers={res?.answer_key}
+                                                                            />
+                                                                        </div>
+                                                                    );
+                                                                },
+                                                            )}
+
                                                         </>
                                                     )}
                                             </>
                                         );
                                     })}
-                                </div >
+                                </div>
                             )}
                         </div>
                     );

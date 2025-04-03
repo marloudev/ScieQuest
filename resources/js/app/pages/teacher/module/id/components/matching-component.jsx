@@ -1,32 +1,23 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 
-export default function MatchingComponent({ question, answers, direction, image, match }) {
+export default function MatchingComponent({ question, answers, data }) {
+  const { user } = useSelector((state) => state.app);
   return (
-    <div>
+    <div className='mt-7'>
       <div>
-        <h3>Direction: {direction}</h3>
-      </div>
-      {image && (
-        <div className='flex flex-1 gap-3'>
-          <img className='w-24' src={image} alt="Question related" />
-        </div>
-      )}
-      <div>
-        <div className='flex items-center justify-between px-20 mt-4'>
-          <div>
-            <p>Column A </p>
-            <p>{question}</p>
-          </div>
-          <div>
-            <p>Column B </p>
-            <p>{match}</p>
+        <div>
+          <div className='flex items-center justify-between'>
+            <b>{question}</b>
+            {/* {user?.user_type == 1 && (
+              <div>
+                <UpdateQuestionSection data={data} />
+                <DeleteQuestionnaireSection data={data} />
+              </div>
+            )} */}
           </div>
         </div>
-
-
-      </div>
-      <div>
-        <p>Answer key: {answers}</p>
+        <p><b>Matching key:</b> {answers}</p>
       </div>
     </div>
   )

@@ -1,0 +1,1 @@
+import{u as t,j as e}from"./app-B0NZlZ0g.js";function a({question:s,answers:i,data:r}){return t(n=>n.app),e.jsx("div",{className:"mt-7",children:e.jsxs("div",{children:[e.jsx("div",{children:e.jsx("div",{className:"flex items-center justify-between",children:e.jsx("b",{children:s})})}),e.jsxs("p",{children:[e.jsx("b",{children:"Matching key:"})," ",i]})]})})}export{a as default};
