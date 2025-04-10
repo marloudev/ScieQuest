@@ -13,12 +13,15 @@ import {
 } from "@mui/material";
 import { Delete } from "@mui/icons-material";
 import store from "@/app/pages/store/store";
-import { delete_students_thunk, get_students_thunk } from "../redux/students-thunk";
+import { delete_students_thunk, get_students_by_id_thunk, get_students_thunk } from "../redux/students-thunk";
+import { useSelector } from "react-redux";
 
 export default function DeleteSection({ data }) {
+  const { user } = useSelector((state) => state.app);
   const [open, setOpen] = useState(false); // Open by default when rendered
   const [notify, setNotify] = useState(false);
   const [loading, setLoading] = useState(false);
+  const teacher_id = user?.user_id;
 
   const handleClose = () => {
     setOpen(false);
@@ -27,7 +30,7 @@ export default function DeleteSection({ data }) {
   const handleRemove = async () => {
     setLoading(true);
     await store.dispatch(delete_students_thunk(data?.student_id))
-    await store.dispatch(get_students_thunk())
+    await store.dispatch(get_students_by_id_thunk(teacher_id))
     setTimeout(() => {
       setLoading(false);
       setNotify(true);
