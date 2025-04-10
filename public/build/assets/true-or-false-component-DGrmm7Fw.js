@@ -1,1 +1,0 @@
-import{u as i,j as e}from"./app-B0RjZSg2.js";function l({question:s,answers:r,data:t}){return i(n=>n.app),e.jsxs("div",{children:[e.jsx("div",{className:"flex items-center justify-between",children:e.jsx("p",{children:s})}),e.jsx("div",{children:e.jsxs("p",{children:[e.jsx("b",{children:"Answer key:"})," ",r]})})]})}export{l as default};
