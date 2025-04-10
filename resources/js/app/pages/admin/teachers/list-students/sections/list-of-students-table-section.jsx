@@ -11,8 +11,8 @@ import { Button, TextField, Tooltip, InputAdornment } from '@mui/material';
 import { Search } from '@mui/icons-material';
 import ViewScoreSection from './view-score-section';
 import { get_students_by_id_thunk } from '../../../students/redux/students-thunk';
-import UpdateSection from '@/app/pages/teacher/list-students/sections/update-section';
 import DeleteSection from '../../../students/sections/delete-section';
+import UpdateSection from './update-section';
 
 export default function ListOfStudentsTableSection() {
     const dispatch = useDispatch();
