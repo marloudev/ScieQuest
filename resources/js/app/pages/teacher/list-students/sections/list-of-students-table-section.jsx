@@ -17,7 +17,7 @@ import ViewScoreSection from './view-score-section';
 
 export default function ListOfStudentsTableSection() {
     const dispatch = useDispatch();
-    const { students } = useSelector((state) => state.students);
+    const { students = [] } = useSelector((state) => state.students);  // Ensure students is an array
     const { user } = useSelector((state) => state.app);
     const [filteredStudents, setFilteredStudents] = useState([]);
     const teacher_id = user?.user_id;
@@ -29,17 +29,16 @@ export default function ListOfStudentsTableSection() {
     }, [dispatch, teacher_id]);
 
     useEffect(() => {
-        if (students && teacher_id) {
+        if (Array.isArray(students) && teacher_id) {
             const filtered = students.filter(student => student.teacher_id === teacher_id);
             setFilteredStudents(filtered);
         }
     }, [students, teacher_id]);
 
     const [searchTerm, setSearchTerm] = useState('');
-
     const handleSearchChange = (e) => setSearchTerm(e.target.value);
 
-    const filteredStudentss = students?.filter((student) => {
+    const filteredStudentss = Array.isArray(students) ? students.filter((student) => {
         const fullName = `${student?.fname} ${student?.lname}`.toLowerCase();
         const email = student?.user?.email?.toLowerCase() || '';
         const student_id = student?.student_id?.toLowerCase() || '';
@@ -49,7 +48,7 @@ export default function ListOfStudentsTableSection() {
             email.includes(searchTerm.toLowerCase()) ||
             student_id.includes(searchTerm.toLowerCase())
         );
-    });
+    }) : [];
 
     return (
         <>
@@ -87,14 +86,14 @@ export default function ListOfStudentsTableSection() {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {filteredStudentss?.length === 0 ? (
+                        {filteredStudentss.length === 0 ? (
                             <TableRow>
                                 <TableCell colSpan={4} align="center">
                                     No students found.
                                 </TableCell>
                             </TableRow>
                         ) : (
-                            filteredStudentss?.map((res, i) => (
+                            filteredStudentss.map((res, i) => (
                                 <TableRow key={i}>
                                     <TableCell>{res?.student_id}</TableCell>
                                     <TableCell>{res?.fname} {res?.lname}</TableCell>
