@@ -29,36 +29,27 @@ export default function ListOfStudentsTableSection() {
     }, [dispatch, teacher_id]);
 
     useEffect(() => {
-        if (students?.data && teacher_id) {
-            const filtered = students.data.filter(student => student.teacher_id === teacher_id);
+        if (students && teacher_id) {
+            const filtered = students.filter(student => student.teacher_id === teacher_id);
             setFilteredStudents(filtered);
         }
     }, [students, teacher_id]);
 
-    console.log('usersss', user)
-    console.log('studentsss', students)
+    const [searchTerm, setSearchTerm] = useState('');
 
-
-    // State for filter values
-    const [searchTerm, setSearchTerm] = React.useState('');
-    const [selectedTeacher, setSelectedTeacher] = React.useState('');
-
-    // Filter students based on search and selected teacher
-    const filteredStudentss = students?.data.filter((student) => {
-        const fullName = `${student.fname} ${student.lname}`.toLowerCase();
-        const email = student.email.toLowerCase();
-        const student_id = student.student_id.toLowerCase();
-        // const teacherFullName = student.teacher ? `${student.teacher.fname} ${student.teacher.lname}`.toLowerCase() : '';
-
-        const matchesSearch =
-            fullName.includes(searchTerm.toLowerCase()) || email.includes(searchTerm.toLowerCase()) || student_id.includes(searchTerm.toLowerCase());
-
-
-        return matchesSearch;
-    });
-
-    // Handlers for filtering
     const handleSearchChange = (e) => setSearchTerm(e.target.value);
+
+    const filteredStudentss = students?.filter((student) => {
+        const fullName = `${student?.fname} ${student?.lname}`.toLowerCase();
+        const email = student?.user?.email?.toLowerCase() || '';
+        const student_id = student?.student_id?.toLowerCase() || '';
+
+        return (
+            fullName.includes(searchTerm.toLowerCase()) ||
+            email.includes(searchTerm.toLowerCase()) ||
+            student_id.includes(searchTerm.toLowerCase())
+        );
+    });
 
     return (
         <>
@@ -66,7 +57,7 @@ export default function ListOfStudentsTableSection() {
                 <div>
                     <CreateSection />
                 </div>
-                <div className=''>
+                <div>
                     <TextField
                         label="Search"
                         value={searchTerm}
@@ -74,7 +65,7 @@ export default function ListOfStudentsTableSection() {
                         variant="outlined"
                         fullWidth
                         className="bg-white"
-                        sx={{ width: "450px" }} // Adjust width as needed
+                        sx={{ width: "450px" }}
                         InputProps={{
                             startAdornment: (
                                 <InputAdornment position="start">
@@ -104,22 +95,13 @@ export default function ListOfStudentsTableSection() {
                             </TableRow>
                         ) : (
                             filteredStudentss?.map((res, i) => (
-                                <TableRow
-                                    key={i}
-                                    sx={{
-                                        '&:last-child td, &:last-child th': {
-                                            border: 0,
-                                        },
-                                    }}
-                                >
-                                    <TableCell>{res.student_id}</TableCell>
-                                    <TableCell>
-                                        {res.fname} {res.lname}
-                                    </TableCell>
+                                <TableRow key={i}>
+                                    <TableCell>{res?.student_id}</TableCell>
+                                    <TableCell>{res?.fname} {res?.lname}</TableCell>
                                     <TableCell>{res?.user?.email}</TableCell>
                                     <TableCell>
                                         <div className="flex gap-2">
-                                            <Tooltip title="Delete Student">
+                                            <Tooltip title="View Scores">
                                                 <ViewScoreSection data={res} />
                                             </Tooltip>
                                             <Tooltip title="Update Student">
