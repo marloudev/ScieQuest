@@ -1,0 +1,1 @@
+import{u as r,j as e}from"./app-BV67h-nK.js";function d({question:s,answers:n,data:t}){return r(i=>i.app),e.jsxs("div",{children:[e.jsx("div",{className:"flex items-center justify-between",children:e.jsx("p",{children:s})}),e.jsx("div",{children:e.jsxs("p",{children:[e.jsx("b",{children:"Answer key:"})," ",n]})})]})}export{d as default};

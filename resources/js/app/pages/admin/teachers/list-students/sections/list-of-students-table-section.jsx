@@ -78,7 +78,7 @@ export default function ListOfStudentsTableSection() {
                             <TableCell>Pupil ID</TableCell>
                             <TableCell>Fullname</TableCell>
                             <TableCell>Email</TableCell>
-                            <TableCell>Action</TableCell>
+                            {/* <TableCell>Action</TableCell> */}
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -94,7 +94,7 @@ export default function ListOfStudentsTableSection() {
                                     <TableCell>{res?.student_id}</TableCell>
                                     <TableCell>{res?.fname} {res?.lname}</TableCell>
                                     <TableCell>{res?.user?.email}</TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                         <div className="flex gap-2">
                                             <Tooltip title="View Scores">
                                                 <ViewScoreSection data={res} />
@@ -106,7 +106,7 @@ export default function ListOfStudentsTableSection() {
                                                 <DeleteSection data={res} />
                                             </Tooltip>
                                         </div>
-                                    </TableCell>
+                                    </TableCell> */}
                                 </TableRow>
                             ))
                         )}
